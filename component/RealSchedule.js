@@ -1,15 +1,18 @@
 import React, {Component} from 'react';
-import {View, Text, ScrollView, Dimensions, TouchableOpacity, FlatList, Image, ImageBackground, Alert, Platform, AsyncStorage, Linking} from 'react-native';
+import {View, Text, ScrollView, Dimensions, TouchableOpacity, FlatList, Image, ImageBackground, Alert, Platform, TouchableWithoutFeedback, AsyncStorage, Linking} from 'react-native';
 import DatePicker from 'react-native-datepicker';
 import Modal from 'react-native-modal';
 import moment from 'moment';
 import ModalDropdown from 'react-native-modal-dropdown';
-
+import {Actions} from 'react-native-router-flux';
 moment().format();
 
 class RealSchedule extends Component {
 
     async componentDidMount() {
+        setTimeout(() => {
+            this.setState({showModal: true})
+          }, 500);
         AsyncStorage.getItem('class')
         .then((value) => {
             let url = "http://idirect.bloombraineducation.com/idirect/lms/live/class/schedule?class="+value+"&course="+this.state.courses[this.state.course];
@@ -33,6 +36,11 @@ class RealSchedule extends Component {
         .catch((error) => {
             console.log(error);
         })
+    }
+
+    attend = () => {
+        Actions.pop();
+        Actions.Payment();
     }
 
 
@@ -82,8 +90,8 @@ class RealSchedule extends Component {
             })
             .then((response) => response.json())
             .then((responseJson) => {
-                console.log(responseJson[this.state.courses[this.state.course]]);
-                this.setState({schedules: responseJson})
+                this.setState({schedules: responseJson[this.state.courses[this.state.course]]})
+                this.setState({showModal:false})
             })
             .catch((error) => {
                 // this.setState({login: false})
@@ -94,16 +102,15 @@ class RealSchedule extends Component {
     render() {
         return (
             <ScrollView 
-                style = {{paddingTop: 10, backgroundColor: '#101010', height: Platform.OS == 'ios' ? '84%' : '80%'}}
+                style = {{paddingTop: 20, backgroundColor: '#101010', height: Platform.OS == 'ios' ? '84%' : '80%'}}
                 showsHorizontalScrollIndicator = {false}
                 showsVerticalScrollIndicator = {false}
             >
-                <TouchableOpacity onPress = { () => {this.setState({showModal: true})}} style = {{marginRight: 10, marginTop: 15, alignSelf: 'flex-end', justifyContent: "center", alignItems: 'center'}}>
-                    <Text style = {{fontFamily: 'Poppins-Bold', color: '#4ACDF4', fontSize: 13,  width: 120, height: 20, textAlign: 'center'}}>Filter by Date</Text>
-                </TouchableOpacity>
                 <Modal 
                     onBackdropPress = {() => {this.setState({showModal: false})}}
                     isVisible = {this.state.showModal}
+                    animationIn = "pulse"
+
                 >
                     <View
                         style = {{
@@ -256,6 +263,17 @@ class RealSchedule extends Component {
                         </View>
                     </View>
                 </Modal>
+                <View style = {{marginTop: -20, marginBottom: 40 }}>
+                <TouchableOpacity 
+                    onPress = { () => {
+                        this.setState({showModal: true})
+                    }}
+                    style = {{
+                        alignSelf: "flex-end"
+                    }}
+                >
+                    <Text style = {{marginTop: 20,fontFamily: 'Poppins-Bold', color: '#4ACDF4', zIndex: 2, width: 60, fontSize: 13, marginRight: 20, textAlign: "right"}}>Filter by</Text>
+                </TouchableOpacity>
                 <View style = {{marginTop: -20}}>
                 {
                     
@@ -289,8 +307,9 @@ class RealSchedule extends Component {
                                                         flexDirection: 'row', 
                                                         // borderWidth: 2, 
                                                         // borderColor: 'white',
-                                                        width: 300,
+                                                        width: Dimensions.get("window").width - 40,
                                                         height: 100,
+                                                        marginRight: 10,
                                                         backgroundColor: '#1C1C1C',
                                                         marginBottom: 20,
                                                         borderRadius: 10
@@ -310,7 +329,7 @@ class RealSchedule extends Component {
                                                                 source = {require('../images/mathswork.png')}
                                                             >
                                                             </ImageBackground>
-                                                            <Text style = {{color: "#4ACDF4", fontFamily: "Poppins-Bold", fontSize: 11, position: 'absolute', top: 10, left: 110}}>Subject</Text>
+                                                            <Text style = {{color: "#4ACDF4", fontFamily: "Poppins-Bold", fontSize: 13, position: 'absolute', top: 10, left: 110}}>Subject</Text>
                                                             </View>
                                                             <View style = {{
                                                                 flex: 1,
@@ -320,14 +339,14 @@ class RealSchedule extends Component {
                         
                                                                 <Text style = {{
                                                                     color: 'white',
-                                                                    fontFamily: 'Poppins-SemiBold',
+                                                                    fontFamily: 'Poppins-Bold',
                                                                     paddingLeft: 15,
                                                                     paddingRight: 50,
                                                                     marginTop: 30,
                                                                     // borderColor: 'white',
                                                                     // borderWidth: 2,
                                                                     flexShrink: 1,
-                                                                    fontSize: 14,
+                                                                    fontSize: 15,
                                                                     height: 40
                                                                     // paddingTop:10
                                                                 }}>
@@ -339,7 +358,7 @@ class RealSchedule extends Component {
                                                                     fontFamily: 'Poppins-SemiBold',
                                                                     paddingLeft: 12,
                                                                     paddingRight: 12,
-                                                                    width: 110,
+                                                                    width: 125,
                                                                     // borderColor: 'white',
                                                                     // borderWidth: 2,
                                                                     flexShrink: 1,
@@ -369,7 +388,7 @@ class RealSchedule extends Component {
                                                                         onPress = {() => {
                                                                             let time = item.time;
                                                                             let url = item.demo_link;
-                                                                            this.onPressAttend(time, url, val);
+                                                                            this.attend();
                                                                         }}
                                                                         style = {{ 
                                                                             // borderWidth: 1, 
@@ -421,10 +440,11 @@ class RealSchedule extends Component {
                                                         flexDirection: 'row', 
                                                         // borderWidth: 2, 
                                                         // borderColor: 'white',
-                                                        width: 300,
+                                                        width: Dimensions.get("window").width - 40,
                                                         height: 100,
                                                         backgroundColor: '#1C1C1C',
                                                         marginBottom: 20,
+                                                        marginRight: 10,
                                                         borderRadius: 10
                                                     }}>
                                                         <View>
@@ -442,7 +462,7 @@ class RealSchedule extends Component {
                                                                 source = {require('../images/mathswork.png')}
                                                             >
                                                             </ImageBackground>
-                                                            <Text style = {{color: "#4ACDF4", fontFamily: "Poppins-Bold", fontSize: 11, position: 'absolute', top: 10, left: 110}}>Subject</Text>
+                                                            <Text style = {{color: "#4ACDF4", fontFamily: "Poppins-Bold", fontSize: 13, position: 'absolute', top: 10, left: 110}}>Subject</Text>
                                                             </View>
                                                             <View style = {{
                                                                 flex: 1,
@@ -452,14 +472,14 @@ class RealSchedule extends Component {
                         
                                                                 <Text style = {{
                                                                     color: 'white',
-                                                                    fontFamily: 'Poppins-SemiBold',
+                                                                    fontFamily: 'Poppins-Bold',
                                                                     paddingLeft: 15,
                                                                     paddingRight: 50,
                                                                     marginTop: 30,
                                                                     // borderColor: 'white',
                                                                     // borderWidth: 2,
                                                                     flexShrink: 1,
-                                                                    fontSize: 14,
+                                                                    fontSize: 15,
                                                                     height: 40
                                                                     // paddingTop:10
                                                                 }}>
@@ -471,7 +491,7 @@ class RealSchedule extends Component {
                                                                     fontFamily: 'Poppins-SemiBold',
                                                                     paddingLeft: 12,
                                                                     paddingRight: 12,
-                                                                    width: 110,
+                                                                    width: 125,
                                                                     // borderColor: 'white',
                                                                     // borderWidth: 2,
                                                                     flexShrink: 1,
@@ -499,9 +519,7 @@ class RealSchedule extends Component {
                                                                     <TouchableOpacity 
 
                                                                         onPress = {() => {
-                                                                            let time = item.time;
-                                                                            let url = item.demo_link;
-                                                                            this.onPressAttend(time, url, val);
+                                                                            this.attend();
                                                                         }}
                                                                         style = {{ 
                                                                             // borderWidth: 1, 
@@ -553,10 +571,11 @@ class RealSchedule extends Component {
                                                         flexDirection: 'row', 
                                                         // borderWidth: 2, 
                                                         // borderColor: 'white',
-                                                        width: 300,
+                                                        width: Dimensions.get("window").width - 40,
                                                         height: 100,
                                                         backgroundColor: '#1C1C1C',
                                                         marginBottom: 20,
+                                                        marginRight: 10,
                                                         borderRadius: 10
                                                     }}>
                                                         <View>
@@ -574,7 +593,7 @@ class RealSchedule extends Component {
                                                                 source = {require('../images/mathswork.png')}
                                                             >
                                                             </ImageBackground>
-                                                            <Text style = {{color: "#4ACDF4", fontFamily: "Poppins-Bold", fontSize: 11, position: 'absolute', top: 10, left: 110}}>Subject</Text>
+                                                            <Text style = {{color: "#4ACDF4", fontFamily: "Poppins-Bold", fontSize: 13, position: 'absolute', top: 10, left: 110}}>Subject</Text>
                                                             </View>
                                                             <View style = {{
                                                                 flex: 1,
@@ -584,14 +603,14 @@ class RealSchedule extends Component {
                         
                                                                 <Text style = {{
                                                                     color: 'white',
-                                                                    fontFamily: 'Poppins-SemiBold',
+                                                                    fontFamily: 'Poppins-Bold',
                                                                     paddingLeft: 15,
                                                                     paddingRight: 50,
                                                                     marginTop: 30,
                                                                     // borderColor: 'white',
                                                                     // borderWidth: 2,
                                                                     flexShrink: 1,
-                                                                    fontSize: 14,
+                                                                    fontSize: 15,
                                                                     height: 40
                                                                     // paddingTop:10
                                                                 }}>
@@ -603,7 +622,7 @@ class RealSchedule extends Component {
                                                                     fontFamily: 'Poppins-SemiBold',
                                                                     paddingLeft: 12,
                                                                     paddingRight: 12,
-                                                                    width: 110,
+                                                                    width: 125,
                                                                     // borderColor: 'white',
                                                                     // borderWidth: 2,
                                                                     flexShrink: 1,
@@ -633,7 +652,7 @@ class RealSchedule extends Component {
                                                                         onPress = {() => {
                                                                             let time = item.time;
                                                                             let url = item.demo_link;
-                                                                            this.onPressAttend(time, url, val);
+                                                                            this.attend();
                                                                         }}
                                                                         style = {{ 
                                                                             // borderWidth: 1, 
@@ -685,8 +704,9 @@ class RealSchedule extends Component {
                                                         flexDirection: 'row', 
                                                         // borderWidth: 2, 
                                                         // borderColor: 'white',
-                                                        width: 300,
+                                                        width: Dimensions.get("window").width - 40,
                                                         height: 100,
+                                                        marginRight: 10,
                                                         backgroundColor: '#1C1C1C',
                                                         marginBottom: 20,
                                                         borderRadius: 10
@@ -706,7 +726,7 @@ class RealSchedule extends Component {
                                                                 source = {require('../images/mathswork.png')}
                                                             >
                                                             </ImageBackground>
-                                                            <Text style = {{color: "#4ACDF4", fontFamily: "Poppins-Bold", fontSize: 11, position: 'absolute', top: 10, left: 110}}>Subject</Text>
+                                                            <Text style = {{color: "#4ACDF4", fontFamily: "Poppins-Bold", fontSize: 13, position: 'absolute', top: 10, left: 110}}>Subject</Text>
                                                             </View>
                                                             <View style = {{
                                                                 flex: 1,
@@ -716,14 +736,14 @@ class RealSchedule extends Component {
                         
                                                                 <Text style = {{
                                                                     color: 'white',
-                                                                    fontFamily: 'Poppins-SemiBold',
+                                                                    fontFamily: 'Poppins-Bold',
                                                                     paddingLeft: 15,
                                                                     paddingRight: 50,
                                                                     marginTop: 30,
                                                                     // borderColor: 'white',
                                                                     // borderWidth: 2,
                                                                     flexShrink: 1,
-                                                                    fontSize: 14,
+                                                                    fontSize: 15,
                                                                     height: 40
                                                                     // paddingTop:10
                                                                 }}>
@@ -735,7 +755,7 @@ class RealSchedule extends Component {
                                                                     fontFamily: 'Poppins-SemiBold',
                                                                     paddingLeft: 12,
                                                                     paddingRight: 12,
-                                                                    width: 110,
+                                                                    width: 125,
                                                                     // borderColor: 'white',
                                                                     // borderWidth: 2,
                                                                     flexShrink: 1,
@@ -765,7 +785,7 @@ class RealSchedule extends Component {
                                                                         onPress = {() => {
                                                                             let time = item.time;
                                                                             let url = item.demo_link;
-                                                                            this.onPressAttend(time, url, val);
+                                                                            this.attend();
                                                                         }}
                                                                         style = {{ 
                                                                             // borderWidth: 1, 
@@ -817,8 +837,9 @@ class RealSchedule extends Component {
                                                         flexDirection: 'row', 
                                                         // borderWidth: 2, 
                                                         // borderColor: 'white',
-                                                        width: 300,
+                                                        width: Dimensions.get("window").width - 40,
                                                         height: 100,
+                                                        marginRight: 10,
                                                         backgroundColor: '#1C1C1C',
                                                         marginBottom: 20,
                                                         borderRadius: 10
@@ -838,7 +859,7 @@ class RealSchedule extends Component {
                                                                 source = {require('../images/mathswork.png')}
                                                             >
                                                             </ImageBackground>
-                                                            <Text style = {{color: "#4ACDF4", fontFamily: "Poppins-Bold", fontSize: 11, position: 'absolute', top: 10, left: 110}}>Subject</Text>
+                                                            <Text style = {{color: "#4ACDF4", fontFamily: "Poppins-Bold", fontSize: 13, position: 'absolute', top: 10, left: 110}}>Subject</Text>
                                                             </View>
                                                             <View style = {{
                                                                 flex: 1,
@@ -848,14 +869,14 @@ class RealSchedule extends Component {
                         
                                                                 <Text style = {{
                                                                     color: 'white',
-                                                                    fontFamily: 'Poppins-SemiBold',
+                                                                    fontFamily: 'Poppins-Bold',
                                                                     paddingLeft: 15,
                                                                     paddingRight: 50,
                                                                     marginTop: 30,
                                                                     // borderColor: 'white',
                                                                     // borderWidth: 2,
                                                                     flexShrink: 1,
-                                                                    fontSize: 14,
+                                                                    fontSize: 15,
                                                                     height: 40
                                                                     // paddingTop:10
                                                                 }}>
@@ -867,7 +888,7 @@ class RealSchedule extends Component {
                                                                     fontFamily: 'Poppins-SemiBold',
                                                                     paddingLeft: 12,
                                                                     paddingRight: 12,
-                                                                    width: 110,
+                                                                    width: 125,
                                                                     // borderColor: 'white',
                                                                     // borderWidth: 2,
                                                                     flexShrink: 1,
@@ -897,7 +918,7 @@ class RealSchedule extends Component {
                                                                         onPress = {() => {
                                                                             let time = item.time;
                                                                             let url = item.demo_link;
-                                                                            this.onPressAttend(time, url, val);
+                                                                            this.attend();
                                                                         }}
                                                                         style = {{ 
                                                                             // borderWidth: 1, 
@@ -949,8 +970,9 @@ class RealSchedule extends Component {
                                                         flexDirection: 'row', 
                                                         // borderWidth: 2, 
                                                         // borderColor: 'white',
-                                                        width: 300,
+                                                        width: Dimensions.get("window").width - 40,
                                                         height: 100,
+                                                        marginRight: 10,
                                                         backgroundColor: '#1C1C1C',
                                                         marginBottom: 20,
                                                         borderRadius: 10
@@ -970,7 +992,7 @@ class RealSchedule extends Component {
                                                                 source = {require('../images/mathswork.png')}
                                                             >
                                                             </ImageBackground>
-                                                            <Text style = {{color: "#4ACDF4", fontFamily: "Poppins-Bold", fontSize: 11, position: 'absolute', top: 10, left: 110}}>Subject</Text>
+                                                            <Text style = {{color: "#4ACDF4", fontFamily: "Poppins-Bold", fontSize: 13, position: 'absolute', top: 10, left: 110}}>Subject</Text>
                                                             </View>
                                                             <View style = {{
                                                                 flex: 1,
@@ -980,14 +1002,14 @@ class RealSchedule extends Component {
                         
                                                                 <Text style = {{
                                                                     color: 'white',
-                                                                    fontFamily: 'Poppins-SemiBold',
+                                                                    fontFamily: 'Poppins-Bold',
                                                                     paddingLeft: 15,
                                                                     paddingRight: 50,
                                                                     marginTop: 30,
                                                                     // borderColor: 'white',
                                                                     // borderWidth: 2,
                                                                     flexShrink: 1,
-                                                                    fontSize: 14,
+                                                                    fontSize: 15,
                                                                     height: 40
                                                                     // paddingTop:10
                                                                 }}>
@@ -999,7 +1021,7 @@ class RealSchedule extends Component {
                                                                     fontFamily: 'Poppins-SemiBold',
                                                                     paddingLeft: 12,
                                                                     paddingRight: 12,
-                                                                    width: 110,
+                                                                    width: 125,
                                                                     // borderColor: 'white',
                                                                     // borderWidth: 2,
                                                                     flexShrink: 1,
@@ -1029,7 +1051,7 @@ class RealSchedule extends Component {
                                                                         onPress = {() => {
                                                                             let time = item.time;
                                                                             let url = item.demo_link;
-                                                                            this.onPressAttend(time, url, val);
+                                                                            this.attend();
                                                                         }}
                                                                         style = {{ 
                                                                             // borderWidth: 1, 
@@ -1081,9 +1103,9 @@ class RealSchedule extends Component {
                                                         flexDirection: 'row', 
                                                         // borderWidth: 2, 
                                                         // borderColor: 'white',
-                                                        width: 300,
+                                                        width: Dimensions.get("window").width - 40,
                                                         height: 100,
-                                                        marginRight: 20,
+                                                        marginRight: 10,
                                                         backgroundColor: '#1C1C1C',
                                                         marginBottom: 20,
                                                         borderRadius: 10
@@ -1103,7 +1125,7 @@ class RealSchedule extends Component {
                                                                 source = {require('../images/mathswork.png')}
                                                             >
                                                             </ImageBackground>
-                                                            <Text style = {{color: "#4ACDF4", fontFamily: "Poppins-Bold", fontSize: 11, position: 'absolute', top: 10, left: 110}}>Subject</Text>
+                                                            <Text style = {{color: "#4ACDF4", fontFamily: "Poppins-Bold", fontSize: 13, position: 'absolute', top: 10, left: 110}}>Subject</Text>
                                                             </View>
                                                             <View style = {{
                                                                 flex: 1,
@@ -1113,14 +1135,14 @@ class RealSchedule extends Component {
                         
                                                                 <Text style = {{
                                                                     color: 'white',
-                                                                    fontFamily: 'Poppins-SemiBold',
+                                                                    fontFamily: 'Poppins-Bold',
                                                                     paddingLeft: 15,
                                                                     paddingRight: 50,
                                                                     marginTop: 30,
                                                                     // borderColor: 'white',
                                                                     // borderWidth: 2,
                                                                     flexShrink: 1,
-                                                                    fontSize: 14,
+                                                                    fontSize: 15,
                                                                     height: 40
                                                                     // paddingTop:10
                                                                 }}>
@@ -1132,7 +1154,7 @@ class RealSchedule extends Component {
                                                                     fontFamily: 'Poppins-SemiBold',
                                                                     paddingLeft: 12,
                                                                     paddingRight: 12,
-                                                                    width: 110,
+                                                                    width: 125,
                                                                     // borderColor: 'white',
                                                                     // borderWidth: 2,
                                                                     flexShrink: 1,
@@ -1162,7 +1184,7 @@ class RealSchedule extends Component {
                                                                         onPress = {() => {
                                                                             let time = item.time;
                                                                             let url = item.demo_link;
-                                                                            this.onPressAttend(time, url, val);
+                                                                            this.attend();
                                                                         }}
                                                                         style = {{ 
                                                                             // borderWidth: 1, 
@@ -1201,7 +1223,8 @@ class RealSchedule extends Component {
                         )
                     })
                     : <View></View>
-                }     
+                }  
+                </View>   
                 </View>                   
             </ScrollView>
         ) 

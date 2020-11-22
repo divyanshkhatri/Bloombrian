@@ -53,6 +53,7 @@ class Recorded extends Component {
         AsyncStorage.getItem('id')
         .then((value) => {
             let url = "http://idirect.bloombraineducation.com/idirect/lms/live/class/recordings?start_date=" +this.state.dayBeforeYesterday+ "&end_date=" +this.state.today+ "&id="+value;
+            // let url = "http://idirect.bloombraineducation.com/idirect/lms/live/class/recordings?start_date=10-11-2020&end_date=20-11-2020&id="+value;
             console.log(url);
             fetch(url, {
                 method: 'POST',
@@ -325,7 +326,7 @@ class Recorded extends Component {
                     
                 </Modal>
                 <View style = {{flexDirection: 'row'}}>
-                <View>
+                <View style = {{marginTop: -15, marginBottom: 30}}>
                 {   
                     this.state.dateArray.map((val) => {
                         console.log(this.state.classes[val])
@@ -334,7 +335,7 @@ class Recorded extends Component {
                         // )
                         if(this.state.classes[val] !== undefined && this.state.classes[val].length != 0){
                             return (
-                                <View style = {{marginTop: 20}}>
+                                <View style = {{marginTop: 0}}>
                                     {
                                     val == this.state.today ? <Text style = {{fontSize: 14, marginLeft: 16, width: 250, marginTop: Platform.OS == 'android' ? 0: 0, color: '#4ACDF4', fontFamily: 'Poppins-Bold'}}>Upcoming</Text> :
                                     val == this.state.tomorrow ? <Text style = {{fontSize: 14, marginLeft: 16, width: 250, marginTop: 0, color: '#4ACDF4', fontFamily: 'Poppins-Bold'}}>Tomorrow</Text> :
@@ -343,7 +344,9 @@ class Recorded extends Component {
                                         horizontal = {true}
                                         showsHorizontalScrollIndicator = {false}
                                         showsVerticalScrollIndicator = {false}
-                                        ListFooterComponent={<View style={{width:30}}></View>}
+                                        contentContainerStyle = {{marginRight: 10}}
+                                        ListFooterComponent={<View style={{width:10}}></View>}
+                                        ListHeaderComponent={<View style={{width:20}}></View>}
                                         data = {this.state.classes[val]}
                                         keyExtractor = {(item) => item.id}
                                         renderItem = {({item}) => {
@@ -351,26 +354,25 @@ class Recorded extends Component {
                                             if(item.length != 0) {
                                                 return (
                                                     <TouchableOpacity 
-                                                        style = {{marginTop: 20}}
+                                                        style = {{marginTop: 10, marginBottom: 15}}
                                                         onPress = {() => Actions.RecordedVideos({details: item})}>
                                                         <View style = {{
                                                             flexDirection: 'row', 
                                                             // borderWidth: 2, 
                                                             // borderColor: 'white',
-                                                            height: 90,
-                                                            width: 330,
-                                                            marginLeft: 18, 
+                                                            height: 100,
+                                                            width: Dimensions.get("window").width - 40, 
                                                             backgroundColor: '#1C1C1C',
-                                                            marginBottom: 20,
-                                                            borderRadius: 10
+                                                            borderRadius: 10,
+                                                            marginRight: 10
                                                         }}>
                                                             <View>
                                                                 <ImageBackground
                                                                     style = {{
                                                                         // marginTop: 20,
                                                                         // marginRight: 20,
-                                                                        width: 90, 
-                                                                        height: 90, 
+                                                                        width: 100, 
+                                                                        height: 100, 
                                                                         borderRadius: 10,
                                                                         marginBottom: 0,
                                                                         overflow: 'hidden',
@@ -379,7 +381,7 @@ class Recorded extends Component {
                                                                     source = {require('../images/mathswork.png')}
                                                                 >
                                                                 </ImageBackground>
-                                                                <Text style = {{color: "#4ACDF4", fontFamily: "Poppins-Bold", fontSize: 10, position: 'absolute', top: 10, left: 105}}>{this.state.subjects[item.subject]}</Text>
+                                                                <Text style = {{color: "#4ACDF4", fontFamily: "Poppins-Bold", fontSize: 12, position: 'absolute', top: 10, left: 110}}>{this.state.subjects[item.subject]}</Text>
                                                                 </View>
                                                                 <View style = {{
                                                                     flex: 1,
@@ -402,7 +404,7 @@ class Recorded extends Component {
                                                                     }}>
                                                                         {item.description}
                                                                     </Text>
-                                                                <View style = {{marginTop: -10, flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
+                                                                <View style = {{marginTop: 0, flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
                                                                     <Text style = {{
                                                                         color: 'gray',
                                                                         fontFamily: 'Poppins-SemiBold',
@@ -450,7 +452,7 @@ class Recorded extends Component {
                             return(
                                 <View>
                                     <Text style = {{fontSize: 14, color: '#4ACDF4', marginLeft: 16, marginBottom: 10, fontFamily: 'Poppins-Bold'}}>{val.toString().split("-").reverse().join("-")}</Text>
-                                    <Text style = {{fontSize: 12, color: 'white', marginLeft: 16, marginBottom: 40, fontFamily: 'Poppins-SemiBold'}}>No Live Recordings Found {'\u2728'}</Text>
+                                    <Text style = {{fontSize: 12, color: 'white', marginLeft: 16, marginBottom: 20, fontFamily: 'Poppins-SemiBold'}}>No Live Recordings Found {'\u2728'}</Text>
                                 </View>
                             )
 

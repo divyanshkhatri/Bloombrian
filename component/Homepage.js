@@ -315,7 +315,8 @@ class Hompage extends Component {
                     borderRadius: 15, 
                     width: 300, 
                     borderBottomWidth: 60, 
-                    borderBottomColor: '#151515'
+                    borderBottomColor: '#151515',
+
                     }}>
                     <Image
                         source = {item.image} 
@@ -361,25 +362,27 @@ class Hompage extends Component {
         return (
             <Pagination
                 containerStyle = {{
-                    marginTop: -15,
+                    alignItems: 'center',
                     // borderColor: 'white',
                     // borderWidth: 3,
-                    paddingBottom: 4,
+                    marginVertical: 0,
+                    paddingVertical: 0
                 }}
                 dotsLength={carouselItems ? carouselItems.length : 0}
                 activeDotIndex={activeIndex}
                 //   containerStyle={{ backgroundColor: 'rgba(0, 0, 0, 0.75)' }}
                 dotStyle={{
-                    width: 7,
-                    height: 7,
-                    borderRadius: 3.5,
+                    width: 9,
+                    height: 9,
+                    borderRadius: 4.5,
                     //   marginTop: -20,
-                    marginHorizontal: -10,
+                    marginHorizontal: -20,
                     backgroundColor: '#32C6F3'
                 }}
                 inactiveDotStyle={{
                     width: 15,
                     height: 15,
+                    alignSelf: 'center',
                     borderRadius: 7.5,
                     // marginTop: -20,
                     marginHorizontal: -10,
@@ -1273,7 +1276,7 @@ class Hompage extends Component {
                     <View 
                         style = {{
                         // flex: 1,
-                            marginTop: 20, 
+                            marginTop: 10, 
                             marginLeft: 16, 
                             flexDirection: 'row',
                             // width: 200, 
@@ -1325,7 +1328,7 @@ class Hompage extends Component {
                             colors={['#1285D1', '#32C1ED', '#6EDEFF']}
                             start={[0, 1]} end={[1, 0]}
                             style = {{
-                                marginTop: Platform.OS == "android" ? 10 : 10,
+                                marginTop: Platform.OS == "android" ? 0 : 0,
                                 alignSelf: 'center',
                                 alignItems: 'center',
                                 flexDirection: 'row',
@@ -1395,7 +1398,7 @@ class Hompage extends Component {
                     // Button Linear Gradient
                             source = {require("../images/live1.png")}
                             style = {{
-                                marginTop: Platform.OS == "android" ? 10 : 10,
+                                marginTop: Platform.OS == "android" ? 10 : 0,
                                 alignSelf: 'center',
                                 alignItems: 'center',
                                 flexDirection: 'row',
@@ -1461,7 +1464,7 @@ class Hompage extends Component {
                 }
                 <Text
                     style = {{
-                        marginTop: Platform.OS == "android" ? 20 : 25, 
+                        marginTop: Platform.OS == "android" ? 20 : 15, 
                         marginLeft: 16,
                         fontFamily : "Poppins-Bold",
                         fontSize: 18,
@@ -1470,8 +1473,10 @@ class Hompage extends Component {
                         Top picks for you</Text>
                 <View style = {{
                     marginTop: 20,
-                    height: 235,
+                    height: 270,
                     alignItems: 'center',
+                    // borderWidth: 2,
+                    // borderColor: "white"
                     }}>
                     <Carousel
                         layout={"default"}
@@ -1483,11 +1488,12 @@ class Hompage extends Component {
                                     Actions.push('VideoPlayer',{titlePage: item, videos: this.state.carouselItems} );
                                 }}>
                                 <View style = {{
-                                    height: 200, 
+                                    height: 230, 
                                     borderRadius: 15, 
                                     width: 300, 
-                                    borderBottomWidth: 60, 
-                                    borderBottomColor: '#151515'
+                                    borderBottomWidth: 70, 
+                                    borderBottomColor: '#151515',
+                                    // borderColor: 'white',
                                     }}>
                                     <Image
                                         // source = {(/^(?:\w+:)?\/\/([^\s\.]+\.\S{2}|localhost[\:?\d]*)\S*$/.test(item["thumbnail_url"] )== false) ? require("../images/picks1.png") : {uri: item["thumbnail_url"]}}
@@ -1497,7 +1503,7 @@ class Hompage extends Component {
                                             borderBottomRightRadius: 0,
                                             borderBottomLeftRadius: 0,
                                             width: 300,
-                                            height: 140,
+                                            height: 165,
                                             resizeMode: "stretch",
                                             // opacity: 0.9,
                                             // borderBottomWidth: 20,
@@ -1535,12 +1541,12 @@ class Hompage extends Component {
                         itemWidth={300}
                         enableMomentum={false}
                         lockScrollWhileSnapping
-                        // autoplay
+                        autoplay
                         useScrollView
                         loop
                         showsHorizontalScrollIndicator = {false}
                         showsVerticalScrollIndicator = {false}
-                        autoplayInterval={3000}
+                        autoplayInterval={2500}
                         onSnapToItem = { index => this.setState({activeIndex:index}) } />
                     
                     {this.pagination}
