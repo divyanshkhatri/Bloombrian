@@ -55,17 +55,16 @@ class DemoVideos1 extends Component {
                     'Content-Type': 'multipart/form-data',
                 },
                 })
-                .then((response) => {
-                    if(response["status"] == 200){
-                    console.log(response);
-                    this.setState({classes: response.json()})
+                .then((response) => response.json())
+                .then((responseJson) => {
+                    console.log(responseJson);
+                    this.setState({classes: responseJson})
                     today = today.split("-").reverse().join("-");
                     dayAfterTomorrow = dayAfterTomorrow.split("-").reverse().join("-");
                     this.setState({today: today});
                     this.setState({dayAfterTomorrow: dayAfterTomorrow});
-                    } else if(response["status"] == 500) {
-                        this.setState({error: 500});
-                    }
+                    // this.setState({urlVideos: responseJson["1"]});
+                    // console.log(this.state.urlVideos)
                 })
                 .catch((error) => {
                     this.setState({login: false})
@@ -137,17 +136,16 @@ class DemoVideos1 extends Component {
                     'Content-Type': 'multipart/form-data',
                 },
                 })
-                .then((response) => {
-                    if(response["status"] == 200){
-                    console.log(response);
-                    this.setState({classes: response.json()})
+                .then((response) => response.json())
+                .then((responseJson) => {
+                    console.log(responseJson);
+                    this.setState({classes: responseJson})
                     today = today.split("-").reverse().join("-");
                     dayAfterTomorrow = dayAfterTomorrow.split("-").reverse().join("-");
                     this.setState({today: today});
                     this.setState({dayAfterTomorrow: dayAfterTomorrow});
-                    } else if(response["status"] == 500) {
-                        this.setState({error: 500});
-                    }
+                    // this.setState({urlVideos: responseJson["1"]});
+                    // console.log(this.state.urlVideos)
                 })
                 .catch((error) => {
                     this.setState({login: false})

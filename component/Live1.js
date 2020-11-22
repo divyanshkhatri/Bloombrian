@@ -1,15 +1,14 @@
 import React, {Component} from 'react';
 import {SafeAreaView, View, Image, Text, Dimensions, AsyncStorage, Platform, BackHandler,TouchableOpacity} from 'react-native';
-import DemoLectures from './DemoLectures';
+import DemoLectures1 from './DemoLectures1';
 import LinearGradient from 'react-native-linear-gradient';
-import Recorded from './Recored';
 import Modal from 'react-native-modal';
 import {Actions} from 'react-native-router-flux';
 import DemoVideos1 from './DemoVideos1';
 import RealSchedule1 from './RealSchedule1';
 import Recorded1 from './Recored1';
 
-class Live extends Component {
+class Live1 extends Component {
 
     state = {
         ds: true,
@@ -131,38 +130,6 @@ class Live extends Component {
                     }}
                     />
                 </View>
-                <TouchableOpacity 
-                    style = {{
-                        width: 140,
-                        alignItems: 'center',
-                        justifyContent: 'center'
-                    }}
-                    onPress = {() => {
-                        this.state.category === "Academics" ? this.setState({academics: true}) :
-                        this.state.category === "Invention" ? this.setState({invention: true}) : 
-                        this.setState({communication: true})
-                    }}>
-                    <Text style = {{
-                        paddingTop: Platform.OS == 'ios' ? 5 : 3,
-                        justifyContent: 'center',
-                        alignContent: 'center',
-                        textAlign: 'center', 
-                        alignSelf: 'center',
-                        fontFamily: "Poppins-SemiBold", 
-                        color: "white",
-                        fontSize: 14, 
-                        // marginTop: 15, 
-                        borderRadius: 15,
-                        width: 140,
-                        height: 30,
-                        overflow: 'hidden',
-                        // borderColor: 'white', 
-                        // borderWidth: 2, 
-                        backgroundColor: "#232323"
-                    }}>Change Subject</Text>
-                </TouchableOpacity>
-
-                
                 <Modal 
                     isVisible = {this.state.invention}
                     animationIn = "pulse"
@@ -1018,4 +985,4 @@ class Live extends Component {
 
 }
 
-export default Live;
+export default Live1;

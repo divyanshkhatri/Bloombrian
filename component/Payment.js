@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, Text, SafeAreaView, Dimensions, Image, TouchableOpacity, Platform, BackHandler} from 'react-native';
+import {View, Text, SafeAreaView, Dimensions, Image, TouchableOpacity, Platform, BackHandler, Linking} from 'react-native';
 import Carousel, {Pagination} from 'react-native-snap-carousel';
 import LinearGradient from 'react-native-linear-gradient';
 import RNPickerSelect from 'react-native-picker-select';
@@ -171,7 +171,8 @@ class Payment extends Component {
                     backgroundColor: 'black',
                     paddingTop: Platform.OS === 'android' ? 0 : 0
                 }}
-            >
+            >   
+
                 <View 
                     style = {{
                         flexDirection: 'row',
@@ -203,10 +204,13 @@ class Payment extends Component {
                             textAlign: 'center',
                             width: '78%'
                         }}
-                    >Membership Plans</Text>
+                    >
+                        Membership Plans
+                    </Text>
+                    
                 </View>
                 <View style = {{
-                    marginTop: Platform.OS == "android" ? -12 : -12,
+                    marginTop: Platform.OS == "android" ? -12 : 0,
                     alignItems: 'center',
                     }}>
                     <Carousel
@@ -218,7 +222,7 @@ class Payment extends Component {
                             ({item}) => (
                                 <View style = {{
                                     marginTop: 55,
-                                    height: 560, 
+                                    height: 540, 
                                     borderRadius: 15, 
                                     overflow: 'hidden',
                                     width: 290, 
@@ -538,7 +542,6 @@ class Payment extends Component {
                         />
                 }
                 </View>
-
             </SafeAreaView>
         )
     }

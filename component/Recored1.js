@@ -213,7 +213,7 @@ class Recorded1 extends Component {
                             borderRadius: 20,
                             padding: 25,
                             width: 250,
-                            height: 250,
+                            height: 230,
                             alignSelf: 'center',
                             shadowColor: '#000',
                             shadowOffset: {
@@ -427,7 +427,7 @@ class Recorded1 extends Component {
                                             } else if(item.length == 0) {
                                                 return (
                                                     <View style = {{flexDirection: "row"}}>
-                                                        <Text style = {{fontSize: 12, color: 'white', marginLeft: 16, marginBottom: 40, fontFamily: 'Poppins-SemiBold'}}>No Live Recordings Found</Text>
+                                                        <Text style = {{fontSize: 12, color: 'white', marginLeft: 16, marginBottom: 40, fontFamily: 'Poppins-SemiBold'}}>No Live Recordings Found {'\u2728'}</Text>
                                                         <Image style = {{width: 20, height: 20}} source = {require("../images/sad.png")}/>
                                                     </View>
                                                 )
@@ -445,7 +445,7 @@ class Recorded1 extends Component {
                                 <View>
                                     <Text style = {{fontSize: 14, color: '#4ACDF4', marginLeft: 16, marginBottom: 0, fontFamily: 'Poppins-Bold'}}>{val.toString().split("-").reverse().join("-")}</Text>
                                     <View style = {{flexDirection: 'row', paddingTop: 10}}>
-                                        <Text style = {{fontSize: 12, color: 'white', marginLeft: 16, marginBottom: 40, fontFamily: 'Poppins-SemiBold'}}>No Live Recordings Found </Text>
+                                        <Text style = {{fontSize: 12, color: 'white', marginLeft: 16, marginBottom: 40, fontFamily: 'Poppins-SemiBold'}}>No Live Recordings Found {'\u2728'}</Text>
                                     </View>
                                 </View>
                             )

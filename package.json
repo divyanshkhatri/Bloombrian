@@ -20,6 +20,7 @@
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-native": "~0.63.3",
+    "react-native-action-button": "^2.8.5",
     "react-native-af-video-player": "^0.2.1",
     "react-native-animated-splash-screen": "^2.0.5",
     "react-native-dash": "^0.0.11",

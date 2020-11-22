@@ -216,7 +216,7 @@ class Recorded extends Component {
                             borderRadius: 20,
                             padding: 25,
                             width: 250,
-                            height: 250,
+                            height: 230,
                             alignSelf: 'center',
                             shadowColor: '#000',
                             shadowOffset: {

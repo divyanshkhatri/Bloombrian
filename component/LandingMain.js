@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Text, View, SafeAreaView, Image, Button, Dimensions, ImageBackground, AsyncStorage, BackHandler, Alert, TouchableOpacity } from 'react-native';
+import {Text, View, SafeAreaView, Image, Button, Dimensions, ImageBackground, AsyncStorage, BackHandler, Alert, TouchableOpacity, Linking } from 'react-native';
 // import { TouchableOpacity } from 'react-native-gesture-handler';
 import {Actions} from 'react-native-router-flux';
 
@@ -140,11 +140,14 @@ export default class LandingMain extends Component {
                              color: 'white',
                         }}>Register</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style = {{
-                        alignSelf: 'center',
-                        marginTop: 45,
-                        justifyContent: 'center'
-                    }}>
+                    <TouchableOpacity 
+                        style = {{
+                            alignSelf: 'center',
+                            marginTop: 45,
+                            justifyContent: 'center'
+                        }}
+                        onPress = {() => {Linking.openURL("https://www.bloombraineducation.com/privacy-policy")}}
+                    >
                         <Text style = {{
                             textAlign: 'center',
                             fontFamily: 'Poppins-SemiBold',
