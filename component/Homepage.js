@@ -1491,7 +1491,7 @@ class Hompage extends Component {
                                     height: 230, 
                                     borderRadius: 15, 
                                     width: 300, 
-                                    borderBottomWidth: 70, 
+                                    borderBottomWidth: 60, 
                                     borderBottomColor: '#151515',
                                     // borderColor: 'white',
                                     }}>
@@ -1503,7 +1503,7 @@ class Hompage extends Component {
                                             borderBottomRightRadius: 0,
                                             borderBottomLeftRadius: 0,
                                             width: 300,
-                                            height: 165,
+                                            height: 170,
                                             resizeMode: "stretch",
                                             // opacity: 0.9,
                                             // borderBottomWidth: 20,
