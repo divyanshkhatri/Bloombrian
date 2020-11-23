@@ -115,7 +115,7 @@ class RealSchedule1 extends Component {
     render() {
         return (
             <ScrollView 
-                style = {{paddingTop: 20, backgroundColor: '#101010', height: Platform.OS == 'ios' ? '100%' : '100%'}}
+                style = {{paddingTop: 20, backgroundColor: '#0F0F0F', height: Platform.OS == 'ios' ? '100%' : '100%'}}
                 showsHorizontalScrollIndicator = {false}
                 showsVerticalScrollIndicator = {false}
             >
@@ -280,10 +280,26 @@ class RealSchedule1 extends Component {
                                 <List.Accordion
                                     title = {title}
                                     style = {{
-                                        backgroundColor: "#151515",
-                                        // borderRadius: 10,
+                                        backgroundColor: "#161616",
+                                        borderRadius: 7,
                                         marginBottom: 10
                                     }}
+                                    left = {props => 
+                                        <Text
+                                            style = {{
+                                                position: 'absolute',
+                                                left: 250,
+                                                fontFamily: "Poppins-Bold",
+                                                color: "white",
+                                                fontSize: 10,
+                                                width: 200,
+                                                zIndex: 10,
+                                                backgroundColor: "#161616"
+                                            }}    
+                                        >
+                                            Click to View Details
+                                        </Text>
+                                    }
                                     titleStyle = {{
                                         fontFamily: 'Poppins-Bold',
                                         fontWeight: '800',
@@ -295,7 +311,9 @@ class RealSchedule1 extends Component {
                                     }}
                                     
                                 >                               
-                                <View>
+                                <View style = {{
+                                    marginLeft: -60,
+                                }}>
                                 {
                                     this.state.schedules[index][0]["Monday"] !== undefined ? 
                                         <View>
