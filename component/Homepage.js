@@ -14,7 +14,8 @@ import
         ActivityIndicator, 
         AsyncStorage, 
         Platform,
-        ImageBackground
+        ImageBackground,
+        TouchableOpacity
     } from 'react-native';
 
 import Carousel, {Pagination} from 'react-native-snap-carousel';
@@ -1322,7 +1323,8 @@ class Hompage extends Component {
                     </View>
                 </TouchableWithoutFeedback>
                 {Platform.isPad ? 
-                    <TouchableWithoutFeedback onPress = {() => {Actions.push('Live1')}}>
+                    <TouchableOpacity
+                        onPress = {() => {Actions.push('Live1')}}>
                         <LinearGradient
                     // Button Linear Gradient
                             colors={['#1285D1', '#32C1ED', '#6EDEFF']}
@@ -1333,8 +1335,8 @@ class Hompage extends Component {
                                 alignItems: 'center',
                                 flexDirection: 'row',
                                 width: this.windowWidth-32,
-                                // borderColor: 'white',
-                                // borderWidth: 1,
+                                borderColor: 'white',
+                                borderWidth: 1,
                                 height: Platform.OS == "android" ? 70 : 80,
                                 paddingLeft: 20,
                                 borderRadius: 16,
@@ -1390,10 +1392,10 @@ class Hompage extends Component {
                         />
                         </View>
                         </LinearGradient>
-                    </TouchableWithoutFeedback>
+                    </TouchableOpacity>
                 : 
                         
-                    <TouchableWithoutFeedback style = {{borderRadius: 16}} onPress = {() => {Actions.push('Live1')}}>
+                    <TouchableOpacity style = {{borderRadius: 16}} onPress = {() => {Actions.push('Live1')}}>
                         <ImageBackground
                     // Button Linear Gradient
                             source = {require("../images/live1.png")}
@@ -1404,7 +1406,7 @@ class Hompage extends Component {
                                 flexDirection: 'row',
                                 width: Dimensions.get("window").width - 32,
                                 // borderColor: 'white',
-                                // borderWidth: 1,
+                                // borderWidth: 3,
                                 height: Platform.OS == "android" ? 70 : 80,
                                 paddingLeft: 20,
                                 borderRadius: 16,
@@ -1460,7 +1462,7 @@ class Hompage extends Component {
                         />
                         </View>
                         </ImageBackground>
-                    </TouchableWithoutFeedback>
+                    </TouchableOpacity>
                 }
                 <Text
                     style = {{

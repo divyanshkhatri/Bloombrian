@@ -444,7 +444,15 @@ class DemoVideos1 extends Component {
                                                                 }}>
                                                                     {this.state.subjects[item.subject]}
                                                                 </Text>
-                                                            <View style = {{marginTop: -10, flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
+                                                                <View  
+                                                                style = {{
+                                                                    marginTop: -10, 
+                                                                    flex: 1, 
+                                                                    flexDirection: 'row', 
+                                                                    justifyContent: 'space-between',
+                                                                    // borderWidth: 1, 
+                                                                    // borderColor: "white"
+                                                                }}>
                                                                 <Text style = {{
                                                                     color: 'gray',
                                                                     fontFamily: 'Poppins-SemiBold',
@@ -455,7 +463,8 @@ class DemoVideos1 extends Component {
                                                                     // borderWidth: 2,
                                                                     flexShrink: 1,
                                                                     fontSize: 10,
-                                                                    marginTop: 10
+                                                                    alignSelf: "center"
+                                                                    // marginTop: 10
                                                                     // paddingTop: 29
                                                                 }}>
                                                                     {item.teacher_name}
@@ -469,39 +478,56 @@ class DemoVideos1 extends Component {
                                                                     width: 80,
                                                                     flexShrink: 1,
                                                                     fontSize: 10,
-                                                                    marginTop: 10
+                                                                    alignSelf: "center"
+                                                                    // marginTop: 10
                                                                     // paddingTop: 29
                                                                 }}>
                                                                     {item.time} pm
                                                                 </Text>
-                                                                <TouchableOpacity 
+                                                                {
+                                                                    item.lock == false ? 
+                                                                    <TouchableOpacity 
 
-                                                                    onPress = {() => {
-                                                                        let time = item.time;
-                                                                        let url = item.demo_link;
-                                                                        this.onPressAttend(time, url, val);
-                                                                    }}
-                                                                    style = {{ 
-                                                                        // borderWidth: 1, 
-                                                                        // borderColor: 'white', 
-                                                                        width: 70, 
-                                                                        height: 25, 
-                                                                        marginRight: 15,
-                                                                        marginTop: 5,
-                                                                        justifyContent: 'center', 
-                                                                        borderRadius: 5,
-                                                                        backgroundColor: '#4ACDF4'
-                                                                    }}
-                                                                >
-                                                                    <Text style = {{
-                                                                        textAlign: 'center', 
-                                                                        alignItems: 'center',
-                                                                        alignSelf: 'center', 
-                                                                        fontSize: 12, 
-                                                                        fontFamily: 'Poppins-Bold', 
-                                                                        color: "white"
-                                                                    }}>Attend</Text>
-                                                                </TouchableOpacity>
+                                                                        onPress = {() => {
+                                                                            let time = item.time;
+                                                                            let url = item.demo_link;
+                                                                            this.onPressAttend(time, url, val);
+                                                                        }}
+                                                                        style = {{ 
+                                                                            // borderWidth: 1, 
+                                                                            // borderColor: 'white', 
+                                                                            width: 70, 
+                                                                            height: 25, 
+                                                                            marginRight: 15,
+                                                                            // marginTop: 5,
+                                                                            alignSelf: "center",
+                                                                            justifyContent: 'center', 
+                                                                            borderRadius: 5,
+                                                                            backgroundColor: '#4ACDF4'
+                                                                        }}
+                                                                    >
+                                                                        <Text style = {{
+                                                                            textAlign: 'center', 
+                                                                            alignItems: 'center',
+                                                                            alignSelf: 'center', 
+                                                                            fontSize: 12, 
+                                                                            fontFamily: 'Poppins-Bold', 
+                                                                            color: "white"
+                                                                        }}>Attend</Text>
+                                                                    </TouchableOpacity>
+                                                                    : 
+                                                                    <Image 
+                                                                        style = {{
+                                                                            width: 15, 
+                                                                            height: 15,
+                                                                            marginRight: 15,
+                                                                            // marginTop: 5,
+                                                                            alignSelf: "center",
+                                                                            justifyContent: 'center', 
+                                                                        }}
+                                                                        source = {require("../images/lock.png")} 
+                                                                    />
+                                                                }
                                                             </View>
                                                         </View>
                                                     </View>

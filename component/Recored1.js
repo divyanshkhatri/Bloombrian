@@ -194,9 +194,6 @@ class Recorded1 extends Component {
                 showsVerticalScrollIndicator = {false}
                 style = {{paddingTop: 10, backgroundColor: '#101010', height: Platform.OS == 'ios' ? '100%' : '100%'}}
                 >
-                <TouchableOpacity onPress = { () => {this.setState({showModal: true})}} style = {{marginRight: 10, marginTop: 15, alignSelf: 'flex-end', justifyContent: "center", alignItems: 'center'}}>
-                    <Text style = {{fontFamily: 'Poppins-Bold', color: '#4ACDF4', fontSize: 13,  width: 120, height: 20, textAlign: 'center'}}>Filter by Date</Text>
-                </TouchableOpacity>
                 <Modal 
                     onBackdropPress = {() => {this.setState({showModal: false})}}
                     isVisible = {this.state.showModal}
@@ -322,8 +319,27 @@ class Recorded1 extends Component {
                     </View>
                     
                 </Modal>
-                <View style = {{marginBottom: 60}}>
-                {   
+                <View 
+                    style = {{
+                        marginBottom: 60,
+                        // borderWidth: 2, 
+                        // borderColor: "white"
+                    }}>
+                <TouchableOpacity 
+                    onPress = { () => {this.setState({showModal: true})}} 
+                    style = {{
+                        marginRight: 10, 
+                        marginTop: 15, 
+                        alignSelf: 'flex-end', 
+                        justifyContent: "center", 
+                        alignItems: 'center',
+                        // borderColor: "white",
+                        // borderWidth: 2
+                    }}
+                >
+                    <Text style = {{fontFamily: 'Poppins-Bold', color: '#4ACDF4', fontSize: 13,  width: 120, height: 20, textAlign: 'center'}}>Filter by Date</Text>
+                </TouchableOpacity>
+                {    
                     this.state.dateArray.map((val) => {
                         console.log(this.state.classes[val])
                         // return (
@@ -442,7 +458,11 @@ class Recorded1 extends Component {
                         } else if(this.state.classes[val] !== undefined && this.state.classes[val].length === 0){
 
                             return(
-                                <View>
+                                <View 
+                                    style = {{
+                                        marginTop: 0, 
+                                    }}
+                                >
                                     <Text style = {{fontSize: 14, color: '#4ACDF4', marginLeft: 16, marginBottom: 0, fontFamily: 'Poppins-Bold'}}>{val.toString().split("-").reverse().join("-")}</Text>
                                     <View style = {{flexDirection: 'row', paddingTop: 10}}>
                                         <Text style = {{fontSize: 12, color: 'white', marginLeft: 16, marginBottom: 40, fontFamily: 'Poppins-SemiBold'}}>No Live Recordings Found {'\u2728'}</Text>
@@ -454,7 +474,7 @@ class Recorded1 extends Component {
                     })
                 }
                 </View>
-                {/* <View style = {{marginBottom: 100}}></View> */}
+                <View style = {{height:30}}></View>
                                
             </ScrollView>
         ) 

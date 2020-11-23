@@ -263,18 +263,51 @@ class RealSchedule extends Component {
                         </View>
                     </View>
                 </Modal>
-                <View style = {{marginTop: -20, marginBottom: 40 }}>
-                <TouchableOpacity 
-                    onPress = { () => {
-                        this.setState({showModal: true})
-                    }}
-                    style = {{
-                        alignSelf: "flex-end"
-                    }}
-                >
-                    <Text style = {{marginTop: 20,fontFamily: 'Poppins-Bold', color: '#4ACDF4', zIndex: 2, width: 60, fontSize: 13, marginRight: 20, textAlign: "right"}}>Filter by</Text>
-                </TouchableOpacity>
+                <View style = {{marginTop: 20, marginBottom: 40 }}>
                 <View style = {{marginTop: -20}}>
+                    <View style = {{flexDirection: "row", justifyContent: "space-between"}}>
+                        <View style = {{flexDirection: "row"}}>
+                            <Text 
+                                style = {{
+                                    marginLeft: 18,
+                                    fontFamily: "Poppins-ExtraBold",
+                                    fontSize: 20,
+                                    color: "#4ACDFF"
+                                }}
+                            >
+                                Course: 
+                            </Text>
+                            <Text 
+                                style = {{
+                                    
+                                    fontFamily: "Poppins-ExtraBold",
+                                    fontSize: 20,
+                                    color: "white"
+                                }}
+                            >  {this.state.course}
+                            </Text>
+                        </View>
+                        <TouchableOpacity 
+                            onPress = { () => {
+                                this.setState({showModal: true})
+                            }}
+                            style = {{
+                                alignSelf: "flex-end"
+                            }}
+                        >
+                            <Text 
+                                style = {{
+                                    fontFamily: 'Poppins-Bold', 
+                                    color: '#4ACDF4', 
+                                    zIndex: 2,
+                                    width: 60, 
+                                    fontSize: 13, 
+                                    marginRight: 20, 
+                                    textAlign: "right"
+                                }}>Filter by</Text>
+                        </TouchableOpacity>
+                    </View>
+                    
                 {
                     
                     this.state.schedules ? this.state.schedules.map((value, index) => {
@@ -286,6 +319,7 @@ class RealSchedule extends Component {
                                     fontSize: 20,
                                     marginLeft: 20,
                                     marginBottom: 10,
+                                    marginTop: 10,
                                     color: "#4ACDF4"
                                 }}>Batch {index+1}</Text>
                                 
@@ -1225,7 +1259,13 @@ class RealSchedule extends Component {
                     : <View></View>
                 }  
                 </View>   
-                </View>                   
+                </View>   
+                <View 
+                    style = {{
+                        height: 70
+                    }}
+                >
+                </View>                  
             </ScrollView>
         ) 
     }
