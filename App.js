@@ -19,6 +19,7 @@ import LandingMain from './component/LandingMain';
 import VideoPlayer from './component/VideoPlayer';
 import RecordedVideos from './component/RecordedVideos';
 import OneSignal from 'react-native-onesignal';
+import TestScreen from './component/TestScreen';
 
 export default class App extends Component {
 
@@ -36,7 +37,6 @@ export default class App extends Component {
       // <View>
         <Router>
           <Scene key = "root">
-
             <Scene type = "reset" key = "Landing" component = {Landing} title = "Landing" hideNavBar duration = {0} swipeEnabled={false} animationEnabled={false} panHandlers={null} />
             <Scene type = "reset" key = "Live1" component = {Live1} title = "Live1" hideNavBar duration = {0} swipeEnabled={false} animationEnabled={false} panHandlers={null}/>
             <Scene type = "reset" key = "LandingMain" component = {LandingMain} title = "LandingMain" hideNavBar duration = {0} swipeEnabled={false} animationEnabled={false} panHandlers={null} />

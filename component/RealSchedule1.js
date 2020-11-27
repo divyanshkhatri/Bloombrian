@@ -285,20 +285,37 @@ class RealSchedule1 extends Component {
                                         marginBottom: 10
                                     }}
                                     left = {props => 
-                                        <Text
-                                            style = {{
-                                                position: 'absolute',
-                                                left: 250,
-                                                fontFamily: "Poppins-Bold",
-                                                color: "white",
-                                                fontSize: 10,
-                                                width: 200,
-                                                zIndex: 10,
-                                                backgroundColor: "#161616"
-                                            }}    
-                                        >
-                                            Click to View Details
-                                        </Text>
+                                        <View style = {{
+                                            position: 'absolute',
+                                            zIndex: 10,
+                                            left: 220,
+                                            flexDirection: 'row',
+                                            alignItems: "center",
+                                            alignContent: "center",
+                                            alignSelf: 'center',
+                                            width: 250,
+                                        }}>
+                                            <Text
+                                                style = {{
+                                                    fontFamily: "Poppins-Bold",
+                                                    color: "white",
+                                                    fontSize: 10,
+                                                    backgroundColor: "#161616",
+                                                    // textAlignVertical: "center"
+                                                }}    
+                                            >
+                                                Click to View Schedule
+                                            </Text>
+                                            <Image 
+                                                style = {{
+                                                    marginLeft: 10,
+                                                    width: 15, 
+                                                    height: 15,
+                                                    tintColor: "white"
+                                                }}
+                                                source = {require("../images/icon.png")}
+                                            />
+                                        </View>
                                     }
                                     titleStyle = {{
                                         fontFamily: 'Poppins-Bold',

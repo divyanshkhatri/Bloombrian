@@ -29,6 +29,9 @@ class Live extends Component {
         category: "",
         id: "",
         plan: false,
+        academics: false, 
+        communication: false,
+        invention: false,
     }
 
     backAction = () => {
@@ -64,6 +67,12 @@ class Live extends Component {
             });
         })
         .catch((e) => console.log(e));
+        AsyncStorage.getItem('subject')
+        .then((val) => this.setState({subject: val}))
+        .catch((e) => console.log(e))
+        AsyncStorage.getItem('category')
+        .then((val) => this.setState({category: val}))
+        .catch((e) => console.log(e))
 
     }
 
