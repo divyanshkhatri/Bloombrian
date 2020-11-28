@@ -58,13 +58,9 @@ class TestScreen extends Component {
             
 		} else {
             setTimeout(() => {
-                this.setState({showScore: true});
+                Actions.Results({marks: this.state.score, total: this.state.questions.length});
                 this.setState({borderColorShow: false});
             }, 1500);
-            setTimeout(() => {
-                Actions.BottomNavigator();
-            }, 2500);
-            
 		}
     };
 
@@ -313,7 +309,7 @@ class TestScreen extends Component {
                                     <TouchableOpacity 
                                         style = {{
                                             borderColor: this.state.borderColorShow && answerOption.isCorrect ? "#1DD348": this.state.borderColorShow && !answerOption.isCorrect && index == this.state.clickedOption ? "#FF5226" : "#1A1A1A",
-                                            borderWidth: 2,
+                                            borderWidth: 4,
                                             width: Dimensions.get("window").width - 40,
                                             minHeight: 60,
                                             maxHeight: 150,
