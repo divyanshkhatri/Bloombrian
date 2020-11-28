@@ -1109,7 +1109,7 @@ export default class Subject extends Component {
                 <Text
                     style = {{
                         color: '#32C6F3',
-                        fontFamily: 'Poppins-SemiBold',
+                        fontFamily: 'Poppins-Bold',
                         fontSize: 18,
                         marginLeft: 16,
                         marginBottom: 22,
