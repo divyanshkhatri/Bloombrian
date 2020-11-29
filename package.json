@@ -16,6 +16,7 @@
     "deprecated-react-native-listview": "0.0.6",
     "expo-av": "^8.6.0",
     "expo-screen-orientation": "^2.0.0",
+    "ios-deploy": "^1.11.3",
     "moment": "^2.29.1",
     "react": "16.13.1",
     "react-dom": "16.13.1",

@@ -58,7 +58,7 @@ class TestScreen extends Component {
             
 		} else {
             setTimeout(() => {
-                Actions.Results({marks: this.state.score, total: this.state.questions.length});
+                Actions.Results({marks: this.state.score, total: this.state.questions.length, questions: this.state.questions});
                 this.setState({borderColorShow: false});
             }, 1500);
 		}
@@ -213,7 +213,7 @@ class TestScreen extends Component {
                         <CountDown
                             until={600}
                             size={30}
-                            onFinish={() => Actions.Results()}
+                            onFinish={() => Actions.Results({marks: this.state.score, total: this.state.questions.length, questions: this.state.questions})}
                             digitStyle = {{
                                 backgroundColor: "#101010",
                                 textAlign: 'center',
