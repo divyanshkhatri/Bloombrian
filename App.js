@@ -21,6 +21,7 @@ import RecordedVideos from './component/RecordedVideos';
 import OneSignal from 'react-native-onesignal';
 import TestScreen from './component/TestScreen';
 import Results from './component/Results';
+import Config from './component/config';
 
 export default class App extends Component {
 
@@ -28,9 +29,10 @@ export default class App extends Component {
     super(properties);
     //Remove this method to stop OneSignal Debugging 
     OneSignal.setLogLevel(6, 0);
-    
+    if(Config.ONESIGNAL_APIKEY) {
     // Replace 'YOUR_ONESIGNAL_APP_ID' with your OneSignal App ID.
-    OneSignal.init("2abdbd29-7d40-47da-bd87-e8c0e58de0a3");
+      OneSignal.init(Config.ONESIGNAL_APIKEY);
+    }
   }
 
   render(){

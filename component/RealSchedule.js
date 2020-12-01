@@ -1,11 +1,22 @@
 import React, {Component} from 'react';
 import {View, Text, ScrollView, Dimensions, TouchableOpacity, FlatList, Image, ImageBackground, Alert, Platform, TouchableWithoutFeedback, AsyncStorage, Linking} from 'react-native';
-import DatePicker from 'react-native-datepicker';
-import Modal from 'react-native-modal';
 import moment from 'moment';
 import ModalDropdown from 'react-native-modal-dropdown';
 import {Actions} from 'react-native-router-flux';
+import { DefaultTheme, List } from 'react-native-paper';
+
+
 moment().format();
+
+const theme = {
+    ...DefaultTheme,
+    roundness: 2,
+    colors: {
+      ...DefaultTheme.colors,
+      primary: '#3498db',
+      accent: '#f1c40f',
+    },
+};
 
 class RealSchedule extends Component {
 
@@ -71,7 +82,9 @@ class RealSchedule extends Component {
         chosen: true,
         showModal: false,
         errorString: "",
-        schedules: null
+        schedules: null,
+        collapseTuesday: false,
+        number: 0,
     }
 
     onPressAttend = (url) => {
@@ -102,73 +115,41 @@ class RealSchedule extends Component {
     render() {
         return (
             <ScrollView 
-                style = {{paddingTop: 20, backgroundColor: '#101010', height: Platform.OS == 'ios' ? '84%' : '80%'}}
+                style = {{paddingTop: 20, backgroundColor: '#0F0F0F', height: Platform.OS == 'ios' ? '84%' : '84%'}}
                 showsHorizontalScrollIndicator = {false}
                 showsVerticalScrollIndicator = {false}
             >
-                <Modal 
-                    onBackdropPress = {() => {this.setState({showModal: false})}}
-                    isVisible = {this.state.showModal}
-                    animationIn = "pulse"
-
-                >
-                    <View
-                        style = {{
-
-                            backgroundColor: '#101010',
-                            // opacity: 0.8,
-                            borderRadius: 20,
-                            padding: 25,
-                            paddingTop: 25,
-                            width: 250,
-                            height: 225,
-                            alignSelf: 'center',
-                            shadowColor: '#000',
-                            shadowOffset: {
-                            width: 0,
-                            height: 2,
-                            },
-                            shadowOpacity: 0.75,
-                            shadowRadius: 3.84,
-                            elevation: 5,
-
-                        }}
-                    >  
-                        <Text
+                <View style = {{marginTop: 20, marginBottom: 40 }}>
+                <View style = {{marginTop: -20}}>
+                    <View style = {{flexDirection: "row", justifyContent: "space-between", marginBottom: 10}}>
+                        <View style = {{flexDirection: "row", alignItems: "center"}}>
+                            <Text 
+                                style = {{
+                                    marginLeft: 18,
+                                    fontFamily: "Poppins-ExtraBold",
+                                    fontSize: 18,
+                                    color: "#4ACDFF"
+                                }}
+                            >
+                                Course:  </Text>
+                            <ModalDropdown 
                             style = {{
-                                fontFamily: 'Poppins-Bold',
-                                fontSize: 14,
-                                color: '#4ACDF4',
-                                marginBottom: 10
-                            }}
-                        >
-                            Choose a course
-                        </Text>
-
-                        <ModalDropdown 
-                            style = {{
-                                borderRadius: 10,
-                                borderWidth: 0,
-                                backgroundColor: '#1A1A1A',
-                                width: 200,
-                                height: 37,
                                 justifyContent: "center",
-                                marginBottom: 10
+
+                                maxWidth: 140,
                             }}
                             textStyle = {{
                                 color: 'white',
-                                fontFamily: 'Poppins-SemiBold',
-                                textAlign: "center",
-                                fontSize: 14
+                                fontFamily: 'Poppins-ExtraBold',
+                                fontSize: 16
                             }}
-                            defaultValue = {"Course"}
+                            defaultValue = {"All Subjects"}
                             options={['All Subjects', 'Spoken English Program', 'Coding 1:5', 'Coding 1:1']}
                             dropdownStyle = {{
                                 width: 200,
                                 backgroundColor: "#1A1A1A",
                                 borderWidth: 0,
-                                borderBottomLeftRadius: 10,
-                                borderBottomRightRadius: 10,
+                                borderRadius: 10,
                             }}
                             dropdownTextStyle = {{
                                 color: "white",
@@ -187,142 +168,169 @@ class RealSchedule extends Component {
                             }}
                             renderSeparator = {() => {return <View></View>}}
                             onSelect = {(index, value) => {
+                                let url = "http://idirect.bloombraineducation.com/idirect/lms/live/class/schedule?class="+this.state.class+"&course="+this.state.courses[value];
+                                console.log(url);
+                                fetch(url, {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'multipart/form-data',
+                                    },
+                                    })
+                                    .then((response) => response.json())
+                                    .then((responseJson) => {
+                                        this.setState({schedules: responseJson[this.state.courses[this.state.course]]})
+                                        this.setState({showModal:false})
+                                    })
+                                    .catch((error) => {
+                                        // this.setState({login: false})
+                                        console.error(error);
+                                });
                                 this.setState({
                                     course: value
                                 })
                             } }
                             />
-
-                        
-                        <Text style = {{
-                            fontFamily: 'Poppins-Bold',
-                            fontSize: 14,
-                            color: '#4ACDF4',
-                            marginBottom: 10
-                        }}>
-                            Class
-                        </Text>
-                        <ModalDropdown 
-                            style = {{
-                                borderRadius: 10,
-                                borderWidth: 0,
-                                backgroundColor: '#1A1A1A',
-                                width: 200,
-                                height: 37,
-                                justifyContent: "center",
-                                marginBottom: 10
-                            }}
-                            textStyle = {{
-                                color: 'white',
-                                fontFamily: 'Poppins-SemiBold',
-                                textAlign: "center",
-                                fontSize: 14
-                            }}
-                            defaultValue = {"Class"}
-                            options={['1st', '2nd', '3rd', '4th', '5th', '6th', '7th', '8th', '9th']}
-                            dropdownStyle = {{
-                                width: 200,
-                                backgroundColor: "#1A1A1A",
-                                borderWidth: 0,
-                                borderBottomLeftRadius: 10,
-                                borderBottomRightRadius: 10,
-                                overflow: "hidden"
-                            }}
-                            dropdownTextStyle = {{
-                                color: "white",
-                                fontSize: 14,
-                                fontFamily: "Poppins-SemiBold",
-                                backgroundColor: "#1A1A1A",
-                                borderWidth: 0,
-                                textAlign: "center"
-                            }}
-                            dropdownTextHighlightStyle = {{
-                                color: "#4ACDF4",
-                                fontSize: 14,
-                                fontFamily: "Poppins-SemiBold",
-                                backgroundColor: "#1A1A1A",
-                                borderWidth: 0,
-                            }}
-                            renderSeparator = {() => {return <View></View>}}
-                            onSelect = {(index, value) => {
-                                this.setState({class: parseInt(index) + 1})
-                            } }
+                            <Image 
+                                style = {{width: 15, height: 15, marginLeft: 5}}
+                                source = {require("../images/icon.png")}
                             />
-
-                        <View>
-                            {!this.state.chosen ? <Text style = {{color: "#4ACDF4", fontFamily: "Poppins-SemiBold", marginTop: 5, fontSize: 10}}>Please select both course and class</Text> : null}
-                            <TouchableOpacity onPress = {() => {this.onClickConfirm()}}>
-                                <Text style = {{
-                                    fontFamily: 'Poppins-Bold',
-                                    fontSize: 15, 
-                                    color: '#4ACDF4',
-                                    marginTop: !this.state.chosen ? 10 : 10,
-                                    textAlign: 'center'
-                                }}>Confirm</Text>
-                            </TouchableOpacity>
                         </View>
-                    </View>
-                </Modal>
-                <View style = {{marginTop: 20, marginBottom: 40 }}>
-                <View style = {{marginTop: -20}}>
-                    <View style = {{flexDirection: "row", justifyContent: "space-between"}}>
-                        <View style = {{flexDirection: "row"}}>
-                            <Text 
-                                style = {{
-                                    marginLeft: 18,
-                                    fontFamily: "Poppins-ExtraBold",
-                                    fontSize: 20,
-                                    color: "#4ACDFF"
+                        <View style = {{flexDirection: "row", justifyContent: "center", alignItems: 'center'}}>
+                        <Text style = {{
+                            color: "#4ACDF4",
+                            fontFamily: "Poppins-Bold"
+                        }}>
+                            Class :  </Text>
+                            <ModalDropdown 
+                              
+                                textStyle = {{
+                                    color: 'white',
+                                    fontFamily: 'Poppins-SemiBold',
+                                    fontSize: 14
                                 }}
-                            >
-                                Course: 
-                            </Text>
-                            <Text 
-                                style = {{
-                                    
-                                    fontFamily: "Poppins-ExtraBold",
-                                    fontSize: 20,
-                                    color: "white"
+                                defaultValue = {
+                                    this.state.class == 1 
+                                    ? '1st' : this.state.class == 2 ? '2nd' : 
+                                    this.state.class == 3 ? '3rd' : this.state.class == 4 ? '4th' : 
+                                    this.state.class == 5 ? '5th' : this.state.class == 6 ? '6th' :
+                                    this.state.class == 7 ? '7th' : this.state.class == 8 ? '8th' : 
+                                    this.state.class == 9 ? '9th' : this.state.class == 10 ? '10th' : 
+                                    this.state.class == 11 ? '11th' : 11   
+                                }
+                                options={['1st', '2nd', '3rd', '4th', '5th', '6th', '7th', '8th', '9th']}
+                                dropdownStyle = {{
+                                    width: 40,
+                                    backgroundColor: "#1A1A1A",
+                                    borderWidth: 0,
+                                    borderBottomLeftRadius: 10,
+                                    borderBottomRightRadius: 10,
+                                    overflow: "hidden",
+                                    marginBottom: 0,
                                 }}
-                            >  {this.state.course}
-                            </Text>
+                                dropdownTextStyle = {{
+                                    color: "white",
+                                    fontSize: 14,
+                                    fontFamily: "Poppins-SemiBold",
+                                    backgroundColor: "#1A1A1A",
+                                    borderWidth: 0,
+                                    textAlign: "center"
+                                }}
+                                dropdownTextHighlightStyle = {{
+                                    color: "#4ACDF4",
+                                    fontSize: 14,
+                                    fontFamily: "Poppins-SemiBold",
+                                    backgroundColor: "#1A1A1A",
+                                    borderWidth: 0,
+                                }}
+                                renderSeparator = {() => {return <View></View>}}
+                                onSelect = {(index, value) => {
+                                    let url = "http://idirect.bloombraineducation.com/idirect/lms/live/class/schedule?class="+(parseInt(index)+1)+"&course="+this.state.courses[this.state.course];
+                                    console.log(url);
+                                    fetch(url, {
+                                        method: 'POST',
+                                        headers: {
+                                            'Content-Type': 'multipart/form-data',
+                                        },
+                                        })
+                                        .then((response) => response.json())
+                                        .then((responseJson) => {
+                                            this.setState({schedules: responseJson[this.state.courses[this.state.course]]})
+                                            this.setState({showModal:false})
+                                        })
+                                        .catch((error) => {
+                                            // this.setState({login: false})
+                                            console.error(error);
+                                    });
+                                    this.setState({class: parseInt(index) + 1})
+                                }}
+                            />
+                            <Image 
+                                style = {{width: 12, height: 12, marginLeft: 5, marginRight: 20}}
+                                source = {require("../images/icon.png")}
+                            />
                         </View>
-                        <TouchableOpacity 
-                            onPress = { () => {
-                                this.setState({showModal: true})
-                            }}
-                            style = {{
-                                alignSelf: "flex-end"
-                            }}
-                        >
-                            <Text 
-                                style = {{
-                                    fontFamily: 'Poppins-Bold', 
-                                    color: '#4ACDF4', 
-                                    zIndex: 2,
-                                    width: 60, 
-                                    fontSize: 13, 
-                                    marginRight: 20, 
-                                    textAlign: "right"
-                                }}>Filter by</Text>
-                        </TouchableOpacity>
                     </View>
                     
                 {
                     
                     this.state.schedules ? this.state.schedules.map((value, index) => {
+                        let title = "Batch " + (index+1).toString();
                         return (
-                            <View style = {{
-                            }}>
-                                <Text style = {{
-                                    fontFamily: "Poppins-Bold",
-                                    fontSize: 20,
-                                    marginLeft: 20,
-                                    marginBottom: 10,
-                                    marginTop: 10,
-                                    color: "#4ACDF4"
-                                }}>Batch {index+1}</Text>
-                                
+                            <View>
+                                <List.Accordion
+                                    title = {title}
+                                    style = {{
+                                        backgroundColor: "#161616",
+                                        borderRadius: 7,
+                                        marginBottom: 10
+                                    }}
+                                    left = {props => 
+                                        <View style = {{
+                                            position: 'absolute',
+                                            zIndex: 10,
+                                            left: 220,
+                                            flexDirection: 'row',
+                                            alignItems: "center",
+                                            alignContent: "center",
+                                            alignSelf: 'center',
+                                            width: 250,
+                                        }}>
+                                            <Text
+                                                style = {{
+                                                    fontFamily: "Poppins-Bold",
+                                                    color: "white",
+                                                    fontSize: 10,
+                                                    backgroundColor: "#161616",
+                                                    // textAlignVertical: "center"
+                                                }}    
+                                            >
+                                                Click to View Schedule
+                                            </Text>
+                                            <Image 
+                                                style = {{
+                                                    marginLeft: 10,
+                                                    width: 15, 
+                                                    height: 15,
+                                                    tintColor: "white"
+                                                }}
+                                                source = {require("../images/icon.png")}
+                                            />
+                                        </View>
+                                    }
+                                    titleStyle = {{
+                                        fontFamily: 'Poppins-Bold',
+                                        fontWeight: '800',
+                                        fontSize: 20,
+                                        marginLeft: 10,
+                                        marginBottom: 5,
+                                        marginTop: 10,
+                                        color: "#4ACDF4"
+                                    }}
+                                    
+                                >                               
+                                <View style = {{
+                                    marginLeft: -60,
+                                }}>
                                 {
                                     this.state.schedules[index][0]["Monday"] !== undefined ? 
                                         <View>
@@ -459,9 +467,13 @@ class RealSchedule extends Component {
                                 {
                                     this.state.schedules[index][0]["Tuesday"] !== undefined ? 
                                         <View>
+                                            <View style = {{flexDirection: "row"}}>
                                             <Text style = {{marginLeft: 23, marginBottom: 10, fontFamily: "Poppins-Bold", color: "white"}}>
                                                 Tuesday
                                             </Text>
+                                            
+                                            </View>
+                                            <View>
                                             <FlatList 
                                                 showsHorizontalScrollIndicator = {false}
                                                 showsVerticalScrollIndicator = {false}
@@ -582,6 +594,8 @@ class RealSchedule extends Component {
                                                     </View>
                                                 )}
                                             />
+                                            
+                                            </View>
                                         </View>
                                     :
                                         <View>    
@@ -1252,20 +1266,21 @@ class RealSchedule extends Component {
                                         <View>    
                                         </View>
                                 }
-                                
+                                </View>
+                                </List.Accordion>
                             </View>
                         )
                     })
                     : <View></View>
                 }  
                 </View>   
-                </View>   
+                </View>  
                 <View 
                     style = {{
-                        height: 70
+                        height: 20
                     }}
                 >
-                </View>                  
+                </View>                 
             </ScrollView>
         ) 
     }

@@ -6,10 +6,13 @@ import {Actions} from 'react-native-router-flux';
 class Results extends Component {
 
     componentDidMount() {
-
+        setTimeout(() => {
+            this.setState({show: false})
+        }, 3200);
     }
 
     state = {
+        show: true,
         marks: this.props.marks,
         total: this.props.total
     }
@@ -161,6 +164,8 @@ class Results extends Component {
                                             style = {{
                                                 width: 40,
                                                 paddingRight: 10,
+                                                justifyContent: "center",
+                                                alignItems: "center"
                                             }}
                                         >
                                             <Image 
@@ -197,6 +202,8 @@ class Results extends Component {
                                             style = {{
                                                 width: 40, 
                                                 paddingRight: 10,
+                                                justifyContent: "center",
+                                                alignItems: "center"
                                             }}
                                         >
                                             <Image 
@@ -233,6 +240,8 @@ class Results extends Component {
                                             style = {{
                                                 width: 40,
                                                 paddingRight: 10,
+                                                justifyContent: "center",
+                                                alignItems: "center"
                                             }}
                                         >
                                             <Image 
@@ -321,7 +330,7 @@ class Results extends Component {
                         
                             <TouchableWithoutFeedback
                                 style = {{
-                                    marginTop: 40,
+                                    marginTop: 50,
                                     alignItems: "center"
                                 }}
 
@@ -464,6 +473,8 @@ class Results extends Component {
                                             style = {{
                                                 width: 40,
                                                 paddingRight: 10,
+                                                justifyContent: "center",
+                                                alignItems: "center"
                                             }}
                                         >
                                             <Image 
@@ -500,6 +511,8 @@ class Results extends Component {
                                             style = {{
                                                 width: 40, 
                                                 paddingRight: 10,
+                                                justifyContent: "center",
+                                                alignItems: "center"
                                             }}
                                         >
                                             <Image 
@@ -536,6 +549,8 @@ class Results extends Component {
                                             style = {{
                                                 width: 40,
                                                 paddingRight: 10,
+                                                justifyContent: "center",
+                                                alignItems: "center"
                                             }}
                                         >
                                             <Image 
@@ -622,18 +637,36 @@ class Results extends Component {
                                 </View>
                             </View>
                         </View>
-                        <View>
-                            <Text
+                        <TouchableWithoutFeedback
                                 style = {{
-                                    color: "white",
-                                    fontFamily: "Poppins-Bold",
-                                    fontSize: 20,
-                                    marginTop: 10,
+                                    marginTop: 50,
+                                    alignItems: "center"
                                 }}
+
+                                onPress = {() => {Actions.BottomNavigator()}}
                             >
-                                Go to Main Menu
-                            </Text>
-                        </View>
+                                <View
+                                    style = {{
+                                        justifyContent: "center",
+                                        height: 55,
+                                        borderWidth: 2,
+                                        borderColor: "#4ACDF4",
+                                        borderRadius: 10,
+                                    }}
+                                >
+                                    <Text
+                                    style = {{
+                                        color: "white",
+                                        fontFamily: "Poppins-Bold",
+                                        fontSize: 20,
+                                        textAlign: "center",
+                                        width: Dimensions.get("window").width - 50
+                                    }}
+                                    >
+                                        Back to Tests Menu
+                                    </Text>
+                                </View> 
+                            </TouchableWithoutFeedback>
                     </View>
                     :
                     <View style = {{
@@ -641,6 +674,24 @@ class Results extends Component {
                         marginRight: 20,
                         marginTop: 60,
                     }}>
+                        {
+                            this.state.show ? 
+                                <Image 
+                                    style = {{
+                                        position: "absolute",
+                                        top: -80,
+                                        left: -150,
+                                        height: Dimensions.get("window").height,
+                                        opacity: 0.9,
+                                        zIndex: -100,
+                                        justifyContent: 'center',
+                                    }}
+                                    source = {require("../images/complete.gif")}
+                                    // source = {{uri: "https://assets8.lottiefiles.com/packages/lf20_i6sqnxav.json"}}
+                                />
+                            :
+                                <View></View>
+                        }
                         <View>
                             <Text
                                 style = {{
@@ -749,6 +800,8 @@ class Results extends Component {
                                             style = {{
                                                 width: 40,
                                                 paddingRight: 10,
+                                                justifyContent: "center",
+                                                alignItems: "center"
                                             }}
                                         >
                                             <Image 
@@ -785,6 +838,8 @@ class Results extends Component {
                                             style = {{
                                                 width: 40, 
                                                 paddingRight: 10,
+                                                alignItems: "center",
+                                                justifyContent: "center"
                                             }}
                                         >
                                             <Image 
@@ -821,6 +876,8 @@ class Results extends Component {
                                             style = {{
                                                 width: 40,
                                                 paddingRight: 10,
+                                                justifyContent: "center",
+                                                alignItems: "center"
                                             }}
                                         >
                                             <Image 
@@ -906,18 +963,36 @@ class Results extends Component {
                                 </View>
                             </View>
                         </View>
-                        <View>
-                            <Text
+                        <TouchableWithoutFeedback
                                 style = {{
-                                    color: "white",
-                                    fontFamily: "Poppins-Bold",
-                                    fontSize: 20,
-                                    marginTop: 10,
+                                    marginTop: 50,
+                                    alignItems: "center"
                                 }}
+
+                                onPress = {() => {Actions.BottomNavigator()}}
                             >
-                                Go to Main Menu
-                            </Text>
-                        </View>
+                                <View
+                                    style = {{
+                                        justifyContent: "center",
+                                        height: 55,
+                                        borderWidth: 2,
+                                        borderColor: "#4ACDF4",
+                                        borderRadius: 10,
+                                    }}
+                                >
+                                    <Text
+                                    style = {{
+                                        color: "white",
+                                        fontFamily: "Poppins-Bold",
+                                        fontSize: 20,
+                                        textAlign: "center",
+                                        width: Dimensions.get("window").width - 50
+                                    }}
+                                    >
+                                        Back to Tests Menu
+                                    </Text>
+                                </View> 
+                            </TouchableWithoutFeedback>
                     </View>
                 }
             </SafeAreaView>

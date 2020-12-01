@@ -12,6 +12,7 @@ class TestScreen extends Component {
     };
 
     state = {
+        clickable: true,
         questions: undefined,
         totalDuration: 4000,
         subject: "",
@@ -51,15 +52,19 @@ class TestScreen extends Component {
         const nextQuestion = this.state.currentQuestion + 1;
         
 		if (nextQuestion < this.state.questions.length) {
+            this.setState({clickable: false})
             setTimeout(() => {
                 this.setState({currentQuestion: nextQuestion});
                 this.setState({borderColorShow: false});
+                this.setState({clickable: true})
             }, 1500);
             
 		} else {
+            this.setState({clickable: false})
             setTimeout(() => {
                 Actions.Results({marks: this.state.score, total: this.state.questions.length, questions: this.state.questions});
                 this.setState({borderColorShow: false});
+                this.setState({clickable: true})
             }, 1500);
 		}
     };
@@ -307,6 +312,7 @@ class TestScreen extends Component {
                             {
                                 this.state.questions != undefined ? this.state.questions[this.state.currentQuestion].answerOptions.map((answerOption, index) => (
                                     <TouchableOpacity 
+                                        disabled = {!this.state.clickable}
                                         style = {{
                                             borderColor: this.state.borderColorShow && answerOption.isCorrect ? "#1DD348": this.state.borderColorShow && !answerOption.isCorrect && index == this.state.clickedOption ? "#FF5226" : "#1A1A1A",
                                             borderWidth: 4,
@@ -318,6 +324,7 @@ class TestScreen extends Component {
                                             backgroundColor: "#1A1A1A",
                                             justifyContent: 'center'
                                         }}
+                                        
                                         onPress={() => this.handleAnswerOptionClick(answerOption.isCorrect, index)}
                                     >
                                         <View style = {{

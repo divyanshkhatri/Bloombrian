@@ -3,6 +3,8 @@ import {View, Text, SafeAreaView, ScrollView, Dimensions, TouchableOpacity, Keyb
 import LinearGradient from 'react-native-linear-gradient';
 import { Actions } from 'react-native-router-flux';
 import Geolocation from '@react-native-community/geolocation';
+import  Config from './config';
+
 // import * as Location from 'expo-location';
 
 class Register extends Component {
@@ -31,7 +33,27 @@ class Register extends Component {
     async componentDidMount() {
 
         BackHandler.addEventListener("hardwareBackPress", this.backAction);
-        let myApiKey = "AIzaSyAPiglxDTELcy1tDJQaE-fa342Pm-VrTqM";
+        console.log("config" + Config.GOOGLEMAP_KEY);
+        if(Config.GOOGLEMAP_KEY) {
+            let myApiKey = Config.GOOGLEMAP_KEY;
+            Geolocation.getCurrentPosition(
+                (position) => {
+                    console.log(position);
+                    fetch('https://maps.googleapis.com/maps/api/geocode/json?address=' + position["coords"].latitude + ',' + position["coords"].longitude + '&key=' + myApiKey)
+                    .then((response) => response.json())
+                    .then((responseJson) => {
+                        console.log(responseJson.results[1].address_components[4])
+                        this.setState({city: responseJson.results[1].address_components[3].long_name + ", " + responseJson.results[1].address_components[4].long_name});
+                    })
+                },
+                (error) => {
+                    // See error code charts below.
+                    console.log(error.code, error.message);
+                },
+                { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
+            );
+        }
+        
         this.keyboardDidShowListener = Keyboard.addListener(
           'keyboardDidShow',
           this._keyboardDidShow,
@@ -40,41 +62,8 @@ class Register extends Component {
           'keyboardDidHide',
           this._keyboardDidHide,
         );
-
-        Geolocation.getCurrentPosition(
-            (position) => {
-                console.log(position);
-                fetch('https://maps.googleapis.com/maps/api/geocode/json?address=' + position["coords"].latitude + ',' + position["coords"].longitude + '&key=' + myApiKey)
-                .then((response) => response.json())
-                .then((responseJson) => {
-                    console.log(responseJson.results[1].address_components[4])
-                    this.setState({city: responseJson.results[1].address_components[3].long_name + ", " + responseJson.results[1].address_components[4].long_name});
-                })
-            },
-            (error) => {
-                // See error code charts below.
-                console.log(error.code, error.message);
-            },
-            { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
-        );
         
     }
-
-        // (async () => {
-        //     let { status } = await Location.requestPermissionsAsync();
-        //     if (status !== 'granted') {
-        //       console.log('Permission to access location was denied');
-        //     }
-      
-        //     let location = await Location.getCurrentPositionAsync({});
-        //     console.log(location.coords)
-            // fetch('https://maps.googleapis.com/maps/api/geocode/json?address=' + location.coords.latitude + ',' + location.coords.longitude + '&key=' + myApiKey)
-            // .then((response) => response.json())
-            // .then((responseJson) => {
-            //     console.log(responseJson.results[1].address_components[7])
-            //     this.setState({city: responseJson.results[1].address_components[5].long_name + ", " + responseJson.results[1].address_components[7].long_name});
-            // })
-        // })();
 
     onPressRegister = () => {
 
