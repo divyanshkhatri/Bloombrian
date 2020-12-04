@@ -610,21 +610,23 @@ class Results extends Component {
                                 <View
                                     style = {{
                                         width: '100%',
-                                        height: 100,
-                                        borderColor: "#202020"
+                                        height: 110,
+                                        backgroundColor: "#101010",
+                                        borderRadius: 10,
+                                        paddingLeft: 10,
+                                        paddingRight: 10,
+                                        paddingTop: 10
                                     }}
                                 >
                                     <FlatList 
-                                        contentContainerStyle = {{
-                                            borderColor: "white"
-                                        }}
                                         data = {this.props.questions}
                                         renderItem = { ({item, index}) => {
-                                            return(
-                                                <View style = {{flexDirection: "row"}}>
+                                            return (
+                                                <View style = {{flexDirection: "row", alignItems: "center"}}>
                                                     <Text style = {{
                                                         color: "#404040",
-                                                        fontFamily: "Poppins-Bold"
+                                                        fontFamily: "Poppins-Bold",
+                                                        textAlign: "center",
                                                     }}>
                                                     Ans {index+1} - 
                                                     </Text>
@@ -638,7 +640,8 @@ class Results extends Component {
                                                                         <Text 
                                                                             style = {{
                                                                                 fontFamily: "Poppins-Bold",
-                                                                                color: "#404040"
+                                                                                color: "#404040",
+                                                                                textAlign: "left"
                                                                             }}
                                                                         > {item.answerText}
                                                                         </Text>
@@ -658,15 +661,11 @@ class Results extends Component {
                             </View>
                         </View>
                         <TouchableWithoutFeedback
-                                style = {{
-                                    marginTop: 50,
-                                    alignItems: "center"
-                                }}
-
                                 onPress = {() => {Actions.BottomNavigator()}}
                             >
                                 <View
                                     style = {{
+                                        marginTop: Platform.OS == "android" ? 50 : 50,
                                         justifyContent: "center",
                                         height: 55,
                                         borderWidth: 2,
@@ -919,20 +918,23 @@ class Results extends Component {
                                 <View
                                     style = {{
                                         width: '100%',
-                                        height: 100,
+                                        height: 110,
+                                        backgroundColor: "#101010",
+                                        borderRadius: 10,
+                                        paddingLeft: 10,
+                                        paddingRight: 10,
+                                        paddingTop: 10
                                     }}
                                 >
                                     <FlatList 
-                                        contentContainerStyle = {{
-                                            borderColor: "white"
-                                        }}
                                         data = {this.props.questions}
                                         renderItem = { ({item, index}) => {
-                                            return(
-                                                <View style = {{flexDirection: "row"}}>
+                                            return (
+                                                <View style = {{flexDirection: "row", alignItems: "center"}}>
                                                     <Text style = {{
                                                         color: "#404040",
-                                                        fontFamily: "Poppins-Bold"
+                                                        fontFamily: "Poppins-Bold",
+                                                        textAlign: "center",
                                                     }}>
                                                     Ans {index+1} - 
                                                     </Text>
@@ -946,7 +948,8 @@ class Results extends Component {
                                                                         <Text 
                                                                             style = {{
                                                                                 fontFamily: "Poppins-Bold",
-                                                                                color: "#404040"
+                                                                                color: "#404040",
+                                                                                textAlign: "left"
                                                                             }}
                                                                         > {item.answerText}
                                                                         </Text>
@@ -966,15 +969,11 @@ class Results extends Component {
                             </View>
                         </View>
                         <TouchableWithoutFeedback
-                                style = {{
-                                    marginTop: 50,
-                                    alignItems: "center"
-                                }}
-
                                 onPress = {() => {Actions.BottomNavigator({chosen: "test"})}}
                             >
                                 <View
                                     style = {{
+                                        marginTop: Platform.OS == "android" ? 50 : 50,
                                         justifyContent: "center",
                                         height: 55,
                                         borderWidth: 2,

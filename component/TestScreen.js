@@ -6,11 +6,6 @@ import CountDown from 'react-native-countdown-component';
 
 class TestScreen extends Component {
 
-    backAction = () => {
-        Actions.Homepage();
-        return true;
-    };
-
     state = {
         clickable: true,
         questions: undefined,
@@ -28,7 +23,10 @@ class TestScreen extends Component {
         invention: false,
         showModalTimeout: false,
         showModalSubmit: false,
-        clickedOption: null
+        clickedOption: null,
+        answeredQustions: new Array(this.props.questions.length).fill(0),
+        disabledQuestions: new Array(this.props.questions.length).fill(0),
+        index: 0,
     }
 
     onPress = () => {
@@ -45,8 +43,15 @@ class TestScreen extends Component {
 		if (isCorrect) {
             this.setState({score: this.state.score + 1});
             this.setState({borderColorShow: true});
+            let disabledQuestions = [ ...this.state.disabledQuestions ];
+            disabledQuestions[this.state.currentQuestion] = {...disabledQuestions[this.state.currentQuestion], key: 1};
+            this.setState({ disabledQuestions });
         }
         else if(!isCorrect) {
+            let disabledQuestions = [ ...this.state.disabledQuestions ];
+            disabledQuestions[this.state.currentQuestion] = {...disabledQuestions[this.state.currentQuestion], key: 1};
+            this.setState({ disabledQuestions });
+            this.setState({answeredQuestions: this.state.answeredQustions.push(index)});
             this.setState({borderColorShow: true});
         }
         const nextQuestion = this.state.currentQuestion + 1;
@@ -54,6 +59,9 @@ class TestScreen extends Component {
 		if (nextQuestion < this.state.questions.length) {
             this.setState({clickable: false})
             setTimeout(() => {
+                let answeredQustions = [ ...this.state.answeredQustions ];
+                answeredQustions[this.state.currentQuestion] = {...answeredQustions[this.state.currentQuestion], key: 1};
+                this.setState({ answeredQustions });
                 this.setState({currentQuestion: nextQuestion});
                 this.setState({borderColorShow: false});
                 this.setState({clickable: true})
@@ -62,6 +70,7 @@ class TestScreen extends Component {
 		} else {
             this.setState({clickable: false})
             setTimeout(() => {
+                console.log(this.state.answeredQustions);
                 Actions.Results({marks: this.state.score, total: this.state.questions.length, questions: this.state.questions});
                 this.setState({borderColorShow: false});
                 this.setState({clickable: true})
@@ -69,6 +78,25 @@ class TestScreen extends Component {
 		}
     };
 
+    handleNext = () => {
+        const nextQuestion = this.state.currentQuestion + 1;
+        if (nextQuestion < this.state.questions.length) {
+            this.setState({currentQuestion: nextQuestion});
+		} else {
+            console.log(this.state.answeredQustions);
+            this.setState({notCompleteModal: true})
+            Actions.Results({marks: this.state.score, total: this.state.questions.length, questions: this.state.questions});
+		}
+    }
+
+    handlePevious = () => {
+        const nextQuestion = this.state.currentQuestion - 1;
+        if (nextQuestion >= 0) {
+            this.setState({currentQuestion: nextQuestion});
+		} else {
+
+        }
+    }
     
     componentWillUnmount() {
         BackHandler.removeEventListener("hardwareBackPress", this.backAction);
@@ -77,6 +105,7 @@ class TestScreen extends Component {
     componentDidMount() {
         BackHandler.addEventListener("hardwareBackPress", this.backAction);
         this.setState({questions: this.props.questions})
+        console.log(this.state.answeredQustions);
     }
     
     render() {
@@ -194,7 +223,7 @@ class TestScreen extends Component {
                     }}
                 >   
                     <TouchableOpacity
-                        onPress = { () => {this.backAction()} }
+                        onPress = { () => {Actions.BottomNavigator({chosen: "test"})} }
                     >
                         <Image 
                             style = {{ 
@@ -292,15 +321,36 @@ class TestScreen extends Component {
                             }}
                         >
                             
-                            <View>                    
-                                <Text
+                            <View>       
+                                <View 
                                     style = {{
-                                        color: "#E1E1E1",
-                                        fontFamily: "Poppins-ExtraBold",
-                                        fontSize: 24,
-                                        marginBottom: 20
+                                        flexDirection: "row",
+                                        justifyContent: "space-between",
+                                        alignItems: "center",
+                                        marginBottom: 20,
                                     }}
-                                >Q {this.state.questions!= undefined ? this.state.currentQuestion < 10 ? "0" + (this.state.currentQuestion + 1).toString() : this.state.currentQuestion + 1: null} . </Text>
+                                >          
+                                    <Text
+                                        style = {{
+                                            color: "#E1E1E1",
+                                            fontFamily: "Poppins-ExtraBold",
+                                            fontSize: 24,
+                                        }}
+                                    >Q {this.state.questions!= undefined ? this.state.currentQuestion < 10 ? "0" + (this.state.currentQuestion + 1).toString() : this.state.currentQuestion + 1: null} . </Text>
+                                    {
+                                    this.state.answeredQustions[this.state.currentQuestion] != 0 ?
+                                        <Text
+                                            style = {{
+                                                fontFamily: "Poppins-Bold",
+                                                fontSize: 14,
+                                                color: "#4ACDF4",
+                                            }}
+                                        >
+                                            Already Answered
+                                        </Text>
+                                        : null
+                                    }
+                                </View>   
                                 <Text 
                                     style = {{
                                         marginBottom: 10,
@@ -315,7 +365,7 @@ class TestScreen extends Component {
                             {
                                 this.state.questions != undefined ? this.state.questions[this.state.currentQuestion].answerOptions.map((answerOption, index) => (
                                     <TouchableOpacity 
-                                        disabled = {!this.state.clickable}
+                                        disabled = {this.state.disabledQuestions[this.state.currentQuestion] != 0}
                                         style = {{
                                             borderColor: this.state.borderColorShow && answerOption.isCorrect ? "#1DD348": this.state.borderColorShow && !answerOption.isCorrect && index == this.state.clickedOption ? "#FF5226" : "#1A1A1A",
                                             borderWidth: 4,
@@ -324,6 +374,7 @@ class TestScreen extends Component {
                                             maxHeight: 150,
                                             borderRadius: 10,
                                             marginBottom: 10,
+                                            opacity: this.state.answeredQustions[this.state.currentQuestion] != 0 ? 0.5 : 1,
                                             backgroundColor: "#1A1A1A",
                                             justifyContent: 'center'
                                         }}
@@ -360,6 +411,67 @@ class TestScreen extends Component {
                                     </TouchableOpacity>                     
 						        )) : null
                             }
+                            <View style = {{
+                                flexDirection: "row",
+                                justifyContent: "space-between",
+                                marginTop: 150,
+                            }}>
+                                <TouchableOpacity
+                                    onPress = {() => this.handlePevious()}
+                                >
+                                    <View style = {{
+                                        flexDirection: "row",
+                                        alignItems: "center",
+                                        justifyContent: "center"
+                                    }}>
+                                        <Image 
+                                            style = {{
+                                                width: 25,
+                                                height: 25,
+                                                tintColor: "#4ACDF4"
+                                            }}
+                                            source = {require("../images/backQuestion.png")}
+                                        />
+                                        <Text
+                                            style = {{
+                                                color: "white",
+                                                fontFamily: "Poppins-Bold",
+                                                fontSize: 22,
+                                            }}
+                                        >
+                                            PREV
+                                        </Text>
+                                    </View>
+                                </TouchableOpacity>
+                                <TouchableOpacity
+                                    onPress = {() => {this.handleNext()}}
+                                >
+                                    <View style = {{
+                                        flexDirection: "row",
+                                        alignItems: "center",
+                                        justifyContent: "center"
+                                    }}>
+                                        <Text
+                                            style = {{
+                                                color: "white",
+                                                fontFamily: "Poppins-Bold",
+                                                fontSize: 22
+                                            }}
+                                        >
+                                            NEXT
+                                        </Text>
+                                        <Image 
+                                            style = {{
+                                                width: 25,
+                                                height: 25,
+                                                transform: [{ rotate: '180deg'}],
+                                                tintColor: "#4ACDF4"
+                                            }}
+                                            source = {require("../images/backQuestion.png")}
+                                        />
+                                    </View>
+                                </TouchableOpacity>
+                            </View>
                         </View>
                         
                     )
