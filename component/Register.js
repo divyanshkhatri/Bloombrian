@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, Text, SafeAreaView, ScrollView, Dimensions, TouchableOpacity, Keyboard, TextInput, Image, StyleSheet,PermissionsAndroid, Platform, Animated, AsyncStorage, BackHandler,Alert} from 'react-native';
+import {StatusBar, View, Text, SafeAreaView, ScrollView, Dimensions, TouchableOpacity, Keyboard, TextInput, Image, StyleSheet,PermissionsAndroid, Platform, Animated, AsyncStorage, BackHandler,Alert} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { Actions } from 'react-native-router-flux';
 import Geolocation from '@react-native-community/geolocation';
@@ -202,6 +202,9 @@ class Register extends Component {
                     paddingTop: Platform.OS === 'android' ? 0 : 0
                 }}
             >
+                <StatusBar 
+                    backgroundColor = "black"
+                />
                 <ScrollView
                     style = {{
                         // paddingBottom: 90,

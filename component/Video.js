@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {SafeAreaView, View, Image, Text, Dimensions, AsyncStorage, FlatList, ImageBackground, Platform, BackHandler,TouchableOpacity} from 'react-native';
+import {SafeAreaView, StatusBar, View, Image, Text, Dimensions, AsyncStorage, FlatList, ImageBackground, Platform, BackHandler,TouchableOpacity} from 'react-native';
 import RNPickerSelect, { defaultStyles } from 'react-native-picker-select';
 import LinearGradient from 'react-native-linear-gradient';
 import Modal from 'react-native-modal';
@@ -107,6 +107,9 @@ class Video extends Component {
                     paddingTop: Platform.OS === 'android' ? 5 : 0
                 }}
             >
+                <StatusBar 
+                    backgroundColor = "black"
+                />
                 <View style = {{
                     // flex: 1,
                     marginTop: 10, 
@@ -175,7 +178,7 @@ class Video extends Component {
                             alignSelf: 'center',
                             fontFamily: "Poppins-SemiBold", 
                             color: "white",
-                            fontSize: 14, 
+                            fontSize: Platform.OS == "android" ? 12 : 14,
                             // marginTop: 15, 
                             borderRadius: 15,
                             width: 140,

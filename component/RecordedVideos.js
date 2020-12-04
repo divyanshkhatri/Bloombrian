@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, Text, SafeAreaView, BackHandle, Image, Dimensions, TouchableOpacity, FlatList, ImageBackground, Platform, BackHandler} from 'react-native';
+import {View, StatusBar, Text, SafeAreaView, BackHandle, Image, Dimensions, TouchableOpacity, FlatList, ImageBackground, Platform, BackHandler} from 'react-native';
 import * as ScreenOrientation from 'expo-screen-orientation';
 import {Actions} from 'react-native-router-flux';
 import { Video } from 'expo-av';
@@ -52,6 +52,9 @@ class RecordedVideos extends Component {
                     paddingTop: Platform.OS === 'android' ? 0 : 0
                 }}
             >
+                <StatusBar 
+                    backgroundColor = "black"
+                />
                 <View style = {{marginBottom: 40}}>
                 <View 
                     style = {{

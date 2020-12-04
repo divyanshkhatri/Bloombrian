@@ -190,6 +190,7 @@ class RealSchedule1 extends Component {
                                 })
                             } }
                             />
+                        
                             <Image 
                                 style = {{width: 15, height: 15, marginLeft: 5}}
                                 source = {require("../images/icon.png")}
@@ -215,11 +216,12 @@ class RealSchedule1 extends Component {
                                     this.state.class == 5 ? '5th' : this.state.class == 6 ? '6th' :
                                     this.state.class == 7 ? '7th' : this.state.class == 8 ? '8th' : 
                                     this.state.class == 9 ? '9th' : this.state.class == 10 ? '10th' : 
-                                    this.state.class == 11 ? '11th' : 11   
+                                    this.state.class == 11 ? '11th' : '12th'   
                                 }
                                 options={['1st', '2nd', '3rd', '4th', '5th', '6th', '7th', '8th', '9th']}
                                 dropdownStyle = {{
-                                    width: 40,
+                                    width: 60,
+                                    height: 170,
                                     backgroundColor: "#1A1A1A",
                                     borderWidth: 0,
                                     borderBottomLeftRadius: 10,
@@ -306,15 +308,23 @@ class RealSchedule1 extends Component {
                                             >
                                                 Click to View Schedule
                                             </Text>
-                                            <Image 
+                                            <View 
                                                 style = {{
-                                                    marginLeft: 10,
-                                                    width: 15, 
-                                                    height: 15,
-                                                    tintColor: "white"
+                                                    width: 50, 
+                                                    height: 20,
+                                                    backgroundColor: "#161616"
                                                 }}
-                                                source = {require("../images/icon.png")}
-                                            />
+                                            >
+                                                <Image 
+                                                    style = {{
+                                                        marginLeft: 10,
+                                                        width: 15, 
+                                                        height: 15,
+                                                        tintColor: "white"
+                                                    }}
+                                                    source = {require("../images/icon.png")}
+                                                />
+                                            </View>
                                         </View>
                                     }
                                     titleStyle = {{
@@ -344,7 +354,19 @@ class RealSchedule1 extends Component {
                                                 ListHeaderComponent = {<View style = {{width: 20}}></View>}
                                                 horizontal = {true}
                                                 data  = {this.state.schedules[index][0]["Monday"]}
-                                                renderItem = {({item}) => (
+                                                renderItem = {({item}) =>
+                                                {
+                                                    let base64Icon = `data:image/png;base64,${item.thumbnail_url}`;
+                                                    let time = item.time;
+                                                    time = time.toString();
+                                                    let timeh = time.split(".")[0];
+                                                    let timem = time.split(".")[1];
+                                                    timem = "0."+timem;
+                                                    console.log(timem);
+                                                    timem = timem*60;
+                                                    timem = Math.round(timem);
+                                                    timem = timem.toString();
+                                                    return (
                                                     <View style = {{
                                                         flexDirection: 'row', 
                                                         // borderWidth: 2, 
@@ -354,24 +376,26 @@ class RealSchedule1 extends Component {
                                                         marginRight: 10,
                                                         backgroundColor: '#1C1C1C',
                                                         marginBottom: 20,
-                                                        borderRadius: 10
+                                                        borderRadius: 10,
                                                     }}>
                                                         <View>
-                                                            <ImageBackground
-                                                                style = {{
-                                                                    // marginTop: 20,
-                                                                    // marginRight: 20,
-                                                                    width: 100, 
-                                                                    height: 100, 
-                                                                    borderRadius: 10,
-                                                                    marginBottom: 0,
-                                                                    overflow: 'hidden',
-                                                                    position: 'relative',
-                                                                }}
-                                                                source = {require('../images/mathswork.png')}
-                                                            >
-                                                            </ImageBackground>
-                                                            <Text style = {{color: "#4ACDF4", fontFamily: "Poppins-Bold", fontSize: 13, position: 'absolute', top: 10, left: 110}}>Subject</Text>
+                                                            {
+                                                                <ImageBackground
+                                                                    style = {{
+                                                                        // marginTop: 20,
+                                                                        // marginRight: 20,
+                                                                        width: 120, 
+                                                                        height: 100, 
+                                                                        borderRadius: 10,
+                                                                        marginBottom: 0,
+                                                                        overflow: 'hidden',
+                                                                        position: 'relative',
+                                                                    }}
+                                                                    source = {{uri: base64Icon}}
+                                                                >
+                                                                </ImageBackground>
+                                                            }
+                                                            <Text style = {{color: "#4ACDF4", fontFamily: "Poppins-Bold", fontSize: 13, position: 'absolute', top: 10, left: 130}}>Subject</Text>
                                                             </View>
                                                             <View style = {{
                                                                 flex: 1,
@@ -414,15 +438,15 @@ class RealSchedule1 extends Component {
                                                                 <Text style = {{
                                                                     color: 'gray',
                                                                     fontFamily: 'Poppins-SemiBold',
-                                                                            // borderColor: 'white',
-                                                                            // borderWidth: 2,
-                                                                    width: 80,
+                                                                    // borderColor: 'white',
+                                                                    // borderWidth: 2,
+                                                                    width: 60,
                                                                     flexShrink: 1,
                                                                     fontSize: 10,
                                                                     marginTop: 10
                                                                     // paddingTop: 29
                                                                 }}>
-                                                                    {item.time} pm
+                                                                    {timeh + ":" + timem} pm
                                                                 </Text>
                                                                 {
                                                                     <TouchableOpacity 
@@ -458,6 +482,7 @@ class RealSchedule1 extends Component {
                                                         </View>
                                                     </View>
                                                 )}
+                                                }
                                             />
                                         </View>
                                     :
@@ -481,7 +506,19 @@ class RealSchedule1 extends Component {
                                                 ListHeaderComponent = {<View style = {{width: 20}}></View>}
                                                 horizontal = {true}
                                                 data  = {this.state.schedules[index][0]["Tuesday"]}
-                                                renderItem = {({item}) => (
+                                                renderItem = {({item}) => 
+                                                {
+                                                    let base64Icon = `data:image/png;base64,${item.thumbnail_url}`;
+                                                    let time = item.time;
+                                                    time = time.toString();
+                                                    let timeh = time.split(".")[0];
+                                                    let timem = time.split(".")[1];
+                                                    timem = "0."+timem;
+                                                    console.log(timem);
+                                                    timem = timem*60;
+                                                    timem = Math.round(timem);
+                                                    timem = timem.toString();
+                                                    return (
                                                     <View style = {{
                                                         flexDirection: 'row', 
                                                         // borderWidth: 2, 
@@ -498,17 +535,17 @@ class RealSchedule1 extends Component {
                                                                 style = {{
                                                                     // marginTop: 20,
                                                                     // marginRight: 20,
-                                                                    width: 100, 
+                                                                    width: 100*1.2, 
                                                                     height: 100, 
                                                                     borderRadius: 10,
                                                                     marginBottom: 0,
                                                                     overflow: 'hidden',
                                                                     position: 'relative',
                                                                 }}
-                                                                source = {require('../images/mathswork.png')}
+                                                                source = {{uri: base64Icon}}
                                                             >
                                                             </ImageBackground>
-                                                            <Text style = {{color: "#4ACDF4", fontFamily: "Poppins-Bold", fontSize: 13, position: 'absolute', top: 10, left: 110}}>Subject</Text>
+                                                            <Text style = {{color: "#4ACDF4", fontFamily: "Poppins-Bold", fontSize: 13, position: 'absolute', top: 10, left: 130}}>Subject</Text>
                                                             </View>
                                                             <View style = {{
                                                                 flex: 1,
@@ -559,7 +596,7 @@ class RealSchedule1 extends Component {
                                                                     marginTop: 10
                                                                     // paddingTop: 29
                                                                 }}>
-                                                                    {item.time} pm
+                                                                    {timeh + ":" + timem} pm
                                                                 </Text>
                                                                 {
                                                                     <TouchableOpacity 
@@ -593,6 +630,7 @@ class RealSchedule1 extends Component {
                                                         </View>
                                                     </View>
                                                 )}
+                                                }
                                             />
                                             
                                             </View>
@@ -614,7 +652,18 @@ class RealSchedule1 extends Component {
                                                 ListHeaderComponent = {<View style = {{width: 20}}></View>}
                                                 horizontal = {true}
                                                 data  = {this.state.schedules[index][0]["Wednesday"]}
-                                                renderItem = {({item}) => (
+                                                renderItem = {({item}) => {
+                                                    let base64Icon = `data:image/png;base64,${item.thumbnail_url}`;
+                                                    let time = item.time;
+                                                    time = time.toString();
+                                                    let timeh = time.split(".")[0];
+                                                    let timem = time.split(".")[1];
+                                                    timem = "0."+timem;
+                                                    console.log(timem);
+                                                    timem = timem*60;
+                                                    timem = Math.round(timem);
+                                                    timem = timem.toString();
+                                                    return (
                                                     <View style = {{
                                                         flexDirection: 'row', 
                                                         // borderWidth: 2, 
@@ -631,17 +680,17 @@ class RealSchedule1 extends Component {
                                                                 style = {{
                                                                     // marginTop: 20,
                                                                     // marginRight: 20,
-                                                                    width: 100, 
+                                                                    width: 120, 
                                                                     height: 100, 
                                                                     borderRadius: 10,
                                                                     marginBottom: 0,
                                                                     overflow: 'hidden',
                                                                     position: 'relative',
                                                                 }}
-                                                                source = {require('../images/mathswork.png')}
+                                                                source = {{uri: base64Icon}}
                                                             >
                                                             </ImageBackground>
-                                                            <Text style = {{color: "#4ACDF4", fontFamily: "Poppins-Bold", fontSize: 13, position: 'absolute', top: 10, left: 110}}>Subject</Text>
+                                                            <Text style = {{color: "#4ACDF4", fontFamily: "Poppins-Bold", fontSize: 13, position: 'absolute', top: 10, left: 130}}>Subject</Text>
                                                             </View>
                                                             <View style = {{
                                                                 flex: 1,
@@ -692,7 +741,7 @@ class RealSchedule1 extends Component {
                                                                     marginTop: 10
                                                                     // paddingTop: 29
                                                                 }}>
-                                                                    {item.time} pm
+                                                                    {timeh + ":" + timem} pm
                                                                 </Text>
                                                                 {
                                                                     <TouchableOpacity 
@@ -728,6 +777,7 @@ class RealSchedule1 extends Component {
                                                         </View>
                                                     </View>
                                                 )}
+                                                }
                                             />
                                         </View>
                                     :
@@ -747,7 +797,18 @@ class RealSchedule1 extends Component {
                                                 ListHeaderComponent = {<View style = {{width: 20}}></View>}
                                                 horizontal = {true}
                                                 data  = {this.state.schedules[index][0]["Thursday"]}
-                                                renderItem = {({item}) => (
+                                                renderItem = {({item}) => {
+                                                    let base64Icon = `data:image/png;base64,${item.thumbnail_url}`;
+                                                    let time = item.time;
+                                                    time = time.toString();
+                                                    let timeh = time.split(".")[0];
+                                                    let timem = time.split(".")[1];
+                                                    timem = "0."+timem;
+                                                    console.log(timem);
+                                                    timem = timem*60;
+                                                    timem = Math.round(timem);
+                                                    timem = timem.toString();
+                                                    return (
                                                     <View style = {{
                                                         flexDirection: 'row', 
                                                         // borderWidth: 2, 
@@ -764,17 +825,17 @@ class RealSchedule1 extends Component {
                                                                 style = {{
                                                                     // marginTop: 20,
                                                                     // marginRight: 20,
-                                                                    width: 100, 
+                                                                    width: 120, 
                                                                     height: 100, 
                                                                     borderRadius: 10,
                                                                     marginBottom: 0,
                                                                     overflow: 'hidden',
                                                                     position: 'relative',
                                                                 }}
-                                                                source = {require('../images/mathswork.png')}
+                                                                source = {{uri: base64Icon}}
                                                             >
                                                             </ImageBackground>
-                                                            <Text style = {{color: "#4ACDF4", fontFamily: "Poppins-Bold", fontSize: 13, position: 'absolute', top: 10, left: 110}}>Subject</Text>
+                                                            <Text style = {{color: "#4ACDF4", fontFamily: "Poppins-Bold", fontSize: 13, position: 'absolute', top: 10, left: 130}}>Subject</Text>
                                                             </View>
                                                             <View style = {{
                                                                 flex: 1,
@@ -825,7 +886,7 @@ class RealSchedule1 extends Component {
                                                                     marginTop: 10
                                                                     // paddingTop: 29
                                                                 }}>
-                                                                    {item.time} pm
+                                                                    {timeh + ":" + timem} pm
                                                                 </Text>
                                                                 {
                                                                     <TouchableOpacity 
@@ -861,6 +922,7 @@ class RealSchedule1 extends Component {
                                                         </View>
                                                     </View>
                                                 )}
+                                                }
                                             />
                                         </View>
                                     :
@@ -880,7 +942,18 @@ class RealSchedule1 extends Component {
                                                 ListHeaderComponent = {<View style = {{width: 20}}></View>}
                                                 horizontal = {true}
                                                 data  = {this.state.schedules[index][0]["Friday"]}
-                                                renderItem = {({item}) => (
+                                                renderItem = {({item}) => {
+                                                    let base64Icon = `data:image/png;base64,${item.thumbnail_url}`;
+                                                    let time = item.time;
+                                                    time = time.toString();
+                                                    let timeh = time.split(".")[0];
+                                                    let timem = time.split(".")[1];
+                                                    timem = "0."+timem;
+                                                    console.log(timem);
+                                                    timem = timem*60;
+                                                    timem = Math.round(timem);
+                                                    timem = timem.toString();
+                                                    return (
                                                     <View style = {{
                                                         flexDirection: 'row', 
                                                         // borderWidth: 2, 
@@ -897,17 +970,17 @@ class RealSchedule1 extends Component {
                                                                 style = {{
                                                                     // marginTop: 20,
                                                                     // marginRight: 20,
-                                                                    width: 100, 
+                                                                    width: 120, 
                                                                     height: 100, 
                                                                     borderRadius: 10,
                                                                     marginBottom: 0,
                                                                     overflow: 'hidden',
                                                                     position: 'relative',
                                                                 }}
-                                                                source = {require('../images/mathswork.png')}
+                                                                source = {{uri: base64Icon}}
                                                             >
                                                             </ImageBackground>
-                                                            <Text style = {{color: "#4ACDF4", fontFamily: "Poppins-Bold", fontSize: 13, position: 'absolute', top: 10, left: 110}}>Subject</Text>
+                                                            <Text style = {{color: "#4ACDF4", fontFamily: "Poppins-Bold", fontSize: 13, position: 'absolute', top: 10, left: 130}}>Subject</Text>
                                                             </View>
                                                             <View style = {{
                                                                 flex: 1,
@@ -958,7 +1031,7 @@ class RealSchedule1 extends Component {
                                                                     marginTop: 10
                                                                     // paddingTop: 29
                                                                 }}>
-                                                                    {item.time} pm
+                                                                    {timeh + ":" + timem} pm
                                                                 </Text>
                                                                 {
                                                                     <TouchableOpacity 
@@ -994,6 +1067,7 @@ class RealSchedule1 extends Component {
                                                         </View>
                                                     </View>
                                                 )}
+                                                }
                                             />
                                         </View>
                                     :
@@ -1013,7 +1087,18 @@ class RealSchedule1 extends Component {
                                                 ListHeaderComponent = {<View style = {{width: 20}}></View>}
                                                 horizontal = {true}
                                                 data  = {this.state.schedules[index][0]["Saturday"]}
-                                                renderItem = {({item}) => (
+                                                renderItem = {({item}) => {
+                                                    let base64Icon = `data:image/png;base64,${item.thumbnail_url}`;
+                                                    let time = item.time;
+                                                    time = time.toString();
+                                                    let timeh = time.split(".")[0];
+                                                    let timem = time.split(".")[1];
+                                                    timem = "0."+timem;
+                                                    console.log(timem);
+                                                    timem = timem*60;
+                                                    timem = Math.round(timem);
+                                                    timem = timem.toString();
+                                                    return (
                                                     <View style = {{
                                                         flexDirection: 'row', 
                                                         // borderWidth: 2, 
@@ -1030,17 +1115,17 @@ class RealSchedule1 extends Component {
                                                                 style = {{
                                                                     // marginTop: 20,
                                                                     // marginRight: 20,
-                                                                    width: 100, 
+                                                                    width: 120, 
                                                                     height: 100, 
                                                                     borderRadius: 10,
                                                                     marginBottom: 0,
                                                                     overflow: 'hidden',
                                                                     position: 'relative',
                                                                 }}
-                                                                source = {require('../images/mathswork.png')}
+                                                                source = {{uri: base64Icon}}
                                                             >
                                                             </ImageBackground>
-                                                            <Text style = {{color: "#4ACDF4", fontFamily: "Poppins-Bold", fontSize: 13, position: 'absolute', top: 10, left: 110}}>Subject</Text>
+                                                            <Text style = {{color: "#4ACDF4", fontFamily: "Poppins-Bold", fontSize: 13, position: 'absolute', top: 10, left: 130}}>Subject</Text>
                                                             </View>
                                                             <View style = {{
                                                                 flex: 1,
@@ -1091,7 +1176,7 @@ class RealSchedule1 extends Component {
                                                                     marginTop: 10
                                                                     // paddingTop: 29
                                                                 }}>
-                                                                    {item.time} pm
+                                                                    {timeh + ":" + timem} pm
                                                                 </Text>
                                                                 {
                                                                     <TouchableOpacity 
@@ -1127,6 +1212,7 @@ class RealSchedule1 extends Component {
                                                         </View>
                                                     </View>
                                                 )}
+                                                }
                                             />
                                         </View>
                                     :
@@ -1146,7 +1232,18 @@ class RealSchedule1 extends Component {
                                                 ListHeaderComponent = {<View style = {{width: 20}}></View>}
                                                 horizontal = {true}
                                                 data  = {this.state.schedules[index][0]["Sunday"]}
-                                                renderItem = {({item}) => (
+                                                renderItem = {({item}) => {
+                                                    let base64Icon = `data:image/png;base64,${item.thumbnail_url}`;
+                                                    let time = item.time;
+                                                    time = time.toString();
+                                                    let timeh = time.split(".")[0];
+                                                    let timem = time.split(".")[1];
+                                                    timem = "0."+timem;
+                                                    console.log(timem);
+                                                    timem = timem*60;
+                                                    timem = Math.round(timem);
+                                                    timem = timem.toString();
+                                                    return (
                                                     <View style = {{
                                                         flexDirection: 'row', 
                                                         // borderWidth: 2, 
@@ -1163,17 +1260,17 @@ class RealSchedule1 extends Component {
                                                                 style = {{
                                                                     // marginTop: 20,
                                                                     // marginRight: 20,
-                                                                    width: 100, 
+                                                                    width: 120, 
                                                                     height: 100, 
                                                                     borderRadius: 10,
                                                                     marginBottom: 0,
                                                                     overflow: 'hidden',
                                                                     position: 'relative',
                                                                 }}
-                                                                source = {require('../images/mathswork.png')}
+                                                                source = {{uri: base64Icon}}
                                                             >
                                                             </ImageBackground>
-                                                            <Text style = {{color: "#4ACDF4", fontFamily: "Poppins-Bold", fontSize: 13, position: 'absolute', top: 10, left: 110}}>Subject</Text>
+                                                            <Text style = {{color: "#4ACDF4", fontFamily: "Poppins-Bold", fontSize: 13, position: 'absolute', top: 10, left: 130}}>Subject</Text>
                                                             </View>
                                                             <View style = {{
                                                                 flex: 1,
@@ -1224,7 +1321,7 @@ class RealSchedule1 extends Component {
                                                                     marginTop: 10
                                                                     // paddingTop: 29
                                                                 }}>
-                                                                    {item.time} pm
+                                                                    {timeh + ":" + timem} pm
                                                                 </Text>
                                                                 {
                                                                     <TouchableOpacity 
@@ -1260,6 +1357,7 @@ class RealSchedule1 extends Component {
                                                         </View>
                                                     </View>
                                                 )}
+                                                }
                                             />
                                         </View>
                                     :

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, Text, Image, SafeAreaView, TextInput, Animated, Keyboard, TouchableOpacity, StyleSheet, BackHandler, AsyncStorage, Alert, Dimensions} from 'react-native';
+import {View, StatusBar, Text, Image, SafeAreaView, TextInput, Animated, Keyboard, TouchableOpacity, StyleSheet, BackHandler, AsyncStorage, Alert, Dimensions} from 'react-native';
 import {Actions} from 'react-native-router-flux';
 
 class Signin extends Component {
@@ -125,6 +125,9 @@ class Signin extends Component {
                     // marginTop: this.state.padding
                 }}
             >
+                <StatusBar 
+                    backgroundColor = "black"
+                />
                 <View style = {{marginTop: Platform.OS == "android" ? 30 : 30}}>
                     <Image style = {{width: 225, height: 170, alignSelf: 'center',}} source = {require('../images/logo.png')}/>
                     <Animated.View style = {{

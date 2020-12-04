@@ -1,36 +1,67 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import { View, Image, TouchableOpacity, Alert, Dimensions, Text, AsyncStorage } from 'react-native';
-
 import Video from './Video';
 import Live from './Live';
 import Test from './Test';
 import Subject from './Subject';
+import { Component } from 'react';
 
 let deviceHeight = Dimensions.get('screen').height;
 let windowHeight = Dimensions.get('window').height;
 let bottomNavBarHeight = deviceHeight - windowHeight;
 
-const BottomNavigator = () => {
+class BottomNavigator extends Component {
 
-    const [text, setText] = useState({
+    state = {
         dashboardText: true,
         videoText: false,
         liveText: false,
         testText: false
-    });
-
-    const [sub, setSub] = useState({
-        subject: "",
-    })
+    }
+    componentDidMount() {
+        console.log(this.props.chosen);
+        if(this.props.chosen == "dashboard")
+            this.setState({
+                dashboardText: true,
+                videoText: false,
+                liveText: false,
+                testText: false,
+            })
     
+        if(this.props.chosen == "video")
+            this.setState({
+                dashboardText: false,
+                videoText: true,
+                liveText: false,
+                testText: false,
+            })
+        
+        if(this.props.chosen == "test")
+            this.setState({
+                dashboardText: false,
+                videoText: false,
+                liveText: false,
+                testText: true,
+            })
+
+        if(this.props.chosen == "live")
+            this.setState({
+                dashboardText: false,
+                videoText: false,
+                liveText: true,
+                testText: false,
+            })
+    }
+
+    render(){
     return (
         <View style={{
             flex: 1,
         }}>
-            <View>{ text.dashboardText ? <Subject /> : null}</View>
-            <View>{ text.testText ? <Test /> : null}</View> 
-            <View>{ text.liveText ? <Live /> : null}</View>
-            <View>{ text.videoText ? <Video /> : null}</View>
+            <View>{ this.state.dashboardText ? <Subject /> : null}</View>
+            <View>{ this.state.testText ? <Test /> : null}</View> 
+            <View>{ this.state.liveText ? <Live /> : null}</View>
+            <View>{ this.state.videoText ? <Video /> : null}</View>
             <View style={{
 
                 position: 'absolute',
@@ -78,21 +109,20 @@ const BottomNavigator = () => {
                 }}>
                     <TouchableOpacity 
                         onPress={() => {
-                            setText({
+                            this.setState({
                                 dashboardText: true,
                                 videoText: false,
                                 liveText: false,
                                 testText: false
                             })
-                            }
-                        }
+                        }}
                     >
                         <Image
 
                             style={{ 
                                 width: 25, 
                                 height: 25, 
-                                tintColor: text.dashboardText? "#32C6F3" : "#585858",    
+                                tintColor: this.state.dashboardText? "#32C6F3" : "#585858",    
                             }}
                             source={require('../images/dashboard.png')}
                         >
@@ -114,7 +144,7 @@ const BottomNavigator = () => {
 
                     <TouchableOpacity
                         onPress={() => {
-                            setText({
+                            this.setState({
                                 dashboardText: false,
                                 videoText: true,
                                 liveText: false,
@@ -127,7 +157,7 @@ const BottomNavigator = () => {
                                 // marginHorizontal: 3, 
                                 width: 25, 
                                 height: 25,
-                                tintColor: text.videoText ? "#32C6F3" : "#585858"
+                                tintColor: this.state.videoText ? "#32C6F3" : "#585858"
                             }}
                             source={require('../images/videos.png')}
                         />
@@ -150,7 +180,7 @@ const BottomNavigator = () => {
 
                         <TouchableOpacity
                             onPress={() => {
-                                setText({
+                                this.setState({
                                     dashboardText: false,
                                     videoText: false,
                                     liveText: false,
@@ -167,7 +197,7 @@ const BottomNavigator = () => {
                                     // marginTop: 3,
                                     width: 30, 
                                     height: 30,
-                                    tintColor: text.testText ? "#32C6F3" : "#585858",
+                                    tintColor: this.state.testText ? "#32C6F3" : "#585858",
                                 }}
                             />
                     
@@ -191,7 +221,7 @@ const BottomNavigator = () => {
                     }}>
                         <TouchableOpacity
                             onPress={() => {
-                                setText({
+                                this.setState({
                                     dashboardText: false,
                                     videoText: false,
                                     liveText: true,
@@ -209,7 +239,7 @@ const BottomNavigator = () => {
                                             width: 30, 
                                             height: 30,
                                             // marginTop: 12,
-                                            tintColor: text.liveText ? "#32C6F3" : "#585858",
+                                            tintColor: this.state.liveText ? "#32C6F3" : "#585858",
                                         }}
                                     // containerStyle={{ marginHorizontal: 20, marginTop: 20 }}
                                 />
@@ -221,8 +251,7 @@ const BottomNavigator = () => {
             </View>
         </View>
     );
-
-
+    }
     
 }
 

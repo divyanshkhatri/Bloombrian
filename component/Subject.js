@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, SafeAreaView, Text, Dimensions, Linking, Image, ImageBackground, LogBox, Platform, TouchableOpacity, AsyncStorage, ActivityIndicator, BackHandler} from 'react-native';
+import {View, StatusBar, SafeAreaView, Text, Dimensions, Linking, Image, ImageBackground, LogBox, Platform, TouchableOpacity, AsyncStorage, ActivityIndicator, BackHandler} from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
 import LinearGradient from 'react-native-linear-gradient';
 import { FlatList, ScrollView } from 'react-native-gesture-handler';
@@ -113,6 +113,9 @@ export default class Subject extends Component {
                     paddingTop: Platform.OS === 'android' ? 0 : 0,
                 }}
             >
+                <StatusBar 
+                    backgroundColor = "black"
+                />
                 <ScrollView
                     style = {{
                         marginBottom: Platform.OS == "android" ? 50: 39
@@ -176,7 +179,7 @@ export default class Subject extends Component {
                                         alignSelf: 'center',
                                         fontFamily: "Poppins-SemiBold", 
                                         color: "white",
-                                        fontSize: 14, 
+                                        fontSize: Platform.OS == "android" ? 12 : 14,
                                         marginTop: 15, 
                                         borderRadius: 15,
                                         width: 140,
@@ -262,7 +265,7 @@ export default class Subject extends Component {
                                         alignSelf: 'center',
                                         fontFamily: "Poppins-SemiBold", 
                                         color: "white",
-                                        fontSize: 14, 
+                                        fontSize: Platform.OS == "android" ? 12 : 14, 
                                         marginTop: 15, 
                                         borderRadius: 15,
                                         width: 140,

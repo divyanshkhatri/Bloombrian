@@ -57,7 +57,8 @@ class DemoVideos1 extends Component {
                 })
                 .then((response) => response.json())
                 .then((responseJson) => {
-                    console.log(responseJson);
+                    this.setState({showLoader: false});
+                    // console.log(responseJson);
                     this.setState({classes: responseJson})
                     today = today.split("-").reverse().join("-");
                     dayAfterTomorrow = dayAfterTomorrow.split("-").reverse().join("-");
@@ -107,6 +108,7 @@ class DemoVideos1 extends Component {
                 chosen: false
             })
         }else {
+            this.setState({showLoader: true})
             this.setState({showModal: false, chosen: true});
 
         }
@@ -138,14 +140,9 @@ class DemoVideos1 extends Component {
                 })
                 .then((response) => response.json())
                 .then((responseJson) => {
-                    console.log(responseJson);
+                    this.setState({showLoader: false})
+                    // console.log(responseJson);
                     this.setState({classes: responseJson})
-                    today = today.split("-").reverse().join("-");
-                    dayAfterTomorrow = dayAfterTomorrow.split("-").reverse().join("-");
-                    this.setState({today: today});
-                    this.setState({dayAfterTomorrow: dayAfterTomorrow});
-                    // this.setState({urlVideos: responseJson["1"]});
-                    // console.log(this.state.urlVideos)
                 })
                 .catch((error) => {
                     this.setState({login: false})
@@ -172,6 +169,7 @@ class DemoVideos1 extends Component {
             'academics': 'Academics',
             'extra_curricular': 'Extra-curricular'
         },
+        showLoader: true,
         today: "",
         tomorrow: "",
         dayAfterTomorrow: "",
@@ -187,57 +185,28 @@ class DemoVideos1 extends Component {
     }
 
     onPressAttend = (class_time, url, date) => {
-        // let time = moment(new Date()).format("YY-MM-DD hh:mm")
-        // console.log(time);
-        // var hh = 5;
-        // var mm = parseInt(class_time.split(":")[1]);
-        // class_time = date + " " + hh + ":" + mm;
-        // console.log(class_time);
-        // var start = moment(class_time, "HH:mm");
-        // var end = moment(time, "HH:mm");
-        // var minutes1 = end.diff(start);
-        // var minutes = end.diff(start, 'minutes');
-        // var interval = moment().hour(0).minute(minutes);
-        // let difference = interval.format("hh:mm");
-        // console.log(difference)
-        // let hrs_diff = parseInt(difference.split(":")[0]);
-        // let mins_diff = parseInt(difference.split(":")[1]);
-        // console.log(hrs_diff+"::::"+mins_diff);
-        // // console.log(date);
-        // let today_date = moment(new Date()).format("YYYY-MM-DD")
-        // // console.log(today_date);
-        // const a = new Date(today_date);
-        // const b = new Date(date);
-        // const utc1 = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate());
-        // const utc2 = Date.UTC(b.getFullYear(), b.getMonth(), b.getDate());
-
-        // let date_diff = (Math.floor((utc2 - utc1) / (1000 * 60 * 60 * 24)));
-        // console.log(date_diff)
-        // if(date_diff == 0 && hrs_diff == 0 && mins_diff <= 5) {
         Linking.openURL(url);
-        // }
-        // if(hrs_diff == 0 && mins_diff <= 5) {
-        //     Linking.openURL(url);
-        //     this.setState({errorString: ""});
-        // } else {
-        //     Alert.alert(
-        //         "Alert Title",
-        //         "My Alert Msg",
-        //         [
-        //           {
-        //             text: "Cancel",
-        //             onPress: () => console.log("Cancel Pressed"),
-        //             style: "cancel"
-        //           },
-        //           { text: "OK", onPress: () => console.log("OK Pressed") }
-        //         ],
-        //         { cancelable: false }
-        //     )
-        // }
     }
 
     render() {
         if(this.state.error == 200){
+        if(this.state.showLoader) {
+            return (
+                <View style = {{
+                    height: "95%",
+                    alignItems: "center",
+                    justifyContent: "center",
+                }}>
+                    <Image 
+                        style = {{
+                            width: 60,
+                            height: 60,
+                        }}
+                        source = {require("../images/loader.gif")}
+                    />
+                </View>
+            )
+        } else 
         return (
             <ScrollView 
                 style = {{paddingTop: 10, backgroundColor: '#101010', height: Platform.OS == 'ios' ? '100%' : '100%'}}
@@ -245,7 +214,7 @@ class DemoVideos1 extends Component {
                 showsVerticalScrollIndicator = {false}    
             >
                 <TouchableOpacity onPress = { () => {this.setState({showModal: true})}} style = {{marginRight: 10, marginTop: 15, alignSelf: 'flex-end', justifyContent: "center", alignItems: 'center'}}>
-                    <Text style = {{fontFamily: 'Poppins-Bold', color: '#4ACDF4', fontSize: 13,  width: 120, height: 20, textAlign: 'center'}}>Filter by Date</Text>
+                    <Text style = {{fontFamily: 'Poppins-Bold', color: '#4ACDF4', fontSize: Platform.OS == "android" ? 12 : 13,  width: 120, height: 20, textAlign: 'center'}}>Filter by Date</Text>
                 </TouchableOpacity>
                 <Modal 
                     onBackdropPress = {() => {this.setState({showModal: false})}}
@@ -394,6 +363,7 @@ class DemoVideos1 extends Component {
                                         keyExtractor = {(item) => item.id}
                                         renderItem = {({item}) => {
                                             if(item.length != 0) {
+                                                let base64Icon = `data:image/png;base64,${item.thumbnail_url}`;
                                                 return (
                                                     <View style = {{
                                                         flexDirection: 'row', 
@@ -411,17 +381,17 @@ class DemoVideos1 extends Component {
                                                                 style = {{
                                                                     // marginTop: 20,
                                                                     // marginRight: 20,
-                                                                    width: 100, 
+                                                                    width: 120, 
                                                                     height: 100, 
                                                                     borderRadius: 10,
                                                                     marginBottom: 0,
                                                                     overflow: 'hidden',
                                                                     position: 'relative',
                                                                 }}
-                                                                source = {require('../images/mathswork.png')}
+                                                                source = {{uri: base64Icon}}
                                                             >
                                                             </ImageBackground>
-                                                            <Text style = {{color: "#4ACDF4", fontFamily: "Poppins-Bold", fontSize: 11, position: 'absolute', top: 10, left: 110}}>Subject</Text>
+                                                            <Text style = {{color: "#4ACDF4", fontFamily: "Poppins-Bold", fontSize: 11, position: 'absolute', top: 10, left: 130}}>Subject</Text>
                                                             </View>
                                                             <View style = {{
                                                                 flex: 1,
@@ -432,14 +402,14 @@ class DemoVideos1 extends Component {
                                                                 <Text style = {{
                                                                     color: 'white',
                                                                     fontFamily: 'Poppins-SemiBold',
-                                                                    paddingLeft: 15,
+                                                                    paddingLeft: 10,
                                                                     paddingRight: 50,
                                                                     marginTop: 30,
                                                                     // borderColor: 'white',
                                                                     // borderWidth: 2,
                                                                     flexShrink: 1,
                                                                     fontSize: 14,
-                                                                    height: 40
+                                                                    height: 35
                                                                     // paddingTop:10
                                                                 }}>
                                                                     {this.state.subjects[item.subject]}
@@ -560,7 +530,7 @@ class DemoVideos1 extends Component {
                     })
                 }
                 </View>
-                {/* <View style = {{marginBottom: 100}}></View> */}
+                <View style = {{height: Platform.OS == "android" ? 40: 10}}></View>
                                
             </ScrollView>
         ) 

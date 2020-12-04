@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, Text, SafeAreaView, Image, TouchableOpacity, TextInput, Alert, Keyboard, Dimensions, Animated, BackHandler, AsyncStorage} from 'react-native';
+import {View, StatusBar, Text, SafeAreaView, Image, TouchableOpacity, TextInput, Alert, Keyboard, Dimensions, Animated, BackHandler, AsyncStorage} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import Dash from 'react-native-dash';
 import { Actions } from 'react-native-router-flux';
@@ -124,6 +124,9 @@ class Checkout extends Component {
                     paddingTop: Platform.OS === 'android' ? 0 : 0
                 }}
             >
+                <StatusBar 
+                    backgroundColor = "black"
+                />
                 <ScrollView>
                 <Animated.View style = {{marginTop: this.state.padding}}>
                 <View 
@@ -322,7 +325,16 @@ class Checkout extends Component {
                         // marginRight: 100
                     }}>
                         <TextInput
-                            style = {{ height: 38, fontFamily: 'Poppins-SemiBold', color: 'white', fontSize: 12, justifyContent: 'center', paddingLeft: 10}}
+                            style = {{ 
+                                height: 38, 
+                                fontFamily: 'Poppins-SemiBold', 
+                                color: 'white', 
+                                fontSize: 12, 
+                                justifyContent: 'center', 
+                                paddingLeft: 10,
+                                paddingBottom: Platform.OS == "android" ? 0 : 5,
+                                paddingTop: Platform.OS == "android" ? 0 : 0,
+                            }}
                             value = {this.state.code}
                             onChangeText = {() => {}}
                             placeholder = "Have a promo Code?"

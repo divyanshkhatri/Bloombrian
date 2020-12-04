@@ -198,7 +198,7 @@ class Recorded extends Component {
                 showsVerticalScrollIndicator = {false}
             >
                 <TouchableOpacity onPress = { () => {this.setState({showModal: true})}} style = {{marginRight: 10, marginTop: 15, alignSelf: 'flex-end', justifyContent: "center", alignItems: 'center'}}>
-                    <Text style = {{fontFamily: 'Poppins-Bold', color: '#4ACDF4', fontSize: 13,  width: 120, height: 20, textAlign: 'center'}}>Filter by Date</Text>
+                    <Text style = {{fontFamily: 'Poppins-Bold', color: '#4ACDF4', fontSize: Platform.OS == "android" ? 12 : 13,  width: 120, height: 20, textAlign: 'center'}}>Filter by Date</Text>
                 </TouchableOpacity>
                 <Modal 
                     onBackdropPress = {() => {this.setState({showModal: false})}}
@@ -216,7 +216,7 @@ class Recorded extends Component {
                             borderRadius: 20,
                             padding: 25,
                             width: 250,
-                            height: 230,
+                            height: Platform.OS == "android" ? 250 : 230,
                             alignSelf: 'center',
                             shadowColor: '#000',
                             shadowOffset: {
@@ -452,7 +452,7 @@ class Recorded extends Component {
                             return(
                                 <View>
                                     <Text style = {{fontSize: 14, color: '#4ACDF4', marginLeft: 16, marginBottom: 10, fontFamily: 'Poppins-Bold'}}>{val.toString().split("-").reverse().join("-")}</Text>
-                                    <Text style = {{fontSize: 12, color: 'white', marginLeft: 16, marginBottom: 20, fontFamily: 'Poppins-SemiBold'}}>No Live Recordings Found {'\u2728'}</Text>
+                                    <Text style = {{fontSize: 12, color: 'white', marginLeft: 16, marginBottom: 20, fontFamily: 'Poppins-SemiBold'}}>No Live Recordings Found</Text>
                                 </View>
                             )
 

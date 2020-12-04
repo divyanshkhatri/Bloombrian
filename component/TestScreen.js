@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, Text, SafeAreaView, TouchableOpacity, BackHandler, Image, AsyncStorage, Platform, Dimensions} from 'react-native';
+import {StatusBar, View, Text, SafeAreaView, TouchableOpacity, BackHandler, Image, AsyncStorage, Platform, Dimensions} from 'react-native';
 import Modal from 'react-native-modal';
 import { Actions } from 'react-native-router-flux';
 import CountDown from 'react-native-countdown-component';
@@ -87,6 +87,9 @@ class TestScreen extends Component {
                     height: '100%'
                 }}
             >
+                <StatusBar 
+                    backgroundColor = "black"
+                />
                 <Modal 
                     isVisible = {this.state.showModalSubmit}
                     onBackdropPress = { () => {this.setState({showModalSubmit: false})}}

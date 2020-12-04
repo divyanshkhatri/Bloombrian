@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {SafeAreaView, View, Text, TouchableOpacity, Image} from 'react-native';
+import {StatusBar, SafeAreaView, View, Text, TouchableOpacity, Image} from 'react-native';
 import { Actions } from 'react-native-router-flux';
 
 class PaymentComplete extends Component {
@@ -15,6 +15,9 @@ class PaymentComplete extends Component {
                     paddingTop: Platform.OS === 'android' ? 0 : 0
                 }}
             >
+                <StatusBar 
+                    backgroundColor = "black"
+                />
                 <View 
                     style = {{
                         flexDirection: 'row',

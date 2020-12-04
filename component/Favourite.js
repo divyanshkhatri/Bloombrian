@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, Text, SafeAreaView, Dimensions, Image, ScrollView, TouchableOpacity, AsyncStorage} from 'react-native';
+import {StatusBar, View, Text, SafeAreaView, Dimensions, Image, ScrollView, TouchableOpacity, AsyncStorage} from 'react-native';
 import RNPickerSelect, { defaultStyles } from 'react-native-picker-select';
 import LinearGradient from 'react-native-linear-gradient';
 import {Actions} from 'react-native-router-flux';
@@ -171,6 +171,9 @@ class Favourite extends Component {
                     paddingBottom: 20
                 }}
             >
+            <StatusBar 
+                backgroundColor = "black"
+            />
             <ScrollView>
                 <View>
                     <LinearGradient

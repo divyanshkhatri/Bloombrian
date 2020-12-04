@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, Text, SafeAreaView, TouchableOpacity, BackHandler, Image, AsyncStorage, Platform, Dimensions} from 'react-native';
+import {View, StatusBar, Text, SafeAreaView, TouchableOpacity, BackHandler, Image, AsyncStorage, Platform, Dimensions} from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
 import { Actions } from 'react-native-router-flux';
 import { FlatList } from 'react-native-gesture-handler';
@@ -502,6 +502,9 @@ class Test extends Component {
                     backgroundColor: 'black'
                 }}
             >
+                <StatusBar 
+                    backgroundColor = "black"
+                />
                 <View style = {{
                     // flex: 1,
                     marginTop: 10, 
@@ -569,7 +572,7 @@ class Test extends Component {
                         alignSelf: 'center',
                         fontFamily: "Poppins-SemiBold", 
                         color: "white",
-                        fontSize: 14, 
+                        fontSize: Platform.OS == "android" ? 12 : 14, 
                         borderRadius: 15,
                         width: 140,
                         height: 30,
@@ -684,9 +687,9 @@ class Test extends Component {
 
                             <View 
                                 style = {{
-                                height: '86%',
+                                height: Platform.OS == "android" ? '87%' : '86%',
                                 backgroundColor: "#141414",
-                                paddingBottom: 40
+                                paddingBottom: Platform.OS == "android" ? 0 : 40
                             }}>
                                 <Text
                                     style = {{
@@ -756,6 +759,7 @@ class Test extends Component {
                                                                             textAlign: "center",
                                                                             fontFamily: "Poppins-SemiBold",
                                                                             color: "white",
+                                                                            fontSize: Platform.OS == "android" ? 12 : 14,
                                                                             backgroundColor: "#4ACDF4",
                                                                             borderRadius: 5,
                                                                             overflow: "hidden"
@@ -782,7 +786,7 @@ class Test extends Component {
                                                                 <Text 
                                                                     style = {{
                                                                         color: "#4ACDF4",
-                                                                        fontSize: 10,
+                                                                        fontSize: Platform.OS == "android" ? 8 : 10,
                                                                         fontFamily: "Poppins-SemiBold"
                                                                     }}
                                                                 >
@@ -795,6 +799,12 @@ class Test extends Component {
                                         </View>
                                     )}
                                 />
+                                <View 
+                                    style = {{
+                                        margin: Platform.OS == "android" ? 15 : 0,
+                                    }}
+                                >
+                                </View>
                             </View>
                         </View>
                     )

@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
-import {SafeAreaView, View, Image, Text, Dimensions, AsyncStorage, Platform, BackHandler,TouchableOpacity} from 'react-native';
+import {SafeAreaView, StatusBar, View, Image, Text, Dimensions, AsyncStorage, Platform, BackHandler,TouchableOpacity} from 'react-native';
 import DemoLectures from './DemoLectures';
 import LinearGradient from 'react-native-linear-gradient';
-import Recorded from './Recored';
 import Modal from 'react-native-modal';
 import {Actions} from 'react-native-router-flux';
 import DemoVideos from './DemoVideos';
 import RealSchedule from './RealSchedule';
+import Recorded from './Recored';
 
 class Live extends Component {
 
@@ -29,9 +29,6 @@ class Live extends Component {
         category: "",
         id: "",
         plan: false,
-        academics: false, 
-        communication: false,
-        invention: false,
     }
 
     backAction = () => {
@@ -67,12 +64,6 @@ class Live extends Component {
             });
         })
         .catch((e) => console.log(e));
-        AsyncStorage.getItem('subject')
-        .then((val) => this.setState({subject: val}))
-        .catch((e) => console.log(e))
-        AsyncStorage.getItem('category')
-        .then((val) => this.setState({category: val}))
-        .catch((e) => console.log(e))
 
     }
 
@@ -95,6 +86,9 @@ class Live extends Component {
                     paddingTop: Platform.OS === 'android' ? 5 : 0
                 }}
             >
+                <StatusBar 
+                    backgroundColor = "black"
+                />
                 <View style = {{
                     // flex: 1,
                     marginTop: 10, 
@@ -139,38 +133,6 @@ class Live extends Component {
                     }}
                     />
                 </View>
-                <TouchableOpacity 
-                    style = {{
-                        width: 140,
-                        alignItems: 'center',
-                        justifyContent: 'center'
-                    }}
-                    onPress = {() => {
-                        this.state.category === "Academics" ? this.setState({academics: true}) :
-                        this.state.category === "Invention" ? this.setState({invention: true}) : 
-                        this.setState({communication: true})
-                    }}>
-                    <Text style = {{
-                        paddingTop: Platform.OS == 'ios' ? 5 : 3,
-                        justifyContent: 'center',
-                        alignContent: 'center',
-                        textAlign: 'center', 
-                        alignSelf: 'center',
-                        fontFamily: "Poppins-SemiBold", 
-                        color: "white",
-                        fontSize: 14, 
-                        // marginTop: 15, 
-                        borderRadius: 15,
-                        width: 140,
-                        height: 30,
-                        overflow: 'hidden',
-                        // borderColor: 'white', 
-                        // borderWidth: 2, 
-                        backgroundColor: "#232323"
-                    }}>Change Subject</Text>
-                </TouchableOpacity>
-
-                
                 <Modal 
                     isVisible = {this.state.invention}
                     animationIn = "pulse"
@@ -950,14 +912,14 @@ class Live extends Component {
                     {this.state.plan == true ?
                         <Text style = {{
                             color: this.state.ds ? '#4ACDF4' : '#383838', 
-                            fontSize: this.state.ds ? 14 : 13,
+                            fontSize: this.state.ds ? Platform.OS == "android" ? 12 : 14 : Platform.OS == "android" ? 11 : 13,
                             fontFamily: 'Poppins-Bold'    
                         }}> Class Schedule</Text> 
                         : 
                         <Text style = {{
                             color: this.state.ds ? '#4ACDF4' : '#383838', 
                             fontFamily: 'Poppins-Bold',
-                            fontSize: this.state.ds ? 14 : 13, 
+                            fontSize: this.state.ds ? Platform.OS == "android" ? 13 : 14 : Platform.OS == "android" ? 12 : 13,
                         }}> Demo Schedule</Text>
                     }
                     </TouchableOpacity>
@@ -971,7 +933,7 @@ class Live extends Component {
                     <Text style = {{
                         color: this.state.rs ? '#4ACDF4' : '#383838',  
                         fontFamily: 'Poppins-Bold',
-                        fontSize: this.state.rs ? 14 : 13,
+                        fontSize: this.state.rs ? Platform.OS == "android" ? 13 : 14 : Platform.OS == "android" ? 12 : 13,
                     }}>Class Schedules</Text>
                     </TouchableOpacity>
                     <TouchableOpacity  onPress = { () => {
@@ -985,7 +947,7 @@ class Live extends Component {
                     <Text style = {{
                         color: this.state.rl ? '#4ACDF4' : '#383838',  
                         fontFamily: 'Poppins-Bold',
-                        fontSize: this.state.rl ? 14 : 13,
+                        fontSize: this.state.rl ? Platform.OS == "android" ? 13 : 14 : Platform.OS == "android" ? 12 : 13,
                     }}>Recorded Lectures</Text>
                     </TouchableOpacity>
                 </View>
@@ -995,7 +957,7 @@ class Live extends Component {
                 }}>
                     <View
                         style = {{
-                            width: this.state.ds ? '33.5%' : '31.4%', 
+                            width: this.state.ds ? Platform.OS == "ios" ? '33.5%' : '34.0%' : Platform.OS == "ios" ? '31.4%' : '31.2%', 
                             height: 3,
                             backgroundColor: this.state.ds ? "#4ACDF4" : "#383838"
                         }}
@@ -1003,7 +965,7 @@ class Live extends Component {
                     </View>
                     <View
                         style = {{
-                            width: this.state.rs ? '32.7%' : '30.4%', 
+                            width: this.state.rs ? Platform.OS == "ios" ? '32.7%' : '33.3%' : Platform.OS == "ios" ? '30.4%' : '30.4%', 
                             height: 3,
                             backgroundColor: this.state.rs ? "#4ACDF4" : "#383838"
                         }}

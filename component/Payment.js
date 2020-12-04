@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, Text, SafeAreaView, Dimensions, Image, TouchableOpacity, Platform, BackHandler, Linking} from 'react-native';
+import {View, StatusBar, Text, SafeAreaView, Dimensions, Image, TouchableOpacity, Platform, BackHandler, Linking} from 'react-native';
 import Carousel, {Pagination} from 'react-native-snap-carousel';
 import LinearGradient from 'react-native-linear-gradient';
 import RNPickerSelect from 'react-native-picker-select';
@@ -172,7 +172,9 @@ class Payment extends Component {
                     paddingTop: Platform.OS === 'android' ? 0 : 0
                 }}
             >   
-
+                <StatusBar 
+                    backgroundColor = "black"
+                />
                 <View 
                     style = {{
                         flexDirection: 'row',
@@ -222,7 +224,7 @@ class Payment extends Component {
                             ({item}) => (
                                 <View style = {{
                                     marginTop: 55,
-                                    height: 540, 
+                                    height: Platform.OS == "android" ? 570 : 540, 
                                     borderRadius: 15, 
                                     overflow: 'hidden',
                                     width: 290, 
@@ -255,7 +257,7 @@ class Payment extends Component {
                                                 <Text style = {{
                                                     color: '#ffffff',
                                                     fontFamily: 'Poppins-Bold',
-                                                    fontSize: 12,
+                                                    fontSize: Platform.OS == "android" ? 11 : 12,
                                                     textShadowColor:'#4ACDF4',
                                                     // textShadowOffset:{width: 5, height: 5},
                                                     textShadowRadius:10,
@@ -267,7 +269,7 @@ class Payment extends Component {
                                                     marginLeft: 6,
                                                     color: 'white',
                                                     fontFamily: 'Poppins-ExtraBold',
-                                                    fontSize: 14,
+                                                    fontSize: Platform.OS == "android" ? 12 : 14,
                                                     lineHeight: 17
                                                 }}>{item.category}</Text>
                                             </View>
@@ -287,7 +289,7 @@ class Payment extends Component {
                                         <Text style = {{
                                             fontFamily: 'Poppins-Bold',
                                             color: '#4ACDF4',
-                                            fontSize: 32,
+                                            fontSize: Platform.OS == "android" ? 30 : 32,
                                             marginBottom: this.state.plan == "1month" ? 20 : 0,
                                             // borderColor: 'white',
                                             // borderWidth: 2,
@@ -296,7 +298,7 @@ class Payment extends Component {
                                         <Text style = {{
                                             fontFamily: 'Poppins-Medium',
                                             color: '#4A4A4A',
-                                            fontSize: 14,
+                                            fontSize: Platform.OS == "android" ?13 : 14,
                                             // borderColor: 'white',
                                             // borderWidth: 2,
                                             textDecorationLine: 'line-through',
@@ -309,7 +311,7 @@ class Payment extends Component {
                                                 <Text style = {{
                                                     fontFamily: 'Poppins-Bold',
                                                     color: '#4ACDF4',
-                                                    fontSize: 32,
+                                                    fontSize: Platform.OS == "android" ? 30 : 32,
                                                     marginBottom: this.state.plan == "1month" ? 20 : 0,
                                                     // borderColor: 'white',
                                                     // borderWidth: 2,
@@ -325,7 +327,7 @@ class Payment extends Component {
                                             <Text
                                                 style = {{
                                                     fontFamily: 'Poppins-SemiBold',
-                                                    fontSize: 14,
+                                                    fontSize: Platform.OS == "android" ? 13 : 14,
                                                     color: 'white',
                                                     marginLeft: 14,
                                                     paddingRight: 20
@@ -341,7 +343,7 @@ class Payment extends Component {
                                             <Text
                                                 style = {{
                                                     fontFamily: 'Poppins-SemiBold',
-                                                    fontSize: 14,
+                                                    fontSize: Platform.OS == "android" ? 13 : 14,
                                                     color: 'white',
                                                     marginLeft: 14,
                                                     paddingRight: 20
@@ -357,7 +359,7 @@ class Payment extends Component {
                                             <Text
                                                 style = {{
                                                     fontFamily: 'Poppins-SemiBold',
-                                                    fontSize: 14,
+                                                    fontSize: Platform.OS == "android" ? 13 : 14,
                                                     color: 'white',
                                                     marginLeft: 14,
                                                     paddingRight: 20
@@ -373,7 +375,7 @@ class Payment extends Component {
                                             <Text
                                                 style = {{
                                                     fontFamily: 'Poppins-SemiBold',
-                                                    fontSize: 14,
+                                                    fontSize: Platform.OS == "android" ? 13 : 14,
                                                     color: 'white',
                                                     marginLeft: 14,
                                                     paddingRight: 20

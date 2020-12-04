@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, Text, Image, SafeAreaView, ImageBackground, Dimensions, AsyncStorage, Alert, BackHandler, ActivityIndicator, Platform, TouchableOpacity, ScrollView} from 'react-native';
+import {StatusBar, View, Text, Image, SafeAreaView, ImageBackground, Dimensions, AsyncStorage, Alert, BackHandler, ActivityIndicator, Platform, TouchableOpacity, ScrollView} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 
 import {Actions} from 'react-native-router-flux';
@@ -94,16 +94,24 @@ class Profile extends Component {
                     // paddingBottom: 40
                 }}
             >
+
                 {this.state.isLoading ?  
                    ( 
                     <View style = {{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+                        <StatusBar 
+                            backgroundColor = "black"
+                        />
                         <Image source={require("../images/loader.gif")} style = {{width: 50, height: 50}} />
                     </View>
                     )
                     : 
                 (
                 <ScrollView>
+                <StatusBar 
+                    backgroundColor = "black"
+                />
                 <View style = {{marginTop: Platform.OS == "android" ? 10 : 0, backgroundColor: "black", flexDirection: 'row', justifyContent: 'space-around', alignContent: 'center', alignItems: 'center'}} >
+
                     <TouchableOpacity onPress = {() => Actions.Homepage()}>
                         <Image style = {{width: 30, height: 30}} source = {require('../images/back.png')} />
                     </TouchableOpacity>
@@ -115,15 +123,16 @@ class Profile extends Component {
                             // borderColor: 'white',
                             // borderWidth: 1,
                             // textAlign: 'center',
-                            marginLeft: 24
+                            marginLeft: -20
                         }}
                     >My Profile</Text>
-                    <Image style = {{width: 22, height: 19, marginLeft: 30, marginTop: Platform.OS == "android" ? -7: -5}} source = {require('../images/edit.png')} />
+                    <View></View>
+                    {/* <Image style = {{width: 22, height: 19, marginLeft: 30, marginTop: Platform.OS == "android" ? -7: -5}} source = {require('../images/edit.png')} /> */}
                 </View>
-                <View style = {{height: '100%', backgroundColor: "black", height: '20%', width: Dimensions.get('window').width, flexDirection: 'row', marginTop: 15, paddingTop: 20, marginRight: 30, height: 140}}>
+                <View style = {{height: '100%', backgroundColor: "black", height: Platform.OS == "android" ? '20%' : '20%', width: Dimensions.get('window').width, flexDirection: 'row', marginTop: 15, paddingTop: 20, marginRight: 30, height: Platform.OS == "android" ? 150 : 140}}>
                     <View style = {{
                         alignItems: 'center',
-                        marginLeft: 30
+                        marginLeft: 50,
                     }}>
                         <ImageBackground 
                             style = {{
@@ -145,17 +154,17 @@ class Profile extends Component {
                             style = {{
                                 color: '#4ACDF4',
                                 fontFamily: 'Poppins-Bold',
-                                fontSize: 22,
+                                fontSize: Platform.OS == "android" ? 20 : 22,
                                 // lineHeight: 20
                             }}
-                            >{this.state.profileData ? this.state.profileData["username"] : null0}
+                            >{this.state.profileData ? this.state.profileData["username"] : null}
                         </Text>
                         <View style = {{flexDirection: 'row', }}>
                             <Text 
                             style = {{
                                 color: 'white',
                                 fontFamily: 'Poppins-Bold',
-                                fontSize: 12,
+                                fontSize: Platform.OS == "android" ? 10 : 12,
                                 lineHeight: 15
                             }}>
                                 Class {this.state.profileData ? this.state.profileData["class_data"] : null}
@@ -164,7 +173,7 @@ class Profile extends Component {
                                 style={{
                                     color: 'white',
                                     fontFamily: 'Poppins-SemiBold',
-                                    fontSize: 10, 
+                                    fontSize: Platform.OS == "android" ? 9 : 10, 
                                     lineHeight: 12
                                 }}>{this.state.superScript}
                             </Text>
@@ -173,7 +182,7 @@ class Profile extends Component {
                             <Text style = {{
                                 color: '#828282',
                                 fontFamily: 'Poppins-SemiBold',
-                                fontSize: 9,
+                                fontSize: Platform.OS == "android" ? 8 : 9,
                                 marginTop: 15
                             }}>Active Plan</Text>
                             {this.state.profileData ? (
@@ -182,24 +191,24 @@ class Profile extends Component {
                                 <Text style = {{
                                     color: 'white',
                                     fontFamily: "Poppins-Bold",
-                                    fontSize: 10
+                                    fontSize: Platform.OS == "android" ? 8.5 : 10,
                                 }} >Personality Development </Text>
                                 <Image 
                                     source = {require("../images/dot.png")}
                                     style = {{width: 5, height: 5}}/>
                                 <Text style = {{
                                     color: '#4ACDF4',
-                                    fontSize: 10,
+                                    fontSize: Platform.OS == "android" ? 8.5 : 10,
                                     fontFamily: 'Poppins-Bold'
                                 }}>  6 Months
                                 </Text>
                             </View>
                             ): <Text style = {{
                                 color: '#FF5252',
-                                fontSize: 10,
+                                fontSize: Platform.OS == "android" ? 8.5 : 10,
                                 marginTop: 2,
                                 fontFamily: 'Poppins-Bold'
-                                }}>No Plans found</Text>
+                                }}>Demo Plan</Text>
                             )
                             : null
                             }
@@ -227,7 +236,7 @@ class Profile extends Component {
                                 // borderColor: 'white',
                                 // borderWidth: 1,
                                 marginTop: 18,
-                                height: 70,
+                                height: Platform.OS == "android" ? 75 : 70,
                                 marginLeft: 28,
                                 marginRight: 30,
                                 paddingLeft: 15,
@@ -240,7 +249,7 @@ class Profile extends Component {
                                 style = {{
                                     // marginLeft: 8,
                                     fontFamily: 'Poppins-Bold',
-                                    fontSize: 11,
+                                    fontSize: Platform.OS == "android" ? 10 : 11,
                                     color: 'white',
                                     marginRight: 70,
                                     // borderWidth: 2, 

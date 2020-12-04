@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { StyleSheet, Text, View, Button, Image } from 'react-native';
+import { StatusBar, StyleSheet, Text, View, Button, Image } from 'react-native';
 import Gif from './Gif';
 
 class Landing extends Component {
@@ -7,6 +7,9 @@ class Landing extends Component {
     render() {
         return (
             <View style = {styles.root}>
+                <StatusBar 
+                    backgroundColor = "black"
+                />
                 <Gif />                
             </View>
         );

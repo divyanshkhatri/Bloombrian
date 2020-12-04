@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import {View, Text, SafeAreaView, TouchableOpacity, Image, Dimensions} from 'react-native';
-import { FlatList, TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import {View, StatusBar, Text, SafeAreaView, TouchableOpacity, Image, Dimensions, TouchableWithoutFeedback, Platform} from 'react-native';
+import { FlatList } from 'react-native-gesture-handler';
 import {Actions} from 'react-native-router-flux';
 
 class Results extends Component {
@@ -25,6 +25,9 @@ class Results extends Component {
                     height: '100%'
                 }}
             >
+                <StatusBar 
+                    backgroundColor = "black"
+                />
                 <View 
                     style = {{
                         flexDirection: 'row',
@@ -56,6 +59,18 @@ class Results extends Component {
                         marginRight: 20,
                         marginTop: 60,
                     }}>
+                        {
+                            this.state.show ? 
+                        <Image 
+                            style = {{
+                                position: "absolute",
+                                height: Dimensions.get("window").height,
+                                left: -150,
+                                top: -80
+                            }}
+                            source = {require("../images/complete.gif")}
+                        />
+                        : null}
                         <View>
                             <Text
                                 style = {{
@@ -65,17 +80,17 @@ class Results extends Component {
                                     marginBottom: 5,
                                 }}
                             >
-                                Keep it up!
+                                Amazing!
                             </Text>
                             <Text
                                 style = {{
-                                    color: "#FF9131",
+                                    color: "#F7CE00",
                                     fontFamily: "Poppins-ExtraBold",
                                     fontSize: 28,
                                     paddingBottom: 20,
                                 }}
                             >
-                                You did well!
+                                You did a great job!
                             </Text>
                             <Text
                                 style = {{
@@ -106,9 +121,9 @@ class Results extends Component {
                                 <View
                                     style = {{
                                         marginLeft: 10,
-                                        width: 100,
-                                        height: 100,
-                                        borderRadius: 50,
+                                        width: Platform.OS == "android" ? 110 : 100,
+                                        height: Platform.OS == "android" ? 110 : 100,
+                                        borderRadius: Platform.OS == "android" ? 55 : 50,
                                         borderWidth: 5,
                                         borderColor: "white"
                                     }}
@@ -119,6 +134,7 @@ class Results extends Component {
                                             borderBottomWidth: 2,
                                             marginLeft: 5,
                                             marginRight: 5,
+                                            paddingTop: 5,
                                         }}
                                     >
                                         <Text 
@@ -126,8 +142,8 @@ class Results extends Component {
                                                 textAlign: "center",
                                                 color: "white",
                                                 fontFamily: "Poppins-Bold",
-                                                fontSize: 30,
-                                                paddingTop: 4,
+                                                fontSize: Platform.OS == "android" ? 28 : 30,
+                                                paddingTop: Platform.OS == "android" ? 0 : 4,
                                             }}
                                         >
                                             {this.state.marks}
@@ -138,7 +154,7 @@ class Results extends Component {
                                             textAlign: "center",
                                             color: "white",
                                             fontFamily: "Poppins-Bold",
-                                            fontSize: 30,
+                                            fontSize: Platform.OS == "android" ? 28 : 30,
                                         }}
                                     >
                                         {this.state.total}
@@ -281,20 +297,23 @@ class Results extends Component {
                                 <View
                                     style = {{
                                         width: '100%',
-                                        height: 100,
+                                        height: 110,
+                                        backgroundColor: "#101010",
+                                        borderRadius: 10,
+                                        paddingLeft: 10,
+                                        paddingRight: 10,
+                                        paddingTop: 10
                                     }}
                                 >
                                     <FlatList 
-                                        contentContainerStyle = {{
-                                            borderColor: "white"
-                                        }}
                                         data = {this.props.questions}
                                         renderItem = { ({item, index}) => {
-                                            return(
-                                                <View style = {{flexDirection: "row"}}>
+                                            return (
+                                                <View style = {{flexDirection: "row", alignItems: "center"}}>
                                                     <Text style = {{
                                                         color: "#404040",
-                                                        fontFamily: "Poppins-Bold"
+                                                        fontFamily: "Poppins-Bold",
+                                                        textAlign: "center",
                                                     }}>
                                                     Ans {index+1} - 
                                                     </Text>
@@ -308,7 +327,8 @@ class Results extends Component {
                                                                         <Text 
                                                                             style = {{
                                                                                 fontFamily: "Poppins-Bold",
-                                                                                color: "#404040"
+                                                                                color: "#404040",
+                                                                                textAlign: "left"
                                                                             }}
                                                                         > {item.answerText}
                                                                         </Text>
@@ -330,7 +350,6 @@ class Results extends Component {
                         
                             <TouchableWithoutFeedback
                                 style = {{
-                                    marginTop: 50,
                                     alignItems: "center"
                                 }}
 
@@ -338,6 +357,7 @@ class Results extends Component {
                             >
                                 <View
                                     style = {{
+                                        marginTop: Platform.OS == "android" ? 50 : 50,
                                         justifyContent: "center",
                                         height: 55,
                                         borderWidth: 2,
@@ -415,9 +435,9 @@ class Results extends Component {
                                 <View
                                     style = {{
                                         marginLeft: 10,
-                                        width: 100,
-                                        height: 100,
-                                        borderRadius: 50,
+                                        width: Platform.OS == "android" ? 110 : 100,
+                                        height: Platform.OS == "android" ? 110 : 100,
+                                        borderRadius: Platform.OS == "android" ? 55 : 50,
                                         borderWidth: 5,
                                         borderColor: "white"
                                     }}
@@ -435,7 +455,7 @@ class Results extends Component {
                                                 textAlign: "center",
                                                 color: "white",
                                                 fontFamily: "Poppins-Bold",
-                                                fontSize: 30,
+                                                fontSize: Platform.OS == "android" ? 28 : 30,
                                                 paddingTop: 4,
                                             }}
                                         >
@@ -447,7 +467,7 @@ class Results extends Component {
                                             textAlign: "center",
                                             color: "white",
                                             fontFamily: "Poppins-Bold",
-                                            fontSize: 30,
+                                            fontSize: Platform.OS == "android" ? 28 : 30,
                                         }}
                                     >
                                         {this.state.total}
@@ -674,24 +694,6 @@ class Results extends Component {
                         marginRight: 20,
                         marginTop: 60,
                     }}>
-                        {
-                            this.state.show ? 
-                                <Image 
-                                    style = {{
-                                        position: "absolute",
-                                        top: -80,
-                                        left: -150,
-                                        height: Dimensions.get("window").height,
-                                        opacity: 0.9,
-                                        zIndex: -100,
-                                        justifyContent: 'center',
-                                    }}
-                                    source = {require("../images/complete.gif")}
-                                    // source = {{uri: "https://assets8.lottiefiles.com/packages/lf20_i6sqnxav.json"}}
-                                />
-                            :
-                                <View></View>
-                        }
                         <View>
                             <Text
                                 style = {{
@@ -701,17 +703,17 @@ class Results extends Component {
                                     marginBottom: 5,
                                 }}
                             >
-                                Keep it up!
+                                You can do better!
                             </Text>
                             <Text
                                 style = {{
-                                    color: "#FF9131",
+                                    color: "#4C0FF6",
                                     fontFamily: "Poppins-ExtraBold",
                                     fontSize: 28,
                                     paddingBottom: 20,
                                 }}
                             >
-                                You did well!
+                                Practice More!
                             </Text>
                             <Text
                                 style = {{
@@ -742,9 +744,9 @@ class Results extends Component {
                                 <View
                                     style = {{
                                         marginLeft: 10,
-                                        width: 100,
-                                        height: 100,
-                                        borderRadius: 50,
+                                        width: Platform.OS == "android" ? 110 : 100,
+                                        height: Platform.OS == "android" ? 110 : 100,
+                                        borderRadius: Platform.OS == "android" ? 55 : 50,
                                         borderWidth: 5,
                                         borderColor: "white"
                                     }}
@@ -762,8 +764,8 @@ class Results extends Component {
                                                 textAlign: "center",
                                                 color: "white",
                                                 fontFamily: "Poppins-Bold",
-                                                fontSize: 30,
-                                                paddingTop: 4,
+                                                fontSize: Platform.OS == "android" ? 26 : 30,
+                                                paddingTop: Platform.OS == "android" ? 0 : 4,
                                             }}
                                         >
                                             {this.state.marks}
@@ -774,7 +776,7 @@ class Results extends Component {
                                             textAlign: "center",
                                             color: "white",
                                             fontFamily: "Poppins-Bold",
-                                            fontSize: 30,
+                                            fontSize: Platform.OS == "android" ? 26 : 30,
                                         }}
                                     >
                                         {this.state.total}
@@ -969,7 +971,7 @@ class Results extends Component {
                                     alignItems: "center"
                                 }}
 
-                                onPress = {() => {Actions.BottomNavigator()}}
+                                onPress = {() => {Actions.BottomNavigator({chosen: "test"})}}
                             >
                                 <View
                                     style = {{

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Text, View, SafeAreaView, Image, Button, Dimensions, ImageBackground, AsyncStorage, BackHandler, Alert, TouchableOpacity, Linking } from 'react-native';
+import {Text, StatusBar, View, SafeAreaView, Image, Button, Dimensions, ImageBackground, AsyncStorage, BackHandler, Alert, TouchableOpacity, Linking } from 'react-native';
 // import { TouchableOpacity } from 'react-native-gesture-handler';
 import {Actions} from 'react-native-router-flux';
 
@@ -42,7 +42,9 @@ export default class LandingMain extends Component {
                 paddingTop: Platform.OS == "android" ? 0 : 0
             
             }}>
-                
+                <StatusBar 
+                    backgroundColor = "black"
+                />               
                 {/* <View style = {{position: 'absolute', width: '100%', height: '100%',}}>
                 <Image style = {{ alignSelf: 'flex-end',width: '100%', height: '70%' }} source = {require('../images/circles.png')}/>
                 </View> */}

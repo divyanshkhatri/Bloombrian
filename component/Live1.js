@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {SafeAreaView, View, Image, Text, Dimensions, AsyncStorage, Platform, BackHandler,TouchableOpacity} from 'react-native';
+import {SafeAreaView, StatusBar, View, Image, Text, Dimensions, AsyncStorage, Platform, BackHandler,TouchableOpacity} from 'react-native';
 import DemoLectures1 from './DemoLectures1';
 import LinearGradient from 'react-native-linear-gradient';
 import Modal from 'react-native-modal';
@@ -86,6 +86,9 @@ class Live1 extends Component {
                     paddingTop: Platform.OS === 'android' ? 5 : 0
                 }}
             >
+                <StatusBar 
+                    backgroundColor = "black"
+                />
                 <View style = {{
                     // flex: 1,
                     marginTop: 10, 
@@ -909,14 +912,14 @@ class Live1 extends Component {
                     {this.state.plan == true ?
                         <Text style = {{
                             color: this.state.ds ? '#4ACDF4' : '#383838', 
-                            fontSize: this.state.ds ? 14 : 13,
+                            fontSize: this.state.ds ? Platform.OS == "android" ? 12 : 14 : Platform.OS == "android" ? 11 : 13,
                             fontFamily: 'Poppins-Bold'    
                         }}> Class Schedule</Text> 
                         : 
                         <Text style = {{
                             color: this.state.ds ? '#4ACDF4' : '#383838', 
                             fontFamily: 'Poppins-Bold',
-                            fontSize: this.state.ds ? 14 : 13, 
+                            fontSize: this.state.ds ? Platform.OS == "android" ? 13 : 14 : Platform.OS == "android" ? 12 : 13,
                         }}> Demo Schedule</Text>
                     }
                     </TouchableOpacity>
@@ -930,7 +933,7 @@ class Live1 extends Component {
                     <Text style = {{
                         color: this.state.rs ? '#4ACDF4' : '#383838',  
                         fontFamily: 'Poppins-Bold',
-                        fontSize: this.state.rs ? 14 : 13,
+                        fontSize: this.state.rs ? Platform.OS == "android" ? 13 : 14 : Platform.OS == "android" ? 12 : 13,
                     }}>Class Schedules</Text>
                     </TouchableOpacity>
                     <TouchableOpacity  onPress = { () => {
@@ -944,7 +947,7 @@ class Live1 extends Component {
                     <Text style = {{
                         color: this.state.rl ? '#4ACDF4' : '#383838',  
                         fontFamily: 'Poppins-Bold',
-                        fontSize: this.state.rl ? 14 : 13,
+                        fontSize: this.state.rl ? Platform.OS == "android" ? 13 : 14 : Platform.OS == "android" ? 12 : 13,
                     }}>Recorded Lectures</Text>
                     </TouchableOpacity>
                 </View>
@@ -954,7 +957,7 @@ class Live1 extends Component {
                 }}>
                     <View
                         style = {{
-                            width: this.state.ds ? '33.5%' : '31.4%', 
+                            width: this.state.ds ? Platform.OS == "ios" ? '33.5%' : '34.0%' : Platform.OS == "ios" ? '31.4%' : '31.2%', 
                             height: 3,
                             backgroundColor: this.state.ds ? "#4ACDF4" : "#383838"
                         }}
@@ -962,7 +965,7 @@ class Live1 extends Component {
                     </View>
                     <View
                         style = {{
-                            width: this.state.rs ? '32.7%' : '30.4%', 
+                            width: this.state.rs ? Platform.OS == "ios" ? '32.7%' : '33.3%' : Platform.OS == "ios" ? '30.4%' : '30.4%', 
                             height: 3,
                             backgroundColor: this.state.rs ? "#4ACDF4" : "#383838"
                         }}

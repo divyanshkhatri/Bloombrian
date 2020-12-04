@@ -9,6 +9,7 @@ buildscript {
         googlePlayServicesVersion      = "17.0.0"
         // playServicesVersion         = "17.0.0"
         // playServicesLocationVersion = "17.0.0"
+        supportLibVersion = "28.0.0"
     }
     repositories {
         google()

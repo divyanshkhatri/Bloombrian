@@ -22,6 +22,8 @@ import OneSignal from 'react-native-onesignal';
 import TestScreen from './component/TestScreen';
 import Results from './component/Results';
 import Config from './component/config';
+import Gif1 from './component/Gif1';
+import Gif from './component/Gif';
 
 export default class App extends Component {
 
@@ -40,8 +42,11 @@ export default class App extends Component {
       // <View>
         <Router>
           <Scene key = "root">
+
             <Scene type = "reset" key = "Landing" component = {Landing} title = "Landing" hideNavBar duration = {0} swipeEnabled={false} animationEnabled={false} panHandlers={null} />
             <Scene type = "reset" key = "Live1" component = {Live1} title = "Live1" hideNavBar duration = {0} swipeEnabled={false} animationEnabled={false} panHandlers={null}/>
+            <Scene type = "reset" key = "Gif1" component = {Gif1} title = "Gif1" hideNavBar duration = {0} swipeEnabled={false} animationEnabled={false} panHandlers={null}/>
+            <Scene type = "reset" key = "Gif" component = {Gif} title = "Gif" hideNavBar duration = {0} swipeEnabled={false} animationEnabled={false} panHandlers={null}/>
             <Scene type = "reset" key = "TestScreen" component = {TestScreen} title = "TestScreen" hideNavBar duration = {0} swipeEnabled={false} animationEnabled={false} panHandlers={null}/>
             <Scene type = "reset" key = "Results" component = {Results} title = "Results" hideNavBar duration = {0} swipeEnabled={false} animationEnabled={false} panHandlers={null}/>
             <Scene type = "reset" key = "LandingMain" component = {LandingMain} title = "LandingMain" hideNavBar duration = {0} swipeEnabled={false} animationEnabled={false} panHandlers={null} />

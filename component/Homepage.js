@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import 
     {
+        StatusBar,
         View, 
         Text, 
         Image,
@@ -65,6 +66,7 @@ class Hompage extends Component {
             })
             .catch((error) => {
                 this.setState({login: false})
+                this.setState({isLoading: true})
                 console.error(error);
             });
 
@@ -93,7 +95,7 @@ class Hompage extends Component {
     
 
     state = {
-        isLoading: true,
+        isLoading: false,
         data: {},
         profileData: {},
         showModalCong: false,
@@ -221,7 +223,7 @@ class Hompage extends Component {
                         borderRadius: 5,
                         width: Dimensions.get('window').width/2.5,
                         marginLeft: 16,
-                        height: Platform.OS == 'android' ? 220 : 210,
+                        height: Platform.OS == 'android' ? 240 : 210,
                         borderRadius: 15
                     }}>
                     <Image 
@@ -247,7 +249,7 @@ class Hompage extends Component {
                         textAlign: 'center',
                         marginTop: 5,
                         fontFamily: 'Poppins-Regular',
-                        fontSize: 10,
+                        fontSize: Platform.OS == "android" ? 9 : 10,
                         color: '#fff',
                     }}>
                     Get a head start for your school curriculum by our thorough videos.
@@ -286,8 +288,8 @@ class Hompage extends Component {
                         borderColor: 'white',
                         borderRadius: 10,
                         paddingTop: 2.5,
-                        width: Platform.OS == "android" ? 80: 80,
-                        height: 21,
+                        width: Platform.OS == "android" ? 90: 80,
+                        height: Platform.OS == "android" ? 24 : 21,
                         marginTop: 12,
                         // marginLeft: 13,
                         textAlign: 'center',
@@ -398,6 +400,7 @@ class Hompage extends Component {
 
     render() {
         return(
+
             <SafeAreaView 
             style = {{
                 // borderWidth: 2,
@@ -405,18 +408,24 @@ class Hompage extends Component {
                 flex: 1, 
                 flexDirection: "column",
                 backgroundColor: 'black',
-                paddingTop: Platform.OS === 'android' ? 0 : 0,
+                paddingTop: Platform.OS === 'android' ? 10 : 0,
                 // alignItems: 'center'
                 }}>
                 
                 {this.state.isLoading ?  
                    ( 
                      <View style = {{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+                        <StatusBar 
+                            backgroundColor = "black"
+                        />
                         <Image source={require("../images/loader.gif")} style = {{width: 50, height: 50}} />
                     </View>
                     
                     ) : (
                 <ScrollView>
+                    <StatusBar 
+                        backgroundColor = "black"
+                    />
                 <Modal 
                     isVisible = {this.state.invention}
                     animationIn = "pulse"
@@ -773,7 +782,8 @@ class Hompage extends Component {
                                         fontFamily: 'Poppins-Bold',
                                         fontSize: 14,
                                         color: '#fff',
-                                        marginTop: 5
+                                        marginTop: 5,
+                                        textAlign: "center"
                                     }}>
                                         Public Speaking
                                     </Text>
@@ -1303,7 +1313,7 @@ class Hompage extends Component {
                         <Text 
                         style = {{
                             fontFamily : "Poppins-Bold",
-                            fontSize: 14,
+                            fontSize: Platform.OS == "android" ? 12 : 14,
                             color: 'white',
                             height: 18,
                             // borderColor: 'white',
@@ -1313,8 +1323,8 @@ class Hompage extends Component {
                         </Text>
                         <Text
                         style = {{
-                            fontFamily : "Poppins-SemiBold",
-                            fontSize: 11,
+                            fontFamily : Platform.OS == "android" ? "Poppins-Medium" : "Poppins-SemiBold",
+                            fontSize: Platform.OS == "android" ? 10 : 11,
                             color: '#707070',
                             height: 40,
                         }}
@@ -1337,7 +1347,7 @@ class Hompage extends Component {
                                 width: this.windowWidth-32,
                                 borderColor: 'white',
                                 borderWidth: 1,
-                                height: Platform.OS == "android" ? 70 : 80,
+                                height: Platform.OS == "android" ? 80 : 80,
                                 paddingLeft: 20,
                                 borderRadius: 16,
                                 overflow: 'hidden',
@@ -1364,7 +1374,7 @@ class Hompage extends Component {
                                 style = {{
                                     marginLeft: 8,
                                     fontFamily: 'Poppins-SemiBold',
-                                    fontSize: 16,
+                                    fontSize: Platform.OS == "android" ? 14 : 16,
                                     color: 'white'
                                 }}
                             >Your Class is Live Now!</Text>
@@ -1407,7 +1417,7 @@ class Hompage extends Component {
                                 width: Dimensions.get("window").width - 32,
                                 // borderColor: 'white',
                                 // borderWidth: 3,
-                                height: Platform.OS == "android" ? 70 : 80,
+                                height: Platform.OS == "android" ? 80 : 80,
                                 paddingLeft: 20,
                                 borderRadius: 16,
                                 overflow: 'hidden',
@@ -1417,7 +1427,8 @@ class Hompage extends Component {
                         <Image 
                             style = {{
                                 width: 20,
-                                height: 20
+                                height: 20,
+                                alignSelf: "center"
                             }}
                             source = {require("../images/wifi.png")} 
                         />
@@ -1434,7 +1445,7 @@ class Hompage extends Component {
                                 style = {{
                                     marginLeft: 8,
                                     fontFamily: 'Poppins-SemiBold',
-                                    fontSize: 16,
+                                    fontSize: Platform.OS == "android" ? 14 : 16,
                                     color: 'white'
                                 }}
                             >Your Class is Live Now!</Text>
@@ -1497,21 +1508,30 @@ class Hompage extends Component {
                                     borderBottomColor: '#151515',
                                     // borderColor: 'white',
                                     }}>
-                                    <Image
-                                        // source = {(/^(?:\w+:)?\/\/([^\s\.]+\.\S{2}|localhost[\:?\d]*)\S*$/.test(item["thumbnail_url"] )== false) ? require("../images/picks1.png") : {uri: item["thumbnail_url"]}}
-                                        source = {require("../images/picks1.jpeg")}
+                                    <View 
                                         style = {{
                                             borderRadius: 15,
-                                            borderBottomRightRadius: 0,
                                             borderBottomLeftRadius: 0,
-                                            width: 300,
-                                            height: 170,
-                                            resizeMode: "stretch",
-                                            // opacity: 0.9,
-                                            // borderBottomWidth: 20,
-                                            borderColor: '#ffffff'
+                                            borderBottomRightRadius: 0,
+                                            overflow: "hidden"
                                         }}
-                                    />
+                                    >
+                                        <Image
+                                            // source = {(/^(?:\w+:)?\/\/([^\s\.]+\.\S{2}|localhost[\:?\d]*)\S*$/.test(item["thumbnail_url"] )== false) ? require("../images/picks1.png") : {uri: item["thumbnail_url"]}}
+                                            source = {require("../images/picks1.jpeg")}
+                                            style = {{
+                                                borderRadius: 15,
+                                                borderBottomRightRadius: 0,
+                                                borderBottomLeftRadius: 0,
+                                                width: 300,
+                                                height: 170,
+                                                resizeMode: "stretch",
+                                                // opacity: 0.9,
+                                                // borderBottomWidth: 20,
+                                                borderColor: '#ffffff'
+                                            }}
+                                        />
+                                    </View>
                                     <Text
                                     style = {{
                                         margin: 10,
@@ -1526,10 +1546,10 @@ class Hompage extends Component {
                 
                                     <Text
                                     style = {{
-                                        marginTop: 2, 
+                                        marginTop: Platform.OS == "android" ? -5 : 2, 
                                         marginLeft: 10,
                                         fontFamily: "Poppins-Regular",
-                                        fontSize: 11,
+                                        fontSize: Platform.OS == "android" ? 9 : 11,
                                         // borderWidth: 2,
                                         // borderColor: 'white',
                                         color: '#707070',
