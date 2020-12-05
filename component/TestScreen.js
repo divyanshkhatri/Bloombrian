@@ -65,7 +65,7 @@ class TestScreen extends Component {
                 this.setState({currentQuestion: nextQuestion});
                 this.setState({borderColorShow: false});
                 this.setState({clickable: true})
-            }, 1500);
+            }, 600);
             
 		} else {
             this.setState({clickable: false})
@@ -74,7 +74,7 @@ class TestScreen extends Component {
                 Actions.Results({marks: this.state.score, total: this.state.questions.length, questions: this.state.questions});
                 this.setState({borderColorShow: false});
                 this.setState({clickable: true})
-            }, 1500);
+            }, 600);
 		}
     };
 
@@ -364,51 +364,65 @@ class TestScreen extends Component {
                             </View>
                             {
                                 this.state.questions != undefined ? this.state.questions[this.state.currentQuestion].answerOptions.map((answerOption, index) => (
-                                    <TouchableOpacity 
-                                        disabled = {this.state.disabledQuestions[this.state.currentQuestion] != 0}
-                                        style = {{
-                                            borderColor: this.state.borderColorShow && answerOption.isCorrect ? "#1DD348": this.state.borderColorShow && !answerOption.isCorrect && index == this.state.clickedOption ? "#FF5226" : "#1A1A1A",
-                                            borderWidth: 4,
-                                            width: Dimensions.get("window").width - 40,
-                                            minHeight: 60,
-                                            maxHeight: 150,
-                                            borderRadius: 10,
-                                            marginBottom: 10,
-                                            opacity: this.state.answeredQustions[this.state.currentQuestion] != 0 ? 0.5 : 1,
-                                            backgroundColor: "#1A1A1A",
-                                            justifyContent: 'center'
-                                        }}
-                                        
-                                        onPress={() => this.handleAnswerOptionClick(answerOption.isCorrect, index)}
-                                    >
-                                        <View style = {{
-                                            flexDirection: 'row',
-                                            justifyContent: "flex-start",
-                                            alignItems: "center"
-                                        }}>
-                                            <Text style = {{
-                                                textAlign: 'center',
-                                                color: "#4ACDF4",
-                                                fontSize: 24,
-                                                marginLeft: 20,
-                                                fontFamily: "Poppins-Bold",
-                                                marginRight: 20,
+                                    (<View>
+                                        <TouchableOpacity 
+                                            disabled = {this.state.disabledQuestions[this.state.currentQuestion] != 0}
+                                            style = {{
+                                                borderColor: ( this.state.borderColorShow && answerOption.isCorrect || this.state.answeredQustions[this.state.currentQuestion] != 0 && answerOption.isCorrect )? "#1DD348": this.state.borderColorShow && !answerOption.isCorrect && index == this.state.clickedOption ? "#FF5226" : "#1A1A1A",
+                                                borderWidth: 4,
+                                                width: Dimensions.get("window").width - 40,
+                                                minHeight: 60,
+                                                maxHeight: 150,
+                                                borderRadius: 10,
+                                                marginBottom: 10,
+                                                opacity: this.state.answeredQustions[this.state.currentQuestion] != 0 ? 0.5 : 1,
+                                                backgroundColor: "#1A1A1A",
+                                                justifyContent: 'center'
+                                            }}
+                                            
+                                            onPress={() => this.handleAnswerOptionClick(answerOption.isCorrect, index)}
+                                        >
+                                            <View style = {{
+                                                flexDirection: 'row',
+                                                justifyContent: "flex-start",
+                                                alignItems: "center",
                                             }}>
-                                                {String.fromCharCode(index + 65)}.
-                                            </Text> 
-                                            <Text style = {{
-                                                textAlign: 'center',
-                                                color: "#E1E1E1",
-                                                fontFamily: "Poppins-Bold",
-                                                flexShrink: 1,
-                                                paddingRight: 10,
-                                                paddingTop: 10, 
-                                                paddingBottom: 10,
-                                            }}>
-                                                {answerOption.answerText}
-                                            </Text> 
+                                                <Text style = {{
+                                                    textAlign: 'center',
+                                                    color: "#4ACDF4",
+                                                    fontSize: 24,
+                                                    marginLeft: 20,
+                                                    fontFamily: "Poppins-Bold",
+                                                    marginRight: 20,
+                                                }}>
+                                                    {String.fromCharCode(index + 65)}.
+                                                </Text> 
+                                                
+                                                <Text style = {{
+                                                    textAlign: 'center',
+                                                    color: "#E1E1E1",
+                                                    fontFamily: "Poppins-Bold",
+                                                    flexShrink: 1,
+                                                    paddingRight: 10,
+                                                    paddingTop: 10, 
+                                                    paddingBottom: 10,
+                                                }}>
+                                                    {answerOption.answerText}
+                                                </Text> 
+                                                {/* {
+                                                    this.state.answeredQustions[this.state.currentQuestion] != 0 ?
+                                                        answerOption.isCorrect ? <Text style = {{
+                                                            color: "#1DD348",
+                                                            fontFamily: "Poppins-Bold",
+                                                            position: "relative",
+                                                            right: 0,
+                                                        }}>Correct Answer</Text> : null
+                                                    :null
+                                                } */}
+                                            </View>
+                                        </TouchableOpacity>  
                                         </View>
-                                    </TouchableOpacity>                     
+                                    )         
 						        )) : null
                             }
                             <View style = {{
