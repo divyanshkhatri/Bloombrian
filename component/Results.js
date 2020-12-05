@@ -239,7 +239,7 @@ class Results extends Component {
                                                 fontSize: 15,
                                             }}
                                         >
-                                            {this.state.total - this.state.marks} Incorrect
+                                            {this.state.total - this.state.marks - this.props.unattempted} Incorrect
                                         </Text>
                                     </View>
                                     <View
@@ -278,7 +278,7 @@ class Results extends Component {
                                                 fontSize: 15,
                                             }}
                                         >
-                                            0 Unattempted
+                                            {this.props.unattempted} Unattempted
                                         </Text>
                                     </View>
                                 </View>
@@ -386,6 +386,18 @@ class Results extends Component {
                         marginTop: 60,
                     }}>
                         <View>
+                            {
+                                this.state.show ? 
+                            <Image 
+                                style = {{
+                                    position: "absolute",
+                                    height: Dimensions.get("window").height,
+                                    left: -150,
+                                    top: -80
+                                }}
+                                source = {require("../images/complete.gif")}
+                            />
+                            : null}
                             <Text
                                 style = {{
                                     color: "white",
@@ -552,7 +564,7 @@ class Results extends Component {
                                                 fontSize: 15,
                                             }}
                                         >
-                                            {this.state.total - this.state.marks} Incorrect
+                                            {this.state.total - this.state.marks - this.props.unattempted} Incorrect
                                         </Text>
                                     </View>
                                     <View
@@ -591,7 +603,7 @@ class Results extends Component {
                                                 fontSize: 15,
                                             }}
                                         >
-                                            0 Unattempted
+                                            {this.props.unattempted} Unattempted
                                         </Text>
                                     </View>
                                 </View>
@@ -860,7 +872,7 @@ class Results extends Component {
                                                 fontSize: 15,
                                             }}
                                         >
-                                            {this.state.total - this.state.marks} Incorrect
+                                            {this.state.total - this.state.marks - this.props.unattempted} Incorrect
                                         </Text>
                                     </View>
                                     <View
@@ -899,7 +911,7 @@ class Results extends Component {
                                                 fontSize: 15,
                                             }}
                                         >
-                                            0 Unattempted
+                                            {this.props.unattempted} Unattempted
                                         </Text>
                                     </View>
                                 </View>

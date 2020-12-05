@@ -1,8 +1,10 @@
 import React, {Component} from 'react';
-import {StatusBar, View, Text, SafeAreaView, TouchableOpacity, BackHandler, Image, AsyncStorage, Platform, Dimensions} from 'react-native';
+import {StatusBar, View, StyleSheet, Text, SafeAreaView, Animated, TouchableOpacity, BackHandler, Image, AsyncStorage, Platform, Dimensions} from 'react-native';
 import Modal from 'react-native-modal';
 import { Actions } from 'react-native-router-flux';
 import CountDown from 'react-native-countdown-component';
+import { ScrollView } from 'react-native-gesture-handler';
+import { Easing } from 'react-native-reanimated';
 
 class TestScreen extends Component {
 
@@ -21,20 +23,24 @@ class TestScreen extends Component {
         academics: false, 
         communication: false,
         invention: false,
-        showModalTimeout: false,
+        showModalSure: false,
         showModalSubmit: false,
         clickedOption: null,
         answeredQustions: new Array(this.props.questions.length).fill(0),
         disabledQuestions: new Array(this.props.questions.length).fill(0),
         index: 0,
+        unattempted: 0,
+        progressStatus: 100,  
     }
+
+    anim = new Animated.Value(100); 
 
     onPress = () => {
         setTimeout(() => {
             this.setState({showModalTimeout: true})
         }, 0);
         setTimeout(() => {
-            Actions.Results()
+            Actions.Results({marks: this.state.score, total: this.state.questions.length, questions: this.state.questions})
         }, 2000);
     }
 
@@ -69,9 +75,14 @@ class TestScreen extends Component {
             
 		} else {
             this.setState({clickable: false})
+            let count = 0;
+            for(let i = 0; i<this.state.questions.length; i++) {
+                if(this.state.answeredQustions[i] == 0) 
+                    count++;
+            }
             setTimeout(() => {
                 console.log(this.state.answeredQustions);
-                Actions.Results({marks: this.state.score, total: this.state.questions.length, questions: this.state.questions});
+                Actions.Results({marks: this.state.score, total: this.state.questions.length, questions: this.state.questions, unattempted: count});
                 this.setState({borderColorShow: false});
                 this.setState({clickable: true})
             }, 600);
@@ -79,13 +90,12 @@ class TestScreen extends Component {
     };
 
     handleNext = () => {
+
         const nextQuestion = this.state.currentQuestion + 1;
         if (nextQuestion < this.state.questions.length) {
             this.setState({currentQuestion: nextQuestion});
 		} else {
-            console.log(this.state.answeredQustions);
-            this.setState({notCompleteModal: true})
-            Actions.Results({marks: this.state.score, total: this.state.questions.length, questions: this.state.questions});
+            this.setState({showModalSubmit: true})
 		}
     }
 
@@ -103,10 +113,21 @@ class TestScreen extends Component {
     }
 
     componentDidMount() {
+        this.onAnimate();  
         BackHandler.addEventListener("hardwareBackPress", this.backAction);
         this.setState({questions: this.props.questions})
         console.log(this.state.answeredQustions);
     }
+
+    onAnimate = () =>{  
+        this.anim.addListener(({value})=> {  
+            this.setState({progressStatus: parseInt(value, 10)});  
+        });  
+        Animated.timing(this.anim,{  
+                toValue: 0,  
+                duration: 60000,  
+        }).start();  
+    }  
     
     render() {
         return (
@@ -120,8 +141,8 @@ class TestScreen extends Component {
                     backgroundColor = "black"
                 />
                 <Modal 
-                    isVisible = {this.state.showModalSubmit}
-                    onBackdropPress = { () => {this.setState({showModalSubmit: false})}}
+                    isVisible = {this.state.showModalSure}
+                    onBackdropPress = { () => {this.setState({showModalSure: false})}}
                 >
                     <View
                     style = {{
@@ -136,7 +157,7 @@ class TestScreen extends Component {
                         paddingLeft: 10, 
                         paddingRight: 10,
                         width: 310,
-                        height: 390,
+                        height: 310,
                         // alignItems: 'center',
                         // justifyContent: 'center',
                         // alignSelf: 'center',
@@ -156,7 +177,122 @@ class TestScreen extends Component {
                                 fontSize: 20,
                                 color: "white",
                                 textAlign: "center",
-                                marginTop: 20,
+                                marginTop: 0,
+                            }}
+                        >
+                                Are you sure?
+                        </Text>
+                        <Text 
+                            style = {{
+                                fontFamily: "Poppins-Bold",
+                                color: "white",
+                                fontSize: 14,
+                                textAlign: "center",
+                                marginTop: 30,
+                                lineHeight: 20
+                            }}
+                        >
+                            Going back would lead to an unsuccessful attempt at the test!
+                        </Text>
+                        <TouchableOpacity 
+                            onPress = { () => {this.setState({showModalSure: false})}}
+                        >
+                                <View
+                                    style = {{
+                                        marginTop: 40,
+                                        width: 250,
+                                        height: 45,
+                                        borderRadius: 7,
+                                        overflow: "hidden",
+                                        backgroundColor: "#4ACDF4",
+                                        alignSelf: "center",
+                                        justifyContent: 'center'
+                                    }}
+                                >
+                                <Text
+                                    style = {{
+                                        fontFamily: "Poppins-Bold",
+                                        color: "white",
+                                        textAlign: "center",
+
+                                    }}
+                                >
+                                    Return to the test
+                                </Text>
+                            </View>
+                        </TouchableOpacity>
+                        <TouchableOpacity 
+                            onPress = { () => {
+                                this.setState({totalDuration: 1})
+                                Actions.BottomNavigator({chosen: "test"})
+                            }}
+                        >
+                                <View
+                                    style = {{
+                                        width: 250,
+                                        height: 45,
+                                        borderRadius: 7,
+                                        overflow: "hidden",
+                                        borderColor: "#4ACDF4",
+                                        borderWidth: 2,
+                                        marginTop: 20,
+                                        alignSelf: "center",
+                                        justifyContent: 'center'
+                                    }}
+                                >
+                                <Text
+                                    style = {{
+                                        fontFamily: "Poppins-Bold",
+                                        color: "white",
+                                        textAlign: "center",
+
+                                    }}
+                                >
+                                    Go back to main menu
+                                </Text>
+                            </View>
+                        </TouchableOpacity>
+                        
+                    </View>
+                </Modal>
+                <Modal 
+                    isVisible = {this.state.showModalSubmit}
+                    onBackdropPress = { () => {this.setState({showModalSubmit: false})}}
+                >
+                    <View
+                    style = {{
+                        // flex: 1,
+                        // borderColor: 'blue',
+                        // borderWidth: 2,
+                        margin: 20,
+                        // marginTop: Dimensions.get('window').height/5,
+                        backgroundColor: '#232323',
+                        borderRadius: 20,
+                        padding: 35,
+                        paddingLeft: 10, 
+                        paddingRight: 10,
+                        width: 310,
+                        height: 310,
+                        // alignItems: 'center',
+                        // justifyContent: 'center',
+                        // alignSelf: 'center',
+                        shadowColor: '#000',
+                        shadowOffset: {
+                        width: 0,
+                        height: 2,
+                        },
+                        shadowOpacity: 0.75,
+                        shadowRadius: 3.84,
+                        elevation: 5
+                    }}
+                    >   
+                        <Text
+                            style = {{
+                                fontFamily: "Poppins-ExtraBold",
+                                fontSize: 20,
+                                color: "white",
+                                textAlign: "center",
+                                marginTop: 0,
                             }}
                         >
                                 Submit Test?
@@ -175,11 +311,67 @@ class TestScreen extends Component {
                         </Text>
                         <TouchableOpacity 
                             onPress = { () => {
+                                let count = 0;
                                 this.setState({totalDuration: 1})
-                                Actions.BottomNavigator();
+                                for(let i = 0; i<this.state.questions.length; i++) {
+                                    if(this.state.answeredQustions[i] === 0) count+=1;
+                                }
+                                this.setState({unattempted: count});
+                                console.log(count);
+                                Actions.Results({marks: this.state.score, total: this.state.questions.length, questions: this.state.questions, unattempted: count});
                             }}
                         >
-                            <Text></Text>
+                                <View
+                                    style = {{
+                                        marginTop: 40,
+                                        width: 250,
+                                        height: 45,
+                                        borderRadius: 7,
+                                        overflow: "hidden",
+                                        backgroundColor: "#4ACDF4",
+                                        alignSelf: "center",
+                                        justifyContent: 'center'
+                                    }}
+                                >
+                                <Text
+                                    style = {{
+                                        fontFamily: "Poppins-Bold",
+                                        color: "white",
+                                        textAlign: "center",
+
+                                    }}
+                                >
+                                    Submit Test
+                                </Text>
+                            </View>
+                        </TouchableOpacity>
+                        <TouchableOpacity 
+                            onPress = { () => {this.setState({showModalSubmit: false})}}
+                        >
+                                <View
+                                    style = {{
+                                        width: 250,
+                                        height: 45,
+                                        borderRadius: 7,
+                                        overflow: "hidden",
+                                        borderColor: "#4ACDF4",
+                                        borderWidth: 2,
+                                        marginTop: 20,
+                                        alignSelf: "center",
+                                        justifyContent: 'center'
+                                    }}
+                                >
+                                <Text
+                                    style = {{
+                                        fontFamily: "Poppins-Bold",
+                                        color: "white",
+                                        textAlign: "center",
+
+                                    }}
+                                >
+                                    Go back to test
+                                </Text>
+                            </View>
                         </TouchableOpacity>
                         
                     </View>
@@ -223,7 +415,7 @@ class TestScreen extends Component {
                     }}
                 >   
                     <TouchableOpacity
-                        onPress = { () => {Actions.BottomNavigator({chosen: "test"})} }
+                        onPress = { () => {this.setState({showModalSure: true})}}
                     >
                         <Image 
                             style = {{ 
@@ -311,7 +503,7 @@ class TestScreen extends Component {
                     )
                     :
                     (   
-                        <View 
+                        <ScrollView 
                             style = {{
                                 height: '100%',
                                 backgroundColor: "black", 
@@ -486,26 +678,48 @@ class TestScreen extends Component {
                                     </View>
                                 </TouchableOpacity>
                             </View>
-                        </View>
+                            <View
+                                style = {{
+                                    height: 70,
+                                }}
+                            ></View>
+                        </ScrollView>
+                        
                         
                     )
                 }
+                <View
+                    style = {{
+                        width: "100%",  
+                        height: 12,  
+                        padding: 3,    
+                        backgroundColor: "#1A1A1A", 
+                        position: "absolute",
+                        bottom: 60,
+                        justifyContent: "center",  
+                    }}
+                >  
+                    <Animated.View  
+                        style={[  
+                            { 
+                                width: "100%",  
+                                height: 12,  
+                                borderTopRightRadius: 5,  
+                                borderBottomRightRadius: 5,
+                                borderTopLeftRadius: 0,
+                                borderBottomLeftRadius: 0,
+                                backgroundColor:this.state.progressStatus <= 50 && this.state.progressStatus > 20  ? "#FFBF2E" : this.state.progressStatus <= 20 ? "#FF2626" : "#1DD348",  
+                            },{width: this.state.progressStatus +"%"},  
+                        ]}  
+                    />  
+                </View>  
             </SafeAreaView>
         )
     }
 }
-const options = {
-    container: {
-      padding: 5,
-      borderRadius: 5,
-      width: 80,
-    },
-    text: {
-      fontSize: 15,
-      color: '#929292',
-      marginLeft: 7,
-      fontFamily: "Poppins-Bold"
-    },
-};
 
 export default TestScreen;
+
+const styles = StyleSheet.create({   
+  
+});  
