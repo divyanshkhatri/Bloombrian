@@ -3,20 +3,12 @@ import {View, Text, ScrollView, Dimensions, TouchableOpacity, FlatList, Image, I
 import moment from 'moment';
 import ModalDropdown from 'react-native-modal-dropdown';
 import {Actions} from 'react-native-router-flux';
-import { DefaultTheme, List } from 'react-native-paper';
+import { List } from 'react-native-paper';
+import Modal500 from './Modal500';
+import Modal404 from './Modal404';
 
 
 moment().format();
-
-const theme = {
-    ...DefaultTheme,
-    roundness: 2,
-    colors: {
-      ...DefaultTheme.colors,
-      primary: '#3498db',
-      accent: '#f1c40f',
-    },
-};
 
 class RealSchedule extends Component {
 
@@ -40,9 +32,13 @@ class RealSchedule extends Component {
                     })
                 } else {
                     if(response.status == 500) {
+                        this.setState({showLoader: false})
+                        this.setState({status: 500});
                         console.log("500");
                     }
                     if(response.status == 404) {
+                        this.setState({showLoader: false})
+                        this.setState({status: 404});
                         console.log("404");
                     }
                 }
@@ -80,6 +76,7 @@ class RealSchedule extends Component {
             'academics': 'Academics',
             'extra_curricular': 'Extra-curricular'
         },
+        status: 200,
         showLoader: true,
         courses : {
             'All Subjects'           : 'beginner',
@@ -118,9 +115,13 @@ class RealSchedule extends Component {
                     })
                 } else {
                     if(response.status == 500) {
+                        this.setState({showLoader: false})
+                        this.setState({status: 500});
                         console.log("500");
                     }
                     if(response.status == 404) {
+                        this.setState({showLoader: false})
+                        this.setState({status: 404});
                         console.log("404");
                     }
                 }
@@ -342,6 +343,26 @@ class RealSchedule extends Component {
                         </View>
                     )
                     :
+                    !this.state.showLoader && this.state.status == 500 ?
+                    (
+                        <View
+                            style = {{
+                                marginTop: -100,
+                            }}
+                        >
+                            <Modal500 />
+                        </View>
+                    ) : 
+                    !this.state.showLoader && this.state.status == 404 ? 
+                    (
+                        <View
+                            style = {{
+                                marginTop: -100,
+                            }}
+                        >
+                            <Modal404 />
+                        </View>
+                    ):
                     this.state.schedules ? this.state.schedules.map((value, index) => {
                         let title = "Batch " + (index+1).toString();
                         return (

@@ -12,566 +12,7 @@ class Test extends Component {
     };
 
     state = {
-        tests: [
-            {
-                courseName: "All Subjects",
-                testName: "Straight Lines 01",
-                questionNumber: "15",
-                time: "30",
-                attempted: true,
-                questions: [
-                    {
-                        questionText: 'What is the test number? What is the test number? What is the test number? What is the test number? What is the test number? What is the test number? What is the test number? What is the test number?',
-                        answerOptions: [
-                            { answerText: '1', isCorrect: true },
-                            { answerText: '2', isCorrect: false },
-                            { answerText: '3', isCorrect: false },
-                            { answerText: '4', isCorrect: false },
-                        ],
-                    },
-                    {
-                        questionText: 'What is the capital of France?',
-                        answerOptions: [
-                            { answerText: 'New York', isCorrect: false },
-                            { answerText: 'London', isCorrect: false },
-                            { answerText: 'Paris', isCorrect: true },
-                            { answerText: 'Dublin', isCorrect: false },
-                        ],
-                    },
-                    {
-                        questionText: 'Who is CEO of Tesla?',
-                        answerOptions: [
-                            { answerText: 'Jeff Bezos', isCorrect: false },
-                            { answerText: 'Elon Musk', isCorrect: true },
-                            { answerText: 'Bill Gates', isCorrect: false },
-                            { answerText: 'Tony Stark', isCorrect: false },
-                        ],
-                    },
-                    {
-                        questionText: 'The iPhone was created by which company?',
-                        answerOptions: [
-                            { answerText: 'Apple', isCorrect: true },
-                            { answerText: 'Intel', isCorrect: false },
-                            { answerText: 'Amazon', isCorrect: false },
-                            { answerText: 'Microsoft', isCorrect: false },
-                        ],
-                    },
-                    {
-                        questionText: 'How many Harry Potter books are there?',
-                        answerOptions: [
-                            { answerText: '1', isCorrect: false },
-                            { answerText: '4', isCorrect: false },
-                            { answerText: '6', isCorrect: false },
-                            { answerText: '7', isCorrect: true },
-                        ],
-                    },
-                    {
-                        questionText: 'What is the test number? What is the test number? What is the test number? What is the test number? What is the test number? What is the test number? What is the test number? What is the test number?',
-                        answerOptions: [
-                            { answerText: '1', isCorrect: true },
-                            { answerText: '2', isCorrect: false },
-                            { answerText: '3', isCorrect: false },
-                            { answerText: '4', isCorrect: false },
-                        ],
-                    },
-                    {
-                        questionText: 'What is the capital of France?',
-                        answerOptions: [
-                            { answerText: 'New York', isCorrect: false },
-                            { answerText: 'London', isCorrect: false },
-                            { answerText: 'Paris', isCorrect: true },
-                            { answerText: 'Dublin', isCorrect: false },
-                        ],
-                    },
-                    {
-                        questionText: 'Who is CEO of Tesla?',
-                        answerOptions: [
-                            { answerText: 'Jeff Bezos', isCorrect: false },
-                            { answerText: 'Elon Musk', isCorrect: true },
-                            { answerText: 'Bill Gates', isCorrect: false },
-                            { answerText: 'Tony Stark', isCorrect: false },
-                        ],
-                    },
-                    {
-                        questionText: 'The iPhone was created by which company?',
-                        answerOptions: [
-                            { answerText: 'Apple', isCorrect: true },
-                            { answerText: 'Intel', isCorrect: false },
-                            { answerText: 'Amazon', isCorrect: false },
-                            { answerText: 'Microsoft', isCorrect: false },
-                        ],
-                    },
-                    {
-                        questionText: 'How many Harry Potter books are there?',
-                        answerOptions: [
-                            { answerText: '1', isCorrect: false },
-                            { answerText: '4', isCorrect: false },
-                            { answerText: '6', isCorrect: false },
-                            { answerText: '7', isCorrect: true },
-                        ],
-                    },
-                    {
-                        questionText: 'What is the test number? What is the test number? What is the test number? What is the test number? What is the test number? What is the test number? What is the test number? What is the test number?',
-                        answerOptions: [
-                            { answerText: '1', isCorrect: true },
-                            { answerText: '2', isCorrect: false },
-                            { answerText: '3', isCorrect: false },
-                            { answerText: '4', isCorrect: false },
-                        ],
-                    },
-                    {
-                        questionText: 'What is the capital of France?',
-                        answerOptions: [
-                            { answerText: 'New York', isCorrect: false },
-                            { answerText: 'London', isCorrect: false },
-                            { answerText: 'Paris', isCorrect: true },
-                            { answerText: 'Dublin', isCorrect: false },
-                        ],
-                    },
-                    {
-                        questionText: 'Who is CEO of Tesla?',
-                        answerOptions: [
-                            { answerText: 'Jeff Bezos', isCorrect: false },
-                            { answerText: 'Elon Musk', isCorrect: true },
-                            { answerText: 'Bill Gates', isCorrect: false },
-                            { answerText: 'Tony Stark', isCorrect: false },
-                        ],
-                    },
-                    {
-                        questionText: 'The iPhone was created by which company?',
-                        answerOptions: [
-                            { answerText: 'Apple', isCorrect: true },
-                            { answerText: 'Intel', isCorrect: false },
-                            { answerText: 'Amazon', isCorrect: false },
-                            { answerText: 'Microsoft', isCorrect: false },
-                        ],
-                    },
-                    {
-                        questionText: 'How many Harry Potter books are there?',
-                        answerOptions: [
-                            { answerText: '1', isCorrect: false },
-                            { answerText: '4', isCorrect: false },
-                            { answerText: '6', isCorrect: false },
-                            { answerText: '7', isCorrect: true },
-                        ],
-                    },
-                ],
-            },
-            {
-                courseName: "All Subjects",
-                testName: "Straight Lines 02",
-                questionNumber: "15",
-                time: "30",
-                attempted: false,
-                questions: [
-                    {
-                        questionText: 'What is the test number?',
-                        answerOptions: [
-                            { answerText: '1', isCorrect: false },
-                            { answerText: '2', isCorrect: true },
-                            { answerText: '3', isCorrect: false },
-                            { answerText: '4', isCorrect: false },
-                        ],
-                    },
-                    {
-                        questionText: 'What is the capital of France?',
-                        answerOptions: [
-                            { answerText: 'New York', isCorrect: false },
-                            { answerText: 'London', isCorrect: false },
-                            { answerText: 'Paris', isCorrect: true },
-                            { answerText: 'Dublin', isCorrect: false },
-                        ],
-                    },
-                    {
-                        questionText: 'Who is CEO of Tesla?',
-                        answerOptions: [
-                            { answerText: 'Jeff Bezos', isCorrect: false },
-                            { answerText: 'Elon Musk', isCorrect: true },
-                            { answerText: 'Bill Gates', isCorrect: false },
-                            { answerText: 'Tony Stark', isCorrect: false },
-                        ],
-                    },
-                    {
-                        questionText: 'The iPhone was created by which company?',
-                        answerOptions: [
-                            { answerText: 'Apple', isCorrect: true },
-                            { answerText: 'Intel', isCorrect: false },
-                            { answerText: 'Amazon', isCorrect: false },
-                            { answerText: 'Microsoft', isCorrect: false },
-                        ],
-                    },
-                    {
-                        questionText: 'How many Harry Potter books are there?',
-                        answerOptions: [
-                            { answerText: '1', isCorrect: false },
-                            { answerText: '4', isCorrect: false },
-                            { answerText: '6', isCorrect: false },
-                            { answerText: '7', isCorrect: true },
-                        ],
-                    },
-                    {
-                        questionText: 'What is the test number? What is the test number? What is the test number? What is the test number? What is the test number? What is the test number? What is the test number? What is the test number?',
-                        answerOptions: [
-                            { answerText: '1', isCorrect: true },
-                            { answerText: '2', isCorrect: false },
-                            { answerText: '3', isCorrect: false },
-                            { answerText: '4', isCorrect: false },
-                        ],
-                    },
-                    {
-                        questionText: 'What is the capital of France?',
-                        answerOptions: [
-                            { answerText: 'New York', isCorrect: false },
-                            { answerText: 'London', isCorrect: false },
-                            { answerText: 'Paris', isCorrect: true },
-                            { answerText: 'Dublin', isCorrect: false },
-                        ],
-                    },
-                    {
-                        questionText: 'Who is CEO of Tesla?',
-                        answerOptions: [
-                            { answerText: 'Jeff Bezos', isCorrect: false },
-                            { answerText: 'Elon Musk', isCorrect: true },
-                            { answerText: 'Bill Gates', isCorrect: false },
-                            { answerText: 'Tony Stark', isCorrect: false },
-                        ],
-                    },
-                    {
-                        questionText: 'The iPhone was created by which company?',
-                        answerOptions: [
-                            { answerText: 'Apple', isCorrect: true },
-                            { answerText: 'Intel', isCorrect: false },
-                            { answerText: 'Amazon', isCorrect: false },
-                            { answerText: 'Microsoft', isCorrect: false },
-                        ],
-                    },
-                    {
-                        questionText: 'How many Harry Potter books are there?',
-                        answerOptions: [
-                            { answerText: '1', isCorrect: false },
-                            { answerText: '4', isCorrect: false },
-                            { answerText: '6', isCorrect: false },
-                            { answerText: '7', isCorrect: true },
-                        ],
-                    },
-                    {
-                        questionText: 'What is the test number? What is the test number? What is the test number? What is the test number? What is the test number? What is the test number? What is the test number? What is the test number?What is the test number? What is the test number? What is the test number? What is the test number? What is the test number? What is the test number? What is the test number? What is the test number?',
-                        answerOptions: [
-                            { answerText: '1', isCorrect: true },
-                            { answerText: '2', isCorrect: false },
-                            { answerText: '3', isCorrect: false },
-                            { answerText: '4', isCorrect: false },
-                        ],
-                    },
-                    {
-                        questionText: 'What is the capital of France?',
-                        answerOptions: [
-                            { answerText: 'New York', isCorrect: false },
-                            { answerText: 'London', isCorrect: false },
-                            { answerText: 'Paris', isCorrect: true },
-                            { answerText: 'Dublin', isCorrect: false },
-                        ],
-                    },
-                    {
-                        questionText: 'Who is CEO of Tesla?',
-                        answerOptions: [
-                            { answerText: 'Jeff Bezos', isCorrect: false },
-                            { answerText: 'Elon Musk', isCorrect: true },
-                            { answerText: 'Bill Gates', isCorrect: false },
-                            { answerText: 'Tony Stark', isCorrect: false },
-                        ],
-                    },
-                    {
-                        questionText: 'The iPhone was created by which company?',
-                        answerOptions: [
-                            { answerText: 'Apple', isCorrect: true },
-                            { answerText: 'Intel', isCorrect: false },
-                            { answerText: 'Amazon', isCorrect: false },
-                            { answerText: 'Microsoft', isCorrect: false },
-                        ],
-                    },
-                    {
-                        questionText: 'How many Harry Potter books are there?',
-                        answerOptions: [
-                            { answerText: '1', isCorrect: false },
-                            { answerText: '4', isCorrect: false },
-                            { answerText: '6', isCorrect: false },
-                            { answerText: '7', isCorrect: true },
-                        ],
-                    },
-                ],
-            },
-            {
-                courseName: "All Subjects",
-                testName: "Parabola 01",
-                questionNumber: "15",
-                time: "30",
-                attempted: true,
-                questions: [
-                    {
-                        questionText: 'What is the test number?',
-                        answerOptions: [
-                            { answerText: '1', isCorrect: false },
-                            { answerText: '2', isCorrect: false },
-                            { answerText: '3', isCorrect: true },
-                            { answerText: '4', isCorrect: false },
-                        ],
-                    },
-                    {
-                        questionText: 'What is the capital of France?',
-                        answerOptions: [
-                            { answerText: 'New York', isCorrect: false },
-                            { answerText: 'London', isCorrect: false },
-                            { answerText: 'Paris', isCorrect: true },
-                            { answerText: 'Dublin', isCorrect: false },
-                        ],
-                    },
-                    {
-                        questionText: 'Who is CEO of Tesla?',
-                        answerOptions: [
-                            { answerText: 'Jeff Bezos', isCorrect: false },
-                            { answerText: 'Elon Musk', isCorrect: true },
-                            { answerText: 'Bill Gates', isCorrect: false },
-                            { answerText: 'Tony Stark', isCorrect: false },
-                        ],
-                    },
-                    {
-                        questionText: 'The iPhone was created by which company?',
-                        answerOptions: [
-                            { answerText: 'Apple', isCorrect: true },
-                            { answerText: 'Intel', isCorrect: false },
-                            { answerText: 'Amazon', isCorrect: false },
-                            { answerText: 'Microsoft', isCorrect: false },
-                        ],
-                    },
-                    {
-                        questionText: 'How many Harry Potter books are there?',
-                        answerOptions: [
-                            { answerText: '1', isCorrect: false },
-                            { answerText: '4', isCorrect: false },
-                            { answerText: '6', isCorrect: false },
-                            { answerText: '7', isCorrect: true },
-                        ],
-                    },
-                ],
-            },
-            {
-                courseName: "All Subjects",
-                testName: "Parabola 02",
-                questionNumber: "15",
-                time: "30",
-                attempted: false,
-                questions: [
-                    {
-                        questionText: 'What is the test number?',
-                        answerOptions: [
-                            { answerText: '1', isCorrect: false },
-                            { answerText: '2', isCorrect: false },
-                            { answerText: '3', isCorrect: false },
-                            { answerText: '4', isCorrect: true },
-                        ],
-                    },
-                    {
-                        questionText: 'What is the capital of France?',
-                        answerOptions: [
-                            { answerText: 'New York', isCorrect: false },
-                            { answerText: 'London', isCorrect: false },
-                            { answerText: 'Paris', isCorrect: true },
-                            { answerText: 'Dublin', isCorrect: false },
-                        ],
-                    },
-                    {
-                        questionText: 'Who is CEO of Tesla?',
-                        answerOptions: [
-                            { answerText: 'Jeff Bezos', isCorrect: false },
-                            { answerText: 'Elon Musk', isCorrect: true },
-                            { answerText: 'Bill Gates', isCorrect: false },
-                            { answerText: 'Tony Stark', isCorrect: false },
-                        ],
-                    },
-                    {
-                        questionText: 'The iPhone was created by which company?',
-                        answerOptions: [
-                            { answerText: 'Apple', isCorrect: true },
-                            { answerText: 'Intel', isCorrect: false },
-                            { answerText: 'Amazon', isCorrect: false },
-                            { answerText: 'Microsoft', isCorrect: false },
-                        ],
-                    },
-                    {
-                        questionText: 'How many Harry Potter books are there?',
-                        answerOptions: [
-                            { answerText: '1', isCorrect: false },
-                            { answerText: '4', isCorrect: false },
-                            { answerText: '6', isCorrect: false },
-                            { answerText: '7', isCorrect: true },
-                        ],
-                    },
-                ],
-            },
-            {
-                courseName: "All Subjects",
-                testName: "Parabola 02",
-                questionNumber: "15",
-                time: "30",
-                attempted: false,
-                questions: [
-                    {
-                        questionText: 'What is the test number?',
-                        answerOptions: [
-                            { answerText: '1', isCorrect: false },
-                            { answerText: '2', isCorrect: false },
-                            { answerText: '3', isCorrect: false },
-                            { answerText: '4', isCorrect: true },
-                        ],
-                    },
-                    {
-                        questionText: 'What is the capital of France?',
-                        answerOptions: [
-                            { answerText: 'New York', isCorrect: false },
-                            { answerText: 'London', isCorrect: false },
-                            { answerText: 'Paris', isCorrect: true },
-                            { answerText: 'Dublin', isCorrect: false },
-                        ],
-                    },
-                    {
-                        questionText: 'Who is CEO of Tesla?',
-                        answerOptions: [
-                            { answerText: 'Jeff Bezos', isCorrect: false },
-                            { answerText: 'Elon Musk', isCorrect: true },
-                            { answerText: 'Bill Gates', isCorrect: false },
-                            { answerText: 'Tony Stark', isCorrect: false },
-                        ],
-                    },
-                    {
-                        questionText: 'The iPhone was created by which company?',
-                        answerOptions: [
-                            { answerText: 'Apple', isCorrect: true },
-                            { answerText: 'Intel', isCorrect: false },
-                            { answerText: 'Amazon', isCorrect: false },
-                            { answerText: 'Microsoft', isCorrect: false },
-                        ],
-                    },
-                    {
-                        questionText: 'How many Harry Potter books are there?',
-                        answerOptions: [
-                            { answerText: '1', isCorrect: false },
-                            { answerText: '4', isCorrect: false },
-                            { answerText: '6', isCorrect: false },
-                            { answerText: '7', isCorrect: true },
-                        ],
-                    },
-                ],
-            },
-            {
-                courseName: "All Subjects",
-                testName: "Parabola 02",
-                questionNumber: "15",
-                time: "30",
-                attempted: false,
-                questions: [
-                    {
-                        questionText: 'What is the test number?',
-                        answerOptions: [
-                            { answerText: '1', isCorrect: false },
-                            { answerText: '2', isCorrect: false },
-                            { answerText: '3', isCorrect: false },
-                            { answerText: '4', isCorrect: true },
-                        ],
-                    },
-                    {
-                        questionText: 'What is the capital of France?',
-                        answerOptions: [
-                            { answerText: 'New York', isCorrect: false },
-                            { answerText: 'London', isCorrect: false },
-                            { answerText: 'Paris', isCorrect: true },
-                            { answerText: 'Dublin', isCorrect: false },
-                        ],
-                    },
-                    {
-                        questionText: 'Who is CEO of Tesla?',
-                        answerOptions: [
-                            { answerText: 'Jeff Bezos', isCorrect: false },
-                            { answerText: 'Elon Musk', isCorrect: true },
-                            { answerText: 'Bill Gates', isCorrect: false },
-                            { answerText: 'Tony Stark', isCorrect: false },
-                        ],
-                    },
-                    {
-                        questionText: 'The iPhone was created by which company?',
-                        answerOptions: [
-                            { answerText: 'Apple', isCorrect: true },
-                            { answerText: 'Intel', isCorrect: false },
-                            { answerText: 'Amazon', isCorrect: false },
-                            { answerText: 'Microsoft', isCorrect: false },
-                        ],
-                    },
-                    {
-                        questionText: 'How many Harry Potter books are there?',
-                        answerOptions: [
-                            { answerText: '1', isCorrect: false },
-                            { answerText: '4', isCorrect: false },
-                            { answerText: '6', isCorrect: false },
-                            { answerText: '7', isCorrect: true },
-                        ],
-                    },
-                ],
-            },
-            {
-                courseName: "All Subjects",
-                testName: "Parabola 02",
-                questionNumber: "15",
-                time: "30",
-                attempted: false,
-                questions: [
-                    {
-                        questionText: 'What is the test number?',
-                        answerOptions: [
-                            { answerText: '1', isCorrect: false },
-                            { answerText: '2', isCorrect: false },
-                            { answerText: '3', isCorrect: false },
-                            { answerText: '4', isCorrect: true },
-                        ],
-                    },
-                    {
-                        questionText: 'What is the capital of France?',
-                        answerOptions: [
-                            { answerText: 'New York', isCorrect: false },
-                            { answerText: 'London', isCorrect: false },
-                            { answerText: 'Paris', isCorrect: true },
-                            { answerText: 'Dublin', isCorrect: false },
-                        ],
-                    },
-                    {
-                        questionText: 'Who is CEO of Tesla?',
-                        answerOptions: [
-                            { answerText: 'Jeff Bezos', isCorrect: false },
-                            { answerText: 'Elon Musk', isCorrect: true },
-                            { answerText: 'Bill Gates', isCorrect: false },
-                            { answerText: 'Tony Stark', isCorrect: false },
-                        ],
-                    },
-                    {
-                        questionText: 'The iPhone was created by which company?',
-                        answerOptions: [
-                            { answerText: 'Apple', isCorrect: true },
-                            { answerText: 'Intel', isCorrect: false },
-                            { answerText: 'Amazon', isCorrect: false },
-                            { answerText: 'Microsoft', isCorrect: false },
-                        ],
-                    },
-                    {
-                        questionText: 'How many Harry Potter books are there?',
-                        answerOptions: [
-                            { answerText: '1', isCorrect: false },
-                            { answerText: '4', isCorrect: false },
-                            { answerText: '6', isCorrect: false },
-                            { answerText: '7', isCorrect: true },
-                        ],
-                    },
-                ],
-            },
-        ],
+        tests: undefined,
         subjects: [
             {
                 label: 'Algebra',
@@ -635,30 +76,6 @@ class Test extends Component {
         invention: false,
     }
 
-    handleAnswerOptionClick = (isCorrect) => {
-		if (isCorrect) {
-            this.setState({score: this.state.score + 1});
-            this.setState({borderColorShow: true});
-        }
-        else if(!isCorrect) {
-            this.setState({borderColorShow: true});
-        }
-        const nextQuestion = this.state.currentQuestion + 1;
-        
-		if (nextQuestion < this.state.questions.length) {
-            setTimeout(() => {
-                this.setState({currentQuestion: nextQuestion});
-                this.setState({borderColorShow: false});
-            }, 1500);
-            
-		} else {
-            setTimeout(() => {
-                this.setState({showScore: true});
-                this.setState({borderColorShow: false});
-            }, 1500);
-            
-		}
-    };
 
     
     componentWillUnmount() {
@@ -709,7 +126,7 @@ class Test extends Component {
         return (
             <SafeAreaView
                 style = {{
-                    backgroundColor: 'black'
+                    backgroundColor: '#020202'
                 }}
             >
                 <StatusBar 
@@ -793,231 +210,133 @@ class Test extends Component {
                     }}>Change Subject</Text>
                 </TouchableOpacity>
                 </View>
-                
-                <RNPickerSelect
-
-                    placeholder={{
-                        label: 'Coordinate Geometry',
-                        value: 'Coordinate Geometry',
-                        color: '',
-                        // fontFamily: 'Poppins-Medium'
-                    }}
-                    
-                    style = {{
-                        inputIOSContainer: {
-                            marginTop: 20,
-                            height: 45,                            
-                            borderRadius: 25,
-                            backgroundColor: '#2C2B2B',
-                        },
-                        placeholder: {
-                            paddingLeft: Platform.OS === 'android' ? 15 : 15,
-                            fontSize: 14,
-                            fontFamily: Platform.OS === 'android' ? 'Poppins-Bold' : 'Poppins-Bold',
-                            color: 'white',
-                            
-                        },
-                        inputAndroid: {
-                            padding: 15,
-                            fontSize: 14,
-                            fontFamily: 'Poppins-Bold',
-                            color: 'white'
-                        },
-                        inputAndroidContainer: {
-                            // borderColor: 'white',
-                            // borderWidth: 2,
-
-                            marginTop: 20,
-                            height: 45,                            
-                            borderRadius: 25,
-                            backgroundColor: '#2C2B2B',
-                        },
-                        inputIOS: {
-                            padding: 15,
-                            fontSize: 14,
-                            fontFamily: 'Poppins-Bold',
-                            color: 'white'
-                        }
-                        
-                    }}
-
-                    items = {this.state.subjects}
-                    
-                    useNativeAndroidPickerStyle = {false}
-
-                    onValueChange = { (value, index) => {
-                    }}
-
-                    Icon = { () => {
-                        return (
-                            <View
-                            style = {{
-                                // borderWidth: 2,
-                                // borderColor: 'white',
-                                marginTop: 12,
-                                marginRight: 20
-                            }}>
-                            <Image 
-                            style = {{
-                                width: 20,
-                                height: 20,
-                                
-                            }}
-                            source = {require('../images/icon.png')}/>
-
-                            </View>
-                        )
-                    }}
-                >
-
-                </RNPickerSelect>
                 </View>
                 {
-                    this.state.showScore ? (
-                        <View
-                            style = {{
-                                height: '100%',
-                                backgroundColor: "#181818"
-                            }}
-                        >
-                            <Text style = {{
-                                color: "#4ACDF4",
-                                fontFamily: "Poppins-Bold",
-                                fontSize: 14
-                            }}>
-                                You scored {this.state.score} out of {this.state.questions.length}
-                            </Text> 
-                        </View>
-                    )
-                    :
-                    (
-                        <View 
-                            
-                        >
+                    <View>
 
-                            <View 
+                        <View 
+                            style = {{
+                            height: Platform.OS == "android" ? '92%' : '92%',
+                            backgroundColor: "#0D0D0D",
+                            paddingBottom: Platform.OS == "android" ? 0 : 40
+                        }}>
+                            <Text
                                 style = {{
-                                height: Platform.OS == "android" ? '87%' : '86%',
-                                backgroundColor: "#141414",
-                                paddingBottom: Platform.OS == "android" ? 0 : 40
-                            }}>
-                                <Text
-                                    style = {{
-                                        marginTop: 20,
-                                        color: "white",
-                                        fontFamily: "Poppins-Bold",
-                                        fontSize: 16,
+                                    marginTop: 20,
+                                    color: "white",
+                                    fontFamily: "Poppins-Bold",
+                                    fontSize: 16,
+                                    marginBottom: 10,
+                                    textAlign: "center"
+                                }}
+                            >
+                                Objective Tests
+                            </Text>
+                            <FlatList 
+                                data = {this.state.tests}
+                                renderItem = { ({item}) => (
+                                    <View style = {{
+                                        marginLeft: 20, 
+                                        marginRight: 20,
+                                        height: 70,
+                                        width: Dimensions.get('screen').width - 40,
+                                        borderRadius: 10,
+                                        backgroundColor: "#1A1A1A",
+                                        marginTop: 10,
                                         marginBottom: 10,
-                                        textAlign: "center"
-                                    }}
-                                >
-                                    Objective Tests
-                                </Text>
-                                <FlatList 
-                                    data = {this.state.tests}
-                                    renderItem = { ({item}) => (
+                                        alignItems: "center",
+                                        paddingLeft: 15, 
+                                        paddingRight: 15,
+                                        flexDirection: 'row',
+                                        justifyContent: "space-between"
+                                    }}>
                                         <View style = {{
-                                            marginLeft: 20, 
-                                            marginRight: 20,
-                                            height: 70,
-                                            width: Dimensions.get('screen').width - 40,
-                                            borderRadius: 10,
-                                            backgroundColor: "#1A1A1A",
-                                            marginTop: 10,
-                                            marginBottom: 10,
-                                            alignItems: "center",
-                                            paddingLeft: 15, 
-                                            paddingRight: 15,
-                                            flexDirection: 'row',
-                                            justifyContent: "space-between"
+                                            flexDirection: 'column'
                                         }}>
-                                            <View style = {{
-                                                flexDirection: 'column'
-                                            }}>
-                                                <Text
-                                                    style = {{
-                                                        fontSize: 14,
-                                                        fontFamily: "Poppins-SemiBold",
-                                                        color: "white",
-                                                    }}
-                                                >
-                                                    {item.testName}
-                                                </Text>
-                                                <Text
-                                                    style = {{
-                                                        fontFamily: "Poppins-SemiBold",
-                                                        fontSize: 10,
-                                                        color: "#929292"
-                                                    }}
-                                                >
-                                                    {item.questionNumber} questions | {item.time} mins
-                                                </Text>
-                                            </View>
-                                            <View>
-                                                    { !item.attempted ?
-                                                        (
-                                                            
-                                                                <TouchableOpacity
-                                                                    onPress = { () => {Actions.TestScreen({questions: item.questions})}}
-                                                                >
-                                                                    <View>
-                                                                        <Text 
-                                                                        style = {{
-                                                                            paddingTop: 2.5,
-                                                                            width: 100,
-                                                                            height: 25,
-                                                                            textAlign: "center",
-                                                                            fontFamily: "Poppins-SemiBold",
-                                                                            color: "white",
-                                                                            fontSize: Platform.OS == "android" ? 12 : 14,
-                                                                            backgroundColor: "#4ACDF4",
-                                                                            borderRadius: 5,
-                                                                            overflow: "hidden"
-                                                                        }}
-                                                                        >
-                                                                            Take Test
-                                                                        </Text>
-                                                                    </View>
-                                                                </TouchableOpacity>
-                                                        ): 
-                                                        <TouchableOpacity>
-                                                            <View 
+                                            <Text
+                                                style = {{
+                                                    fontSize: 14,
+                                                    fontFamily: "Poppins-SemiBold",
+                                                    color: "white",
+                                                }}
+                                            >
+                                                {item.testName}
+                                            </Text>
+                                            <Text
+                                                style = {{
+                                                    fontFamily: "Poppins-SemiBold",
+                                                    fontSize: 10,
+                                                    color: "#929292"
+                                                }}
+                                            >
+                                                {item.questionNumber} questions | {item.time} mins
+                                            </Text>
+                                        </View>
+                                        <View>
+                                                { !item.attempted ?
+                                                    (
+                                                        
+                                                            <TouchableOpacity
+                                                                onPress = { () => {Actions.TestScreen({questions: item.questions, time: item["time"]*60})}}
+                                                            >
+                                                                <View>
+                                                                    <Text 
+                                                                    style = {{
+                                                                        paddingTop: 2.5,
+                                                                        width: 100,
+                                                                        height: 25,
+                                                                        textAlign: "center",
+                                                                        fontFamily: "Poppins-SemiBold",
+                                                                        color: "white",
+                                                                        fontSize: Platform.OS == "android" ? 12 : 14,
+                                                                        backgroundColor: "#4ACDF4",
+                                                                        borderRadius: 5,
+                                                                        overflow: "hidden"
+                                                                    }}
+                                                                    >
+                                                                        Take Test
+                                                                    </Text>
+                                                                </View>
+                                                            </TouchableOpacity>
+                                                    ): 
+                                                    <TouchableOpacity>
+                                                        <View 
+                                                            style = {{
+                                                                alignItems: 'center'
+                                                            }}
+                                                        >
+                                                            <Image 
                                                                 style = {{
-                                                                    alignItems: 'center'
+                                                                    width: 25, 
+                                                                    height: 25
+                                                                }}
+                                                                source = {require("../images/progress.png")}
+                                                            />
+                                                            <Text 
+                                                                style = {{
+                                                                    color: "#4ACDF4",
+                                                                    fontSize: Platform.OS == "android" ? 8 : 10,
+                                                                    fontFamily: "Poppins-SemiBold"
                                                                 }}
                                                             >
-                                                                <Image 
-                                                                    style = {{
-                                                                        width: 25, 
-                                                                        height: 25
-                                                                    }}
-                                                                    source = {require("../images/progress.png")}
-                                                                />
-                                                                <Text 
-                                                                    style = {{
-                                                                        color: "#4ACDF4",
-                                                                        fontSize: Platform.OS == "android" ? 8 : 10,
-                                                                        fontFamily: "Poppins-SemiBold"
-                                                                    }}
-                                                                >
-                                                                    Results
-                                                                </Text>
-                                                            </View>
-                                                        </TouchableOpacity>
-                                                    }
-                                            </View>
+                                                                Results
+                                                            </Text>
+                                                        </View>
+                                                    </TouchableOpacity>
+                                                }
                                         </View>
-                                    )}
-                                />
-                                <View 
-                                    style = {{
-                                        margin: Platform.OS == "android" ? 15 : 0,
-                                    }}
-                                >
-                                </View>
+                                    </View>
+                                )}
+                            />
+                            <View 
+                                style = {{
+                                    margin: Platform.OS == "android" ? 15 : 0,
+                                }}
+                            >
                             </View>
                         </View>
-                    )
+                    </View>
+                    
                 }
             </SafeAreaView>
         )

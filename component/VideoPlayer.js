@@ -93,7 +93,7 @@ class VideoPlayer extends Component {
                 </View>
             
                 <Video
-                    source={{ uri: this.props.titlePage.video_url }}
+                    source={{ uri: this.props.titlePage.video_url, headers: {"Content-Type": "video/mp4"}  }}
                     rate={1.0}
                     onFullscreenUpdate={Platform.OS == "android" ? this.onFullscreenUpdate : () => {}}
                     volume={1.0}

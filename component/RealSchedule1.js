@@ -3,27 +3,16 @@ import {View, Text, ScrollView, Dimensions, TouchableOpacity, FlatList, Image, I
 import moment from 'moment';
 import ModalDropdown from 'react-native-modal-dropdown';
 import {Actions} from 'react-native-router-flux';
-import { DefaultTheme, List } from 'react-native-paper';
+import { List } from 'react-native-paper';
+import Modal500 from './Modal500';
+import Modal404 from './Modal404';
 
 
 moment().format();
 
-const theme = {
-    ...DefaultTheme,
-    roundness: 2,
-    colors: {
-      ...DefaultTheme.colors,
-      primary: '#3498db',
-      accent: '#f1c40f',
-    },
-};
-
 class RealSchedule1 extends Component {
 
     async componentDidMount() {
-        setTimeout(() => {
-            this.setState({showModal: true})
-          }, 500);
         AsyncStorage.getItem('class')
         .then((value) => {
             let url = "http://idirect.bloombraineducation.com/idirect/lms/live/class/schedule?class="+value+"&course="+this.state.courses[this.state.course];
@@ -43,13 +32,18 @@ class RealSchedule1 extends Component {
                     })
                 } else {
                     if(response.status == 500) {
+                        this.setState({showLoader: false})
+                        this.setState({status: 500});
                         console.log("500");
                     }
                     if(response.status == 404) {
+                        this.setState({showLoader: false})
+                        this.setState({status: 404});
                         console.log("404");
                     }
                 }
             })
+            
             .catch((error) => {
                 this.setState({login: false})
                 console.error(error);
@@ -82,6 +76,8 @@ class RealSchedule1 extends Component {
             'academics': 'Academics',
             'extra_curricular': 'Extra-curricular'
         },
+        status: 200,
+        showLoader: true,
         courses : {
             'All Subjects'           : 'beginner',
             'Spoken English Program' : 'advance',
@@ -94,7 +90,6 @@ class RealSchedule1 extends Component {
         showModal: false,
         errorString: "",
         schedules: null,
-        collapseTuesday: false,
         number: 0,
     }
 
@@ -120,13 +115,18 @@ class RealSchedule1 extends Component {
                     })
                 } else {
                     if(response.status == 500) {
+                        this.setState({showLoader: false})
+                        this.setState({status: 500});
                         console.log("500");
                     }
                     if(response.status == 404) {
+                        this.setState({showLoader: false})
+                        this.setState({status: 404});
                         console.log("404");
                     }
                 }
             })
+            
             .catch((error) => {
                 // this.setState({login: false})
                 console.error(error);
@@ -189,6 +189,7 @@ class RealSchedule1 extends Component {
                             }}
                             renderSeparator = {() => {return <View></View>}}
                             onSelect = {(index, value) => {
+                                this.setState({showLoader: true})
                                 let url = "http://idirect.bloombraineducation.com/idirect/lms/live/class/schedule?class="+this.state.class+"&course="+this.state.courses[value];
                                 console.log(url);
                                 fetch(url, {
@@ -197,7 +198,7 @@ class RealSchedule1 extends Component {
                                         'Content-Type': 'multipart/form-data',
                                     },
                                     })
-                                    then((response) => {
+                                    .then((response) => {
                                         if(response.ok) {
                                         response.json().then((responseJson) => {
                                             this.setState({showLoader: false})
@@ -213,6 +214,7 @@ class RealSchedule1 extends Component {
                                             }
                                         }
                                     })
+                                    
                                     .catch((error) => {
                                         // this.setState({login: false})
                                         console.error(error);
@@ -248,7 +250,7 @@ class RealSchedule1 extends Component {
                                     this.state.class == 5 ? '5th' : this.state.class == 6 ? '6th' :
                                     this.state.class == 7 ? '7th' : this.state.class == 8 ? '8th' : 
                                     this.state.class == 9 ? '9th' : this.state.class == 10 ? '10th' : 
-                                    this.state.class == 11 ? '11th' : '12th'   
+                                    this.state.class == 11 ? '11th' : '12th' 
                                 }
                                 options={['1st', '2nd', '3rd', '4th', '5th', '6th', '7th', '8th', '9th']}
                                 dropdownStyle = {{
@@ -278,6 +280,7 @@ class RealSchedule1 extends Component {
                                 }}
                                 renderSeparator = {() => {return <View></View>}}
                                 onSelect = {(index, value) => {
+                                    this.setState({showLoader: true})
                                     let url = "http://idirect.bloombraineducation.com/idirect/lms/live/class/schedule?class="+(parseInt(index)+1)+"&course="+this.state.courses[this.state.course];
                                     console.log(url);
                                     fetch(url, {
@@ -318,7 +321,48 @@ class RealSchedule1 extends Component {
                     </View>
                     
                 {
-                    
+                    this.state.showLoader ? 
+                    (
+                        <View
+                            style = {{
+                                height: '95%',
+                                alignItems: "center",
+                                justifyContent: "center",
+
+                            }}
+                        >
+                            <Image 
+                                style = {{
+                                    marginTop: 200,
+                                    width  : 60,
+                                    height : 60,
+                                    
+                                }}
+                                source = {require("../images/loader.gif")}
+                            />
+                        </View>
+                    )
+                    :
+                    !this.state.showLoader && this.state.status == 500 ?
+                    (
+                        <View
+                            style = {{
+                                marginTop: -100,
+                            }}
+                        >
+                            <Modal500 />
+                        </View>
+                    ) : 
+                    !this.state.showLoader && this.state.status == 404 ? 
+                    (
+                        <View
+                            style = {{
+                                marginTop: -100,
+                            }}
+                        >
+                            <Modal404 />
+                        </View>
+                    ):
                     this.state.schedules ? this.state.schedules.map((value, index) => {
                         let title = "Batch " + (index+1).toString();
                         return (
@@ -420,26 +464,46 @@ class RealSchedule1 extends Component {
                                                         marginRight: 10,
                                                         backgroundColor: '#1C1C1C',
                                                         marginBottom: 20,
-                                                        borderRadius: 10,
+                                                        borderRadius: 10
                                                     }}>
                                                         <View>
                                                             {
-                                                                <ImageBackground
+                                                                item.thumbnail_url != false ?
+                                                                <Image
                                                                     style = {{
                                                                         // marginTop: 20,
                                                                         // marginRight: 20,
-                                                                        width: 120, 
+                                                                        width: 140, 
                                                                         height: 100, 
                                                                         borderRadius: 10,
                                                                         marginBottom: 0,
                                                                         overflow: 'hidden',
                                                                         position: 'relative',
+                                                                        resizeMode: "stretch"
                                                                     }}
-                                                                    source = {{uri: base64Icon}}
+                                                                    source = {{uri: item.thumbnail_url}}
                                                                 >
-                                                                </ImageBackground>
+                                                                </Image>
+                                                                :
+                                                                
+                                                                <Image
+                                                                    style = {{
+                                                                        // marginTop: 20,
+                                                                        // marginRight: 20,
+                                                                        width: 140, 
+                                                                        height: 100, 
+                                                                        borderRadius: 10,
+                                                                        marginBottom: 0,
+                                                                        overflow: 'hidden',
+                                                                        position: 'relative',
+                                                                        resizeMode: "stretch"
+
+                                                                    }}
+                                                                    source = {require("../images/mathswork.png")}
+                                                                >
+                                                                </Image>
                                                             }
-                                                            <Text style = {{color: "#4ACDF4", fontFamily: "Poppins-Bold", fontSize: 13, position: 'absolute', top: 10, left: 130}}>Subject</Text>
+                                                            <Text style = {{color: "#4ACDF4", fontFamily: "Poppins-Bold", fontSize: 13, position: 'absolute', top: 10, left: 150}}>Subject</Text>
                                                             </View>
                                                             <View style = {{
                                                                 flex: 1,
@@ -466,9 +530,8 @@ class RealSchedule1 extends Component {
                                                                 <Text style = {{
                                                                     color: 'gray',
                                                                     fontFamily: 'Poppins-SemiBold',
-                                                                    paddingLeft: 12,
-                                                                    paddingRight: 12,
-                                                                    width: 125,
+                                                                    marginLeft: 12,
+                                                                    maxWidth: 125,
                                                                     // borderColor: 'white',
                                                                     // borderWidth: 2,
                                                                     flexShrink: 1,
@@ -484,7 +547,7 @@ class RealSchedule1 extends Component {
                                                                     fontFamily: 'Poppins-SemiBold',
                                                                     // borderColor: 'white',
                                                                     // borderWidth: 2,
-                                                                    width: 60,
+                                                                    maxWidth: 60,
                                                                     flexShrink: 1,
                                                                     fontSize: 10,
                                                                     marginTop: 10
@@ -503,7 +566,7 @@ class RealSchedule1 extends Component {
                                                                         style = {{ 
                                                                             // borderWidth: 1, 
                                                                             // borderColor: 'white', 
-                                                                            width: 70, 
+                                                                            width: 60, 
                                                                             height: 25, 
                                                                             marginRight: 15,
                                                                             marginTop: 5,
@@ -550,7 +613,7 @@ class RealSchedule1 extends Component {
                                                 ListHeaderComponent = {<View style = {{width: 20}}></View>}
                                                 horizontal = {true}
                                                 data  = {this.state.schedules[index][0]["Tuesday"]}
-                                                renderItem = {({item}) => 
+                                                renderItem = {({item}) =>
                                                 {
                                                     let base64Icon = `data:image/png;base64,${item.thumbnail_url}`;
                                                     let time = item.time;
@@ -569,27 +632,49 @@ class RealSchedule1 extends Component {
                                                         // borderColor: 'white',
                                                         width: Dimensions.get("window").width - 40,
                                                         height: 100,
+                                                        marginRight: 10,
                                                         backgroundColor: '#1C1C1C',
                                                         marginBottom: 20,
-                                                        marginRight: 10,
                                                         borderRadius: 10
                                                     }}>
                                                         <View>
-                                                            <ImageBackground
-                                                                style = {{
-                                                                    // marginTop: 20,
-                                                                    // marginRight: 20,
-                                                                    width: 100*1.2, 
-                                                                    height: 100, 
-                                                                    borderRadius: 10,
-                                                                    marginBottom: 0,
-                                                                    overflow: 'hidden',
-                                                                    position: 'relative',
-                                                                }}
-                                                                source = {{uri: base64Icon}}
-                                                            >
-                                                            </ImageBackground>
-                                                            <Text style = {{color: "#4ACDF4", fontFamily: "Poppins-Bold", fontSize: 13, position: 'absolute', top: 10, left: 130}}>Subject</Text>
+                                                            {
+                                                                item.thumbnail_url != false ?
+                                                                <Image
+                                                                    style = {{
+                                                                        // marginTop: 20,
+                                                                        // marginRight: 20,
+                                                                        width: 140, 
+                                                                        height: 100, 
+                                                                        borderRadius: 10,
+                                                                        marginBottom: 0,
+                                                                        overflow: 'hidden',
+                                                                        position: 'relative',
+                                                                        resizeMode: "stretch"
+                                                                    }}
+                                                                    source = {{uri: item.thumbnail_url}}
+                                                                >
+                                                                </Image>
+                                                                :
+                                                                
+                                                                <Image
+                                                                    style = {{
+                                                                        // marginTop: 20,
+                                                                        // marginRight: 20,
+                                                                        width: 140, 
+                                                                        height: 100, 
+                                                                        borderRadius: 10,
+                                                                        marginBottom: 0,
+                                                                        overflow: 'hidden',
+                                                                        position: 'relative',
+                                                                        resizeMode: "stretch"
+
+                                                                    }}
+                                                                    source = {require("../images/mathswork.png")}
+                                                                >
+                                                                </Image>
+                                                            }
+                                                            <Text style = {{color: "#4ACDF4", fontFamily: "Poppins-Bold", fontSize: 13, position: 'absolute', top: 10, left: 150}}>Subject</Text>
                                                             </View>
                                                             <View style = {{
                                                                 flex: 1,
@@ -616,9 +701,8 @@ class RealSchedule1 extends Component {
                                                                 <Text style = {{
                                                                     color: 'gray',
                                                                     fontFamily: 'Poppins-SemiBold',
-                                                                    paddingLeft: 12,
-                                                                    paddingRight: 12,
-                                                                    width: 125,
+                                                                    marginLeft: 12,
+                                                                    maxWidth: 125,
                                                                     // borderColor: 'white',
                                                                     // borderWidth: 2,
                                                                     flexShrink: 1,
@@ -632,9 +716,9 @@ class RealSchedule1 extends Component {
                                                                 <Text style = {{
                                                                     color: 'gray',
                                                                     fontFamily: 'Poppins-SemiBold',
-                                                                            // borderColor: 'white',
-                                                                            // borderWidth: 2,
-                                                                    width: 80,
+                                                                    // borderColor: 'white',
+                                                                    // borderWidth: 2,
+                                                                    maxWidth: 60,
                                                                     flexShrink: 1,
                                                                     fontSize: 10,
                                                                     marginTop: 10
@@ -646,12 +730,14 @@ class RealSchedule1 extends Component {
                                                                     <TouchableOpacity 
 
                                                                         onPress = {() => {
+                                                                            let time = item.time;
+                                                                            let url = item.demo_link;
                                                                             this.attend();
                                                                         }}
                                                                         style = {{ 
                                                                             // borderWidth: 1, 
                                                                             // borderColor: 'white', 
-                                                                            width: 70, 
+                                                                            width: 60, 
                                                                             height: 25, 
                                                                             marginRight: 15,
                                                                             marginTop: 5,
@@ -676,7 +762,6 @@ class RealSchedule1 extends Component {
                                                 )}
                                                 }
                                             />
-                                            
                                             </View>
                                         </View>
                                     :
@@ -696,7 +781,8 @@ class RealSchedule1 extends Component {
                                                 ListHeaderComponent = {<View style = {{width: 20}}></View>}
                                                 horizontal = {true}
                                                 data  = {this.state.schedules[index][0]["Wednesday"]}
-                                                renderItem = {({item}) => {
+                                                renderItem = {({item}) =>
+                                                {
                                                     let base64Icon = `data:image/png;base64,${item.thumbnail_url}`;
                                                     let time = item.time;
                                                     time = time.toString();
@@ -714,27 +800,49 @@ class RealSchedule1 extends Component {
                                                         // borderColor: 'white',
                                                         width: Dimensions.get("window").width - 40,
                                                         height: 100,
+                                                        marginRight: 10,
                                                         backgroundColor: '#1C1C1C',
                                                         marginBottom: 20,
-                                                        marginRight: 10,
                                                         borderRadius: 10
                                                     }}>
                                                         <View>
-                                                            <ImageBackground
-                                                                style = {{
-                                                                    // marginTop: 20,
-                                                                    // marginRight: 20,
-                                                                    width: 120, 
-                                                                    height: 100, 
-                                                                    borderRadius: 10,
-                                                                    marginBottom: 0,
-                                                                    overflow: 'hidden',
-                                                                    position: 'relative',
-                                                                }}
-                                                                source = {{uri: base64Icon}}
-                                                            >
-                                                            </ImageBackground>
-                                                            <Text style = {{color: "#4ACDF4", fontFamily: "Poppins-Bold", fontSize: 13, position: 'absolute', top: 10, left: 130}}>Subject</Text>
+                                                            {
+                                                                item.thumbnail_url != false ?
+                                                                <Image
+                                                                    style = {{
+                                                                        // marginTop: 20,
+                                                                        // marginRight: 20,
+                                                                        width: 140, 
+                                                                        height: 100, 
+                                                                        borderRadius: 10,
+                                                                        marginBottom: 0,
+                                                                        overflow: 'hidden',
+                                                                        position: 'relative',
+                                                                        resizeMode: "stretch"
+                                                                    }}
+                                                                    source = {{uri: item.thumbnail_url}}
+                                                                >
+                                                                </Image>
+                                                                :
+                                                                
+                                                                <Image
+                                                                    style = {{
+                                                                        // marginTop: 20,
+                                                                        // marginRight: 20,
+                                                                        width: 140, 
+                                                                        height: 100, 
+                                                                        borderRadius: 10,
+                                                                        marginBottom: 0,
+                                                                        overflow: 'hidden',
+                                                                        position: 'relative',
+                                                                        resizeMode: "stretch"
+
+                                                                    }}
+                                                                    source = {require("../images/mathswork.png")}
+                                                                >
+                                                                </Image>
+                                                            }
+                                                            <Text style = {{color: "#4ACDF4", fontFamily: "Poppins-Bold", fontSize: 13, position: 'absolute', top: 10, left: 150}}>Subject</Text>
                                                             </View>
                                                             <View style = {{
                                                                 flex: 1,
@@ -761,9 +869,8 @@ class RealSchedule1 extends Component {
                                                                 <Text style = {{
                                                                     color: 'gray',
                                                                     fontFamily: 'Poppins-SemiBold',
-                                                                    paddingLeft: 12,
-                                                                    paddingRight: 12,
-                                                                    width: 125,
+                                                                    marginLeft: 12,
+                                                                    maxWidth: 125,
                                                                     // borderColor: 'white',
                                                                     // borderWidth: 2,
                                                                     flexShrink: 1,
@@ -777,9 +884,9 @@ class RealSchedule1 extends Component {
                                                                 <Text style = {{
                                                                     color: 'gray',
                                                                     fontFamily: 'Poppins-SemiBold',
-                                                                            // borderColor: 'white',
-                                                                            // borderWidth: 2,
-                                                                    width: 80,
+                                                                    // borderColor: 'white',
+                                                                    // borderWidth: 2,
+                                                                    maxWidth: 60,
                                                                     flexShrink: 1,
                                                                     fontSize: 10,
                                                                     marginTop: 10
@@ -798,7 +905,7 @@ class RealSchedule1 extends Component {
                                                                         style = {{ 
                                                                             // borderWidth: 1, 
                                                                             // borderColor: 'white', 
-                                                                            width: 70, 
+                                                                            width: 60, 
                                                                             height: 25, 
                                                                             marginRight: 15,
                                                                             marginTop: 5,
@@ -841,7 +948,8 @@ class RealSchedule1 extends Component {
                                                 ListHeaderComponent = {<View style = {{width: 20}}></View>}
                                                 horizontal = {true}
                                                 data  = {this.state.schedules[index][0]["Thursday"]}
-                                                renderItem = {({item}) => {
+                                                renderItem = {({item}) =>
+                                                {
                                                     let base64Icon = `data:image/png;base64,${item.thumbnail_url}`;
                                                     let time = item.time;
                                                     time = time.toString();
@@ -865,21 +973,43 @@ class RealSchedule1 extends Component {
                                                         borderRadius: 10
                                                     }}>
                                                         <View>
-                                                            <ImageBackground
-                                                                style = {{
-                                                                    // marginTop: 20,
-                                                                    // marginRight: 20,
-                                                                    width: 120, 
-                                                                    height: 100, 
-                                                                    borderRadius: 10,
-                                                                    marginBottom: 0,
-                                                                    overflow: 'hidden',
-                                                                    position: 'relative',
-                                                                }}
-                                                                source = {{uri: base64Icon}}
-                                                            >
-                                                            </ImageBackground>
-                                                            <Text style = {{color: "#4ACDF4", fontFamily: "Poppins-Bold", fontSize: 13, position: 'absolute', top: 10, left: 130}}>Subject</Text>
+                                                            {
+                                                                item.thumbnail_url != false ?
+                                                                <Image
+                                                                    style = {{
+                                                                        // marginTop: 20,
+                                                                        // marginRight: 20,
+                                                                        width: 140, 
+                                                                        height: 100, 
+                                                                        borderRadius: 10,
+                                                                        marginBottom: 0,
+                                                                        overflow: 'hidden',
+                                                                        position: 'relative',
+                                                                        resizeMode: "stretch"
+                                                                    }}
+                                                                    source = {{uri: item.thumbnail_url}}
+                                                                >
+                                                                </Image>
+                                                                :
+                                                                
+                                                                <Image
+                                                                    style = {{
+                                                                        // marginTop: 20,
+                                                                        // marginRight: 20,
+                                                                        width: 140, 
+                                                                        height: 100, 
+                                                                        borderRadius: 10,
+                                                                        marginBottom: 0,
+                                                                        overflow: 'hidden',
+                                                                        position: 'relative',
+                                                                        resizeMode: "stretch"
+
+                                                                    }}
+                                                                    source = {require("../images/mathswork.png")}
+                                                                >
+                                                                </Image>
+                                                            }
+                                                            <Text style = {{color: "#4ACDF4", fontFamily: "Poppins-Bold", fontSize: 13, position: 'absolute', top: 10, left: 150}}>Subject</Text>
                                                             </View>
                                                             <View style = {{
                                                                 flex: 1,
@@ -906,9 +1036,8 @@ class RealSchedule1 extends Component {
                                                                 <Text style = {{
                                                                     color: 'gray',
                                                                     fontFamily: 'Poppins-SemiBold',
-                                                                    paddingLeft: 12,
-                                                                    paddingRight: 12,
-                                                                    width: 125,
+                                                                    marginLeft: 12,
+                                                                    maxWidth: 125,
                                                                     // borderColor: 'white',
                                                                     // borderWidth: 2,
                                                                     flexShrink: 1,
@@ -922,9 +1051,9 @@ class RealSchedule1 extends Component {
                                                                 <Text style = {{
                                                                     color: 'gray',
                                                                     fontFamily: 'Poppins-SemiBold',
-                                                                            // borderColor: 'white',
-                                                                            // borderWidth: 2,
-                                                                    width: 80,
+                                                                    // borderColor: 'white',
+                                                                    // borderWidth: 2,
+                                                                    maxWidth: 60,
                                                                     flexShrink: 1,
                                                                     fontSize: 10,
                                                                     marginTop: 10
@@ -943,7 +1072,7 @@ class RealSchedule1 extends Component {
                                                                         style = {{ 
                                                                             // borderWidth: 1, 
                                                                             // borderColor: 'white', 
-                                                                            width: 70, 
+                                                                            width: 60, 
                                                                             height: 25, 
                                                                             marginRight: 15,
                                                                             marginTop: 5,
@@ -986,7 +1115,8 @@ class RealSchedule1 extends Component {
                                                 ListHeaderComponent = {<View style = {{width: 20}}></View>}
                                                 horizontal = {true}
                                                 data  = {this.state.schedules[index][0]["Friday"]}
-                                                renderItem = {({item}) => {
+                                                renderItem = {({item}) =>
+                                                {
                                                     let base64Icon = `data:image/png;base64,${item.thumbnail_url}`;
                                                     let time = item.time;
                                                     time = time.toString();
@@ -1010,21 +1140,43 @@ class RealSchedule1 extends Component {
                                                         borderRadius: 10
                                                     }}>
                                                         <View>
-                                                            <ImageBackground
-                                                                style = {{
-                                                                    // marginTop: 20,
-                                                                    // marginRight: 20,
-                                                                    width: 120, 
-                                                                    height: 100, 
-                                                                    borderRadius: 10,
-                                                                    marginBottom: 0,
-                                                                    overflow: 'hidden',
-                                                                    position: 'relative',
-                                                                }}
-                                                                source = {{uri: base64Icon}}
-                                                            >
-                                                            </ImageBackground>
-                                                            <Text style = {{color: "#4ACDF4", fontFamily: "Poppins-Bold", fontSize: 13, position: 'absolute', top: 10, left: 130}}>Subject</Text>
+                                                            {
+                                                                item.thumbnail_url != false ?
+                                                                <Image
+                                                                    style = {{
+                                                                        // marginTop: 20,
+                                                                        // marginRight: 20,
+                                                                        width: 140, 
+                                                                        height: 100, 
+                                                                        borderRadius: 10,
+                                                                        marginBottom: 0,
+                                                                        overflow: 'hidden',
+                                                                        position: 'relative',
+                                                                        resizeMode: "stretch"
+                                                                    }}
+                                                                    source = {{uri: item.thumbnail_url}}
+                                                                >
+                                                                </Image>
+                                                                :
+                                                                
+                                                                <Image
+                                                                    style = {{
+                                                                        // marginTop: 20,
+                                                                        // marginRight: 20,
+                                                                        width: 140, 
+                                                                        height: 100, 
+                                                                        borderRadius: 10,
+                                                                        marginBottom: 0,
+                                                                        overflow: 'hidden',
+                                                                        position: 'relative',
+                                                                        resizeMode: "stretch"
+
+                                                                    }}
+                                                                    source = {require("../images/mathswork.png")}
+                                                                >
+                                                                </Image>
+                                                            }
+                                                            <Text style = {{color: "#4ACDF4", fontFamily: "Poppins-Bold", fontSize: 13, position: 'absolute', top: 10, left: 150}}>Subject</Text>
                                                             </View>
                                                             <View style = {{
                                                                 flex: 1,
@@ -1051,9 +1203,8 @@ class RealSchedule1 extends Component {
                                                                 <Text style = {{
                                                                     color: 'gray',
                                                                     fontFamily: 'Poppins-SemiBold',
-                                                                    paddingLeft: 12,
-                                                                    paddingRight: 12,
-                                                                    width: 125,
+                                                                    marginLeft: 12,
+                                                                    maxWidth: 125,
                                                                     // borderColor: 'white',
                                                                     // borderWidth: 2,
                                                                     flexShrink: 1,
@@ -1067,9 +1218,9 @@ class RealSchedule1 extends Component {
                                                                 <Text style = {{
                                                                     color: 'gray',
                                                                     fontFamily: 'Poppins-SemiBold',
-                                                                            // borderColor: 'white',
-                                                                            // borderWidth: 2,
-                                                                    width: 80,
+                                                                    // borderColor: 'white',
+                                                                    // borderWidth: 2,
+                                                                    maxWidth: 60,
                                                                     flexShrink: 1,
                                                                     fontSize: 10,
                                                                     marginTop: 10
@@ -1088,7 +1239,7 @@ class RealSchedule1 extends Component {
                                                                         style = {{ 
                                                                             // borderWidth: 1, 
                                                                             // borderColor: 'white', 
-                                                                            width: 70, 
+                                                                            width: 60, 
                                                                             height: 25, 
                                                                             marginRight: 15,
                                                                             marginTop: 5,
@@ -1131,7 +1282,8 @@ class RealSchedule1 extends Component {
                                                 ListHeaderComponent = {<View style = {{width: 20}}></View>}
                                                 horizontal = {true}
                                                 data  = {this.state.schedules[index][0]["Saturday"]}
-                                                renderItem = {({item}) => {
+                                                renderItem = {({item}) =>
+                                                {
                                                     let base64Icon = `data:image/png;base64,${item.thumbnail_url}`;
                                                     let time = item.time;
                                                     time = time.toString();
@@ -1155,21 +1307,43 @@ class RealSchedule1 extends Component {
                                                         borderRadius: 10
                                                     }}>
                                                         <View>
-                                                            <ImageBackground
-                                                                style = {{
-                                                                    // marginTop: 20,
-                                                                    // marginRight: 20,
-                                                                    width: 120, 
-                                                                    height: 100, 
-                                                                    borderRadius: 10,
-                                                                    marginBottom: 0,
-                                                                    overflow: 'hidden',
-                                                                    position: 'relative',
-                                                                }}
-                                                                source = {{uri: base64Icon}}
-                                                            >
-                                                            </ImageBackground>
-                                                            <Text style = {{color: "#4ACDF4", fontFamily: "Poppins-Bold", fontSize: 13, position: 'absolute', top: 10, left: 130}}>Subject</Text>
+                                                            {
+                                                                item.thumbnail_url != false ?
+                                                                <Image
+                                                                    style = {{
+                                                                        // marginTop: 20,
+                                                                        // marginRight: 20,
+                                                                        width: 140, 
+                                                                        height: 100, 
+                                                                        borderRadius: 10,
+                                                                        marginBottom: 0,
+                                                                        overflow: 'hidden',
+                                                                        position: 'relative',
+                                                                        resizeMode: "stretch"
+                                                                    }}
+                                                                    source = {{uri: item.thumbnail_url}}
+                                                                >
+                                                                </Image>
+                                                                :
+                                                                
+                                                                <Image
+                                                                    style = {{
+                                                                        // marginTop: 20,
+                                                                        // marginRight: 20,
+                                                                        width: 140, 
+                                                                        height: 100, 
+                                                                        borderRadius: 10,
+                                                                        marginBottom: 0,
+                                                                        overflow: 'hidden',
+                                                                        position: 'relative',
+                                                                        resizeMode: "stretch"
+
+                                                                    }}
+                                                                    source = {require("../images/mathswork.png")}
+                                                                >
+                                                                </Image>
+                                                            }
+                                                            <Text style = {{color: "#4ACDF4", fontFamily: "Poppins-Bold", fontSize: 13, position: 'absolute', top: 10, left: 150}}>Subject</Text>
                                                             </View>
                                                             <View style = {{
                                                                 flex: 1,
@@ -1196,9 +1370,8 @@ class RealSchedule1 extends Component {
                                                                 <Text style = {{
                                                                     color: 'gray',
                                                                     fontFamily: 'Poppins-SemiBold',
-                                                                    paddingLeft: 12,
-                                                                    paddingRight: 12,
-                                                                    width: 125,
+                                                                    marginLeft: 12,
+                                                                    maxWidth: 125,
                                                                     // borderColor: 'white',
                                                                     // borderWidth: 2,
                                                                     flexShrink: 1,
@@ -1212,9 +1385,9 @@ class RealSchedule1 extends Component {
                                                                 <Text style = {{
                                                                     color: 'gray',
                                                                     fontFamily: 'Poppins-SemiBold',
-                                                                            // borderColor: 'white',
-                                                                            // borderWidth: 2,
-                                                                    width: 80,
+                                                                    // borderColor: 'white',
+                                                                    // borderWidth: 2,
+                                                                    maxWidth: 60,
                                                                     flexShrink: 1,
                                                                     fontSize: 10,
                                                                     marginTop: 10
@@ -1233,7 +1406,7 @@ class RealSchedule1 extends Component {
                                                                         style = {{ 
                                                                             // borderWidth: 1, 
                                                                             // borderColor: 'white', 
-                                                                            width: 70, 
+                                                                            width: 60, 
                                                                             height: 25, 
                                                                             marginRight: 15,
                                                                             marginTop: 5,
@@ -1273,10 +1446,12 @@ class RealSchedule1 extends Component {
                                             <FlatList 
                                                 showsHorizontalScrollIndicator = {false}
                                                 showsVerticalScrollIndicator = {false}
+                                                contentContainerStyle = {{marginRight: 20}}
                                                 ListHeaderComponent = {<View style = {{width: 20}}></View>}
                                                 horizontal = {true}
                                                 data  = {this.state.schedules[index][0]["Sunday"]}
-                                                renderItem = {({item}) => {
+                                                renderItem = {({item}) =>
+                                                {
                                                     let base64Icon = `data:image/png;base64,${item.thumbnail_url}`;
                                                     let time = item.time;
                                                     time = time.toString();
@@ -1300,21 +1475,43 @@ class RealSchedule1 extends Component {
                                                         borderRadius: 10
                                                     }}>
                                                         <View>
-                                                            <ImageBackground
-                                                                style = {{
-                                                                    // marginTop: 20,
-                                                                    // marginRight: 20,
-                                                                    width: 120, 
-                                                                    height: 100, 
-                                                                    borderRadius: 10,
-                                                                    marginBottom: 0,
-                                                                    overflow: 'hidden',
-                                                                    position: 'relative',
-                                                                }}
-                                                                source = {{uri: base64Icon}}
-                                                            >
-                                                            </ImageBackground>
-                                                            <Text style = {{color: "#4ACDF4", fontFamily: "Poppins-Bold", fontSize: 13, position: 'absolute', top: 10, left: 130}}>Subject</Text>
+                                                            {
+                                                                item.thumbnail_url != false ?
+                                                                <Image
+                                                                    style = {{
+                                                                        // marginTop: 20,
+                                                                        // marginRight: 20,
+                                                                        width: 140, 
+                                                                        height: 100, 
+                                                                        borderRadius: 10,
+                                                                        marginBottom: 0,
+                                                                        overflow: 'hidden',
+                                                                        position: 'relative',
+                                                                        resizeMode: "stretch"
+                                                                    }}
+                                                                    source = {{uri: item.thumbnail_url}}
+                                                                >
+                                                                </Image>
+                                                                :
+                                                                
+                                                                <Image
+                                                                    style = {{
+                                                                        // marginTop: 20,
+                                                                        // marginRight: 20,
+                                                                        width: 140, 
+                                                                        height: 100, 
+                                                                        borderRadius: 10,
+                                                                        marginBottom: 0,
+                                                                        overflow: 'hidden',
+                                                                        position: 'relative',
+                                                                        resizeMode: "stretch"
+
+                                                                    }}
+                                                                    source = {require("../images/mathswork.png")}
+                                                                >
+                                                                </Image>
+                                                            }
+                                                            <Text style = {{color: "#4ACDF4", fontFamily: "Poppins-Bold", fontSize: 13, position: 'absolute', top: 10, left: 150}}>Subject</Text>
                                                             </View>
                                                             <View style = {{
                                                                 flex: 1,
@@ -1341,9 +1538,8 @@ class RealSchedule1 extends Component {
                                                                 <Text style = {{
                                                                     color: 'gray',
                                                                     fontFamily: 'Poppins-SemiBold',
-                                                                    paddingLeft: 12,
-                                                                    paddingRight: 12,
-                                                                    width: 125,
+                                                                    marginLeft: 12,
+                                                                    maxWidth: 125,
                                                                     // borderColor: 'white',
                                                                     // borderWidth: 2,
                                                                     flexShrink: 1,
@@ -1357,9 +1553,9 @@ class RealSchedule1 extends Component {
                                                                 <Text style = {{
                                                                     color: 'gray',
                                                                     fontFamily: 'Poppins-SemiBold',
-                                                                            // borderColor: 'white',
-                                                                            // borderWidth: 2,
-                                                                    width: 80,
+                                                                    // borderColor: 'white',
+                                                                    // borderWidth: 2,
+                                                                    maxWidth: 60,
                                                                     flexShrink: 1,
                                                                     fontSize: 10,
                                                                     marginTop: 10
@@ -1378,7 +1574,7 @@ class RealSchedule1 extends Component {
                                                                         style = {{ 
                                                                             // borderWidth: 1, 
                                                                             // borderColor: 'white', 
-                                                                            width: 70, 
+                                                                            width: 60, 
                                                                             height: 25, 
                                                                             marginRight: 15,
                                                                             marginTop: 5,

@@ -1,9 +1,12 @@
+import { throwIfAudioIsDisabled } from 'expo-av/build/Audio/AudioAvailability';
 import react from 'react';
 import React, {Component} from 'react';
 import {View, Text, ScrollView, Dimensions, TouchableOpacity, FlatList, Image, ImageBackground, Platform, AsyncStorage, Linking} from 'react-native';
 import DatePicker from 'react-native-datepicker';
 import Modal from 'react-native-modal';
 import {Actions} from 'react-native-router-flux';
+import Modal404 from './Modal404';
+import Modal500 from './Modal500';
 
 class Recorded extends Component {
 
@@ -53,7 +56,6 @@ class Recorded extends Component {
         AsyncStorage.getItem('id')
         .then((value) => {
             let url = "http://idirect.bloombraineducation.com/idirect/lms/live/class/recordings?start_date=" +this.state.dayBeforeYesterday+ "&end_date=" +this.state.today+"&id="+value;
-            // let url = "http://idirect.bloombraineducation.com/idirect/lms/live/class/recordings?start_date=10-11-2020&end_date=20-11-2020&id="+value;
             console.log(url);
             fetch(url, {
                 method: 'POST',
@@ -65,6 +67,7 @@ class Recorded extends Component {
 
                     if(response.ok){
                         response.json().then((responseJson) => {
+                            this.setState({showLoader: false})
                             this.setState({classes: responseJson})
                             today = today.split("-").reverse().join("-");
                             dayBeforeYesterday = dayBeforeYesterday.split("-").reverse().join("-");
@@ -73,9 +76,13 @@ class Recorded extends Component {
                         })
                     } else {
                         if(response.status === 500) {
+                            this.setState({status: 500});
+                            this.setState({showLoader: false})
                             console.log("Internal Server Error");
                         }
                         if(response.status === 404) {
+                            this.setState({status: 500});
+                            this.setState({showLoader: false})
                             console.log("404 Not Found");
                         }
                     }
@@ -147,8 +154,10 @@ class Recorded extends Component {
                 },
                 })
                 .then((response) => {
+                    this.setState({showLoader: false})
                     if(response.ok){
                         response.json().then((responseJson) => {
+                            this.setState({showLoader: false})
                             this.setState({classes: responseJson})   
                             dateFrom = this.state.dateFrom.split("-").reverse().join("-");
                             dateTo = this.state.dateTo.split("-").reverse().join("-");
@@ -157,9 +166,13 @@ class Recorded extends Component {
                         })
                     } else {
                         if(response.status === 500) {
+                            this.setState({status: 500});
+                            this.setState({showLoader: false})
                             console.log("Internal Server Error");
                         }
                         if(response.status === 404) {
+                            this.setState({status: 404});
+                            this.setState({showLoader: false})
                             console.log("404 Not Found");
                         }
                     }
@@ -187,18 +200,58 @@ class Recorded extends Component {
             'extra_curricular': 'Extra-curricular'
         },
         today: "",
+        status: 200,
         yesterday: "",
         dayBeforeYesterday: "",
         dayAfterSeven: "",
         dateArray: [],
         dateFrom:"",
         dateTo: "",
+        showLoader: true,
         chosen: true,
         showModal: false,
         classes: {}
     }
 
     render() {
+        if(this.state.showLoader) {
+            return (
+                <View style = {{
+                    height: "85%",
+                    alignItems: "center",
+                    justifyContent: "center",
+                }}>
+                    <Image 
+                        style = {{
+                            width: 60,
+                            height: 60,
+                        }}
+                        source = {require("../images/loader.gif")}
+                    />
+                </View>
+            )
+        }
+        if(this.state.status == 404 && !this.state.showLoader) 
+        return (
+            <View
+                style = {{
+                    marginTop: -70
+                }}
+            >
+                <Modal404 />
+            </View>
+        )
+        else if(this.state.status == 500 && !this.state.showLoader) 
+        return (
+            <View
+                style = {{
+                    marginTop: -70
+                }}
+            >
+                <Modal500 />
+            </View>
+        )
+        else if(this.state.status == 200 && !this.state.showLoader)
         return (
             <ScrollView 
                 style = {{paddingTop: 10, backgroundColor: '#101010', height: Platform.OS == 'ios' ? '84%' : '80%'}}
@@ -236,7 +289,7 @@ class Recorded extends Component {
                             elevation: 5,
                             alignItems: 'center'
                         }}
-                        >  
+                    >  
                         <Text style = {{
                             fontFamily: 'Poppins-Bold',
                             fontSize: 12,

@@ -1,8 +1,12 @@
+import { throwIfAudioIsDisabled } from 'expo-av/build/Audio/AudioAvailability';
+import react from 'react';
 import React, {Component} from 'react';
 import {View, Text, ScrollView, Dimensions, TouchableOpacity, FlatList, Image, ImageBackground, Platform, AsyncStorage, Linking} from 'react-native';
 import DatePicker from 'react-native-datepicker';
 import Modal from 'react-native-modal';
 import {Actions} from 'react-native-router-flux';
+import Modal404 from './Modal404';
+import Modal500 from './Modal500';
 
 class Recorded1 extends Component {
 
@@ -51,7 +55,7 @@ class Recorded1 extends Component {
 
         AsyncStorage.getItem('id')
         .then((value) => {
-            let url = "http://idirect.bloombraineducation.com/idirect/lms/live/class/recordings?start_date=" +this.state.dayBeforeYesterday+ "&end_date=" +this.state.today+ "&id="+value;
+            let url = "http://idirect.bloombraineducation.com/idirect/lms/live/class/recordings?start_date=" +this.state.dayBeforeYesterday+ "&end_date=" +this.state.today+"&id="+value;
             console.log(url);
             fetch(url, {
                 method: 'POST',
@@ -60,31 +64,29 @@ class Recorded1 extends Component {
                 },
                 })
                 .then((response) => {
-                    if(response.ok) {
+
+                    if(response.ok){
                         response.json().then((responseJson) => {
-                            console.log(responseJson);
+                            this.setState({showLoader: false})
                             this.setState({classes: responseJson})
                             today = today.split("-").reverse().join("-");
                             dayBeforeYesterday = dayBeforeYesterday.split("-").reverse().join("-");
                             this.setState({today: today});
                             this.setState({dayBeforeYesterday: dayBeforeYesterday});
-                            // this.setState({urlVideos: responseJson["1"]});
-                            // console.log(this.state.urlVideos)
                         })
                     } else {
-                        if(response.status == 500) {
-                            console.log("500");
+                        if(response.status === 500) {
+                            this.setState({showLoader: false})
+                            this.setState({status: 500});
+                            console.log("Internal Server Error");
                         }
-                        if(response.status == 404) {
-                            console.log("404");
+                        if(response.status === 404) {
+                            this.setState({showLoader: false})
+                            this.setState({status: 500});
+                            console.log("404 Not Found");
                         }
                     }
                 })
-                
-                .catch((error) => {
-                    this.setState({login: false})
-                    console.error(error);
-            });
         })
     
         
@@ -152,29 +154,30 @@ class Recorded1 extends Component {
                 },
                 })
                 .then((response) => {
-                    if(response.ok) {
+                    this.setState({showLoader: false})
+                    if(response.ok){
                         response.json().then((responseJson) => {
-                            console.log(responseJson);
+                            this.setState({showLoader: false})
                             this.setState({classes: responseJson})   
                             dateFrom = this.state.dateFrom.split("-").reverse().join("-");
                             dateTo = this.state.dateTo.split("-").reverse().join("-");
                             this.setState({dateFrom});
                             this.setState({dateTo});
-        
                         })
                     } else {
-                        if(response.status == 500) {
-                            console.log("500");
+                        if(response.status === 500) {
+                            this.setState({showLoader: false})
+                            this.setState({status: 500});
+                            console.log("Internal Server Error");
                         }
-                        if(response.status == 404) {
-                            console.log("404");
+                        if(response.status === 404) {
+                            this.setState({showLoader: false})
+                            this.setState({status: 404});
+                            console.log("404 Not Found");
                         }
                     }
+                
                 })
-                .catch((error) => {
-                    this.setState({login: false})
-                    console.error(error);
-            });
         })
 
         
@@ -197,24 +200,67 @@ class Recorded1 extends Component {
             'extra_curricular': 'Extra-curricular'
         },
         today: "",
+        status: 200,
         yesterday: "",
         dayBeforeYesterday: "",
         dayAfterSeven: "",
         dateArray: [],
         dateFrom:"",
         dateTo: "",
+        showLoader: true,
         chosen: true,
         showModal: false,
         classes: {}
     }
 
     render() {
+        if(this.state.showLoader) {
+            return (
+                <View style = {{
+                    height: "85%",
+                    alignItems: "center",
+                    justifyContent: "center",
+                }}>
+                    <Image 
+                        style = {{
+                            width: 60,
+                            height: 60,
+                        }}
+                        source = {require("../images/loader.gif")}
+                    />
+                </View>
+            )
+        }
+        if(this.state.status == 404) 
+        return (
+            <View
+                style = {{
+                    marginTop: -70
+                }}
+            >
+                <Modal404 />
+            </View>
+        )
+        else if(this.state.status == 500) 
+        return (
+            <View
+                style = {{
+                    marginTop: -70
+                }}
+            >
+                <Modal500 />
+            </View>
+        )
+        else if(this.state.status == 200)
         return (
             <ScrollView 
+                style = {{paddingTop: 10, backgroundColor: '#101010', height: Platform.OS == 'ios' ? '100%' : '100%'}}
                 showsHorizontalScrollIndicator = {false}
                 showsVerticalScrollIndicator = {false}
-                style = {{paddingTop: 10, backgroundColor: '#101010', height: Platform.OS == 'ios' ? '100%' : '100%'}}
-                >
+            >
+                <TouchableOpacity onPress = { () => {this.setState({showModal: true})}} style = {{marginRight: 10, marginTop: 15, alignSelf: 'flex-end', justifyContent: "center", alignItems: 'center'}}>
+                    <Text style = {{fontFamily: 'Poppins-Bold', color: '#4ACDF4', fontSize: Platform.OS == "android" ? 12 : 13,  width: 120, height: 20, textAlign: 'center'}}>Filter by Date</Text>
+                </TouchableOpacity>
                 <Modal 
                     onBackdropPress = {() => {this.setState({showModal: false})}}
                     isVisible = {this.state.showModal}
@@ -243,7 +289,7 @@ class Recorded1 extends Component {
                             elevation: 5,
                             alignItems: 'center'
                         }}
-                        >  
+                    >  
                         <Text style = {{
                             fontFamily: 'Poppins-Bold',
                             fontSize: 12,
@@ -340,27 +386,9 @@ class Recorded1 extends Component {
                     </View>
                     
                 </Modal>
-                <View 
-                    style = {{
-                        marginBottom: 60,
-                        // borderWidth: 2, 
-                        // borderColor: "white"
-                    }}>
-                <TouchableOpacity 
-                    onPress = { () => {this.setState({showModal: true})}} 
-                    style = {{
-                        marginRight: 10, 
-                        marginTop: 15, 
-                        alignSelf: 'flex-end', 
-                        justifyContent: "center", 
-                        alignItems: 'center',
-                        // borderColor: "white",
-                        // borderWidth: 2
-                    }}
-                >
-                    <Text style = {{fontFamily: 'Poppins-Bold', color: '#4ACDF4', fontSize: Platform.OS == "android" ? 12 : 13,  width: 120, height: 20, textAlign: 'center'}}>Filter by Date</Text>
-                </TouchableOpacity>
-                {    
+                <View style = {{flexDirection: 'row'}}>
+                <View style = {{marginTop: -15, marginBottom: 30}}>
+                {   
                     this.state.dateArray.map((val) => {
                         console.log(this.state.classes[val])
                         // return (
@@ -368,48 +396,74 @@ class Recorded1 extends Component {
                         // )
                         if(this.state.classes[val] !== undefined && this.state.classes[val].length != 0){
                             return (
-                                <View>
+                                <View style = {{marginTop: 0}}>
                                     {
-                                    val == this.state.today ? <Text style = {{fontSize: 14, marginLeft: 16, width: 250, marginTop: Platform.OS == 'android' ? -25: -20, color: '#4ACDF4', fontFamily: 'Poppins-Bold'}}>Upcoming</Text> :
-                                    val == this.state.tomorrow ? <Text style = {{fontSize: 14, marginLeft: 16, width: 250, marginTop:-25, color: '#4ACDF4', fontFamily: 'Poppins-Bold'}}>Tomorrow</Text> :
-                                    <Text style = {{fontSize: 14, color: '#4ACDF4', marginLeft: 16, marginTop: Platform.OS == 'android' ? -25: -20, width: 250, fontFamily: 'Poppins-Bold'}}>{val.toString().split("-").reverse().join("-")}</Text>}
+                                    val == this.state.today ? <Text style = {{fontSize: 14, marginLeft: 16, width: 250, marginTop: Platform.OS == 'android' ? 0: 0, color: '#4ACDF4', fontFamily: 'Poppins-Bold'}}>Upcoming</Text> :
+                                    val == this.state.tomorrow ? <Text style = {{fontSize: 14, marginLeft: 16, width: 250, marginTop: 0, color: '#4ACDF4', fontFamily: 'Poppins-Bold'}}>Tomorrow</Text> :
+                                    <Text style = {{fontSize: 14, color: '#4ACDF4', marginLeft: 16, marginTop: Platform.OS == 'android' ? 0: 0, width: 250, fontFamily: 'Poppins-Bold'}}>{val.toString().split("-").reverse().join("-")}</Text>}
                                     <FlatList 
-                                        ListHeaderComponent = {<View style = {{marginBottom: 15}}></View>}
-                                        ListFooterComponent = {<View style = {{marginBottom: 30}}></View>}
+                                        horizontal = {true}
+                                        showsHorizontalScrollIndicator = {false}
+                                        showsVerticalScrollIndicator = {false}
+                                        contentContainerStyle = {{marginRight: 10}}
+                                        ListFooterComponent={<View style={{width:10}}></View>}
+                                        ListHeaderComponent={<View style={{width:20}}></View>}
                                         data = {this.state.classes[val]}
                                         keyExtractor = {(item) => item.id}
                                         renderItem = {({item}) => {
                                             
                                             if(item.length != 0) {
                                                 return (
-                                                    <TouchableOpacity onPress = {() => Actions.RecordedVideos({details: item})}>
+                                                    <TouchableOpacity 
+                                                        style = {{marginTop: 10, marginBottom: 15}}
+                                                        onPress = {() => Actions.RecordedVideos({details: item})}>
                                                         <View style = {{
                                                             flexDirection: 'row', 
                                                             // borderWidth: 2, 
                                                             // borderColor: 'white',
-                                                            height: 90,
-                                                            marginLeft: 16, 
-                                                            marginRight: 16,
+                                                            height: 100,
+                                                            width: Dimensions.get("window").width - 40, 
                                                             backgroundColor: '#1C1C1C',
-                                                            marginBottom: 20,
-                                                            borderRadius: 10
+                                                            borderRadius: 10,
+                                                            marginRight: 10
                                                         }}>
                                                             <View>
-                                                                <ImageBackground
-                                                                    style = {{
-                                                                        // marginTop: 20,
-                                                                        // marginRight: 20,
-                                                                        width: 90, 
-                                                                        height: 90, 
-                                                                        borderRadius: 10,
-                                                                        marginBottom: 0,
-                                                                        overflow: 'hidden',
-                                                                        position: 'relative',
-                                                                    }}
-                                                                    source = {require('../images/mathswork.png')}
-                                                                >
-                                                                </ImageBackground>
-                                                                <Text style = {{color: "#4ACDF4", fontFamily: "Poppins-Bold", fontSize: 10, position: 'absolute', top: 10, left: 105}}>{this.state.subjects[item.subject]}</Text>
+                                                                {
+                                                                    item.thumbnail_url == false ?
+                                                                    <Image
+                                                                        style = {{
+                                                                            // marginTop: 20,
+                                                                            // marginRight: 20,
+                                                                            width: 140, 
+                                                                            height: 120, 
+                                                                            borderRadius: 10,
+                                                                            marginBottom: 0,
+                                                                            overflow: 'hidden',
+                                                                            position: 'relative',
+                                                                            resizeMode: "stretch"
+                                                                        }}
+                                                                        source = {require('../images/mathswork.png')}
+                                                                    >
+                                                                    </Image>
+                                                                    : 
+                                                                    <Image
+                                                                        style = {{
+                                                                            // marginTop: 20,
+                                                                            // marginRight: 20,
+                                                                            width: 140, 
+                                                                            height: 100, 
+                                                                            borderRadius: 10,
+                                                                            marginBottom: 0,
+                                                                            overflow: 'hidden',
+                                                                            position: 'relative',
+                                                                            resizeMode: "stretch"
+                                                                        }}
+                                                                        source = {{uri: item.thumbnail_url}}
+                                                                    >
+                                                                    </Image>
+                                                                }
+                                                                <Text style = {{color: "#4ACDF4", fontFamily: "Poppins-Bold", fontSize: 12, position: 'absolute', top: 10, left: 150}}>{this.state.subjects[item.subject]}</Text>
+                                                                <Text style = {{color: "gray", fontFamily: "Poppins-Bold", fontSize: 12, position: 'absolute', top: 10, left: 280}}>{item.title}</Text>
                                                                 </View>
                                                                 <View style = {{
                                                                     flex: 1,
@@ -417,22 +471,24 @@ class Recorded1 extends Component {
                                                                     justifyContent: 'space-around', 
                                                                 }}>
                             
-                                                                    <Text style = {{
+                                                                    <Text 
+                                                                        numberOfLines = {2}
+                                                                        style = {{
                                                                         color: 'white',
                                                                         fontFamily: 'Poppins-SemiBold',
                                                                         paddingLeft: 15,
-                                                                        paddingRight: 50,
+                                                                        paddingRight: 30,
                                                                         marginTop: 30,
                                                                         // borderColor: 'white',
                                                                         // borderWidth: 2,
-                                                                        flexShrink: 1,
+                                                                        maxWidth: 300,
                                                                         fontSize: 14,
-                                                                        height: 40
+                                                                        height: 45
                                                                         // paddingTop:10
                                                                     }}>
-                                                                        {item.description}
+                                                                        {item.description.charAt(0).toUpperCase() + item.description.substr(1).toLowerCase()}
                                                                     </Text>
-                                                                <View style = {{marginTop: -10, flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
+                                                                <View style = {{marginTop: 0, flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
                                                                     <Text style = {{
                                                                         color: 'gray',
                                                                         fontFamily: 'Poppins-SemiBold',
@@ -463,9 +519,8 @@ class Recorded1 extends Component {
                                                 
                                             } else if(item.length == 0) {
                                                 return (
-                                                    <View style = {{flexDirection: "row"}}>
+                                                    <View>
                                                         <Text style = {{fontSize: 12, color: 'white', marginLeft: 16, marginBottom: 40, fontFamily: 'Poppins-SemiBold'}}>No Live Recordings Found</Text>
-                                                        <Image style = {{width: 20, height: 20}} source = {require("../images/sad.png")}/>
                                                     </View>
                                                 )
                                             }
@@ -479,15 +534,9 @@ class Recorded1 extends Component {
                         } else if(this.state.classes[val] !== undefined && this.state.classes[val].length === 0){
 
                             return(
-                                <View 
-                                    style = {{
-                                        marginTop: 0, 
-                                    }}
-                                >
-                                    <Text style = {{fontSize: 14, color: '#4ACDF4', marginLeft: 16, marginBottom: 0, fontFamily: 'Poppins-Bold'}}>{val.toString().split("-").reverse().join("-")}</Text>
-                                    <View style = {{flexDirection: 'row', paddingTop: 10}}>
-                                        <Text style = {{fontSize: 12, color: 'white', marginLeft: 16, marginBottom: 40, fontFamily: 'Poppins-SemiBold'}}>No Live Recordings Found</Text>
-                                    </View>
+                                <View>
+                                    <Text style = {{fontSize: 14, color: '#4ACDF4', marginLeft: 16, marginBottom: 10, fontFamily: 'Poppins-Bold'}}>{val.toString().split("-").reverse().join("-")}</Text>
+                                    <Text style = {{fontSize: 12, color: 'white', marginLeft: 16, marginBottom: 20, fontFamily: 'Poppins-SemiBold'}}>No Live Recordings Found</Text>
                                 </View>
                             )
 
@@ -495,8 +544,14 @@ class Recorded1 extends Component {
                     })
                 }
                 </View>
-                <View style = {{height:30}}></View>
-                               
+                </View> 
+                <View
+                    style = {{
+                        height: 70,
+                    }}
+                >
+
+                </View>
             </ScrollView>
         ) 
     }

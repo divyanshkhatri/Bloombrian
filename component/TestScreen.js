@@ -31,6 +31,7 @@ class TestScreen extends Component {
         unattempted: 0,
         progressStatus: 100,  
         count: 0,
+        totalTime: 0,
     }
 
     anim = new Animated.Value(100); 
@@ -71,7 +72,7 @@ class TestScreen extends Component {
                 this.setState({currentQuestion: nextQuestion});
                 this.setState({borderColorShow: false});
                 this.setState({clickable: true})
-            }, 1500);
+            }, 1000);
             
 		} else {
             this.setState({clickable: false})
@@ -83,7 +84,7 @@ class TestScreen extends Component {
                 Actions.Results({marks: this.state.score, total: this.state.questions.length, questions: this.state.questions, unattempted: this.state.count});
                 this.setState({borderColorShow: false});
                 this.setState({clickable: true})
-            }, 1500);
+            }, 1000);
 		}
     };
 
@@ -111,9 +112,12 @@ class TestScreen extends Component {
     }
 
     componentDidMount() {
-        this.onAnimate();  
         BackHandler.addEventListener("hardwareBackPress", this.backAction);
         this.setState({questions: this.props.questions})
+        console.log(this.props.questions);
+        this.setState({totalTime: this.props.time})
+        console.log(this.state.totalTime);
+        this.onAnimate();  
     }
 
     onAnimate = () =>{  
@@ -122,7 +126,7 @@ class TestScreen extends Component {
         });  
         Animated.timing(this.anim,{  
                 toValue: 0,  
-                duration: 60000,  
+                duration: this.props.time*1000,  
         }).start();  
     }  
     
@@ -435,28 +439,39 @@ class TestScreen extends Component {
                             }}
                             source = {require("../images/clock.png")}
                         />
-                        <CountDown
-                            until={600}
-                            size={30}
-                            onFinish={() => Actions.Results({marks: this.state.score, total: this.state.questions.length, questions: this.state.questions})}
-                            digitStyle = {{
-                                backgroundColor: "#101010",
-                                textAlign: 'center',
-                                alignContent: 'center',
-                                alignItems: "center",
-                            }}
-                            separatorStyle = {{
-                                color: "#929292",
-                                alignContent: 'center',
-                                alignItems: "center"
-                            }}
-                            size = {15}
-                            digitTxtStyle={{color: '#929292', fontFamily: "Poppins-Bold"}}
-                            timeToShow={['M', 'S']}
-                            timeLabels={{m: 'MM', s: 'SS'}}
-                            showSeparator = {true}
-                            timeLabels={{m: null, s: null}}
-                        />
+                        {
+                            this.state.questions != undefined ? 
+                            
+                            <CountDown
+                                until={this.state.totalTime}
+                                size={30}
+                                onFinish={() => {
+                                    this.state.answeredQustions.map((val) => {
+                                        if(val == 0) {this.setState({count: this.state.count+1})};
+                                    })
+                                    console.log("COOUNNTTTT = " + this.state.count);
+                                    Actions.Results({marks: this.state.score, total: this.state.questions.length, questions: this.state.questions, unattempted: this.state.count});
+                                }}
+                                digitStyle = {{
+                                    backgroundColor: "#101010",
+                                    textAlign: 'center',
+                                    alignContent: 'center',
+                                    alignItems: "center",
+                                }}
+                                separatorStyle = {{
+                                    color: "#929292",
+                                    alignContent: 'center',
+                                    alignItems: "center"
+                                }}
+                                size = {15}
+                                digitTxtStyle={{color: '#929292', fontFamily: "Poppins-Bold"}}
+                                timeToShow={['M', 'S']}
+                                timeLabels={{m: 'MM', s: 'SS'}}
+                                showSeparator = {true}
+                                timeLabels={{m: null, s: null}}
+                            />
+                            : null
+                        }
                     </View>
                     <TouchableOpacity 
                         onPress = {() => {

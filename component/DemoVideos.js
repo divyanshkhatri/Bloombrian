@@ -3,6 +3,8 @@ import {View, Text, ScrollView, Dimensions, TouchableOpacity, FlatList, Image, I
 import DatePicker from 'react-native-datepicker';
 import Modal from 'react-native-modal';
 import moment from 'moment';
+import Modal404 from './Modal404';
+import Modal500 from './Modal500';
 moment().format();
 
 class DemoVideos1 extends Component {
@@ -67,9 +69,13 @@ class DemoVideos1 extends Component {
                         })
                     } else {
                         if(response.status == 404) {
+                            this.setState({showLoader: false})
+                            this.setState({status: 404});
                             console.log("404");
                         }
                         if(response.status == 500) {
+                            this.setState({showLoader: false})
+                            this.setState({status: 500});
                             console.log("500");
                         }
                     }
@@ -153,9 +159,13 @@ class DemoVideos1 extends Component {
                         
                     } else {
                         if(response.status == 404) {
+                            this.setState({showLoader: false})
+                            this.setState({status: 404});
                             console.log("404");
                         }
                         if(response.status == 500) {
+                            this.setState({showLoader: false})
+                            this.setState({status: 500});
                             console.log("500");
                         }
                     }
@@ -198,6 +208,7 @@ class DemoVideos1 extends Component {
         classes: {},
         errorString: "",
         error: 200,
+        status: 200,
     }
 
     onPressAttend = (class_time, url, date) => {
@@ -222,7 +233,20 @@ class DemoVideos1 extends Component {
                     />
                 </View>
             )
-        } else 
+        } 
+        else if(this.state.status == 404) 
+        return (
+            <View>
+                <Modal404 />
+            </View>
+        )
+        else if(this.state.status == 500)
+        return (
+            <View>
+                <Modal500 />
+            </View>
+        )
+        else if(this.state.status == 200)
         return (
             <ScrollView 
                 style = {{paddingTop: 10, backgroundColor: '#101010', height: Platform.OS == 'ios' ? '84%' : '84%'}}
@@ -357,7 +381,7 @@ class DemoVideos1 extends Component {
                     </View>
                     
                 </Modal>
-                <View style = {{marginBottom: 50}}>
+                <View style = {{marginBottom: 10}}>
                 {   
                     this.state.dateArray.map((val) => {
                         console.log(this.state.classes[val])
@@ -436,11 +460,13 @@ class DemoVideos1 extends Component {
                                                                 justifyContent: 'space-around', 
                                                             }}>
                         
-                                                                <Text style = {{
+                                                                <Text 
+                                                                numberOfLines = {1}
+                                                                style = {{
                                                                     color: 'white',
                                                                     fontFamily: 'Poppins-SemiBold',
                                                                     paddingLeft: 10,
-                                                                    paddingRight: 50,
+                                                                    paddingRight: 20,
                                                                     marginTop: 30,
                                                                     // borderColor: 'white',
                                                                     // borderWidth: 2,
@@ -596,7 +622,7 @@ class DemoVideos1 extends Component {
                     })
                 }
                 </View>
-                <View style = {{height: Platform.OS == "android" ? 40: 10}}></View>
+                <View style = {{height: Platform.OS == "android" ? 40: -0}}></View>
                                
             </ScrollView>
         ) 

@@ -70,7 +70,7 @@ class RecordedVideos extends Component {
                     }}
                 >   
                 <TouchableOpacity
-                    onPress = { () => {Actions.BottomNavigator()} }
+                    onPress = { () => {Actions.BottomNavigator({chosen: "live"})} }
                 >
                     <Image 
                         style = {{ 

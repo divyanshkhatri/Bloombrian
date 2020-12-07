@@ -354,7 +354,7 @@ class Results extends Component {
                                     alignItems: "center"
                                 }}
 
-                                onPress = {() => {Actions.BottomNavigator()}}
+                                onPress = {() => {Actions.BottomNavigator({chosen: "test"})}}
                             >
                                 <View
                                     style = {{
@@ -674,7 +674,7 @@ class Results extends Component {
                             </View>
                         </View>
                         <TouchableWithoutFeedback
-                                onPress = {() => {Actions.BottomNavigator()}}
+                                onPress = {() => {Actions.BottomNavigator({chosen: "test"})}}
                             >
                                 <View
                                     style = {{
