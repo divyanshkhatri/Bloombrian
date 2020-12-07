@@ -673,6 +673,36 @@ class Test extends Component {
         AsyncStorage.getItem('category')
         .then((val) => this.setState({category: val}))
         .catch((e) => console.log(e))
+
+        AsyncStorage.getItem('id')
+        .then((val) => {
+            let url = 'http://idirect.bloombraineducation.com/idirect/lms/test?id='+val;
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+                })
+                .then((response) => {
+                    if(response.ok) {
+                        response.json().then((responseJson) => {
+                            this.setState({tests: responseJson["test"]})
+                        })
+                        
+                    } else {
+                        if(response.status == 404) {
+                            console.log("404");
+                        }
+                        if(response.status == 500) {
+                            console.log("500");
+                        }
+                    }
+                })
+                .catch((error) => {
+                    this.setState({login: false})
+                    console.error(error);
+            });
+        })
     }
     
     render() {

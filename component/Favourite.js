@@ -122,10 +122,17 @@ class Favourite extends Component {
                     'Content-Type': 'multipart/form-data',
                 },
                 })
-                .then((response) => response.json())
-                .then((responseJson) => {
+                .then((response) => {
+                    if(response.ok)
                     Actions.Homepage();
-                    console.log(responseJson);
+                    else {
+                        if(response.status == 404) {
+                            console.log("404");
+                        } 
+                        if(response.status == 500) {
+                            console.log("500");
+                        }
+                    }
                 })
                 .catch((error) => {
                     this.setState({login: false})
@@ -147,10 +154,17 @@ class Favourite extends Component {
                     'Content-Type': 'multipart/form-data',
                 },
                 })
-                .then((response) => response.json())
-                .then((responseJson) => {
-                     Actions.Homepage();
-                    console.log(responseJson);
+                .then((response) => {
+                    if(response.ok)
+                    Actions.Homepage();
+                    else {
+                        if(response.status == 404) {
+                            console.log("404");
+                        } 
+                        if(response.status == 500) {
+                            console.log("500");
+                        }
+                    }
                 })
                 .catch((error) => {
                     this.setState({login: false})

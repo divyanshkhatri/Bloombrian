@@ -58,39 +58,47 @@ class Signin extends Component {
                 'Content-Type': 'multipart/form-data',
             },
             })
-            .then((response) => response.json())
-            .then((responseJson) => {
-                // console.log(responseJson)
-                
-                if(responseJson["success"] === 200){
-                    AsyncStorage.setItem('email', JSON.stringify(responseJson.email));
-                    AsyncStorage.setItem('id', JSON.stringify(responseJson.id));
-                    AsyncStorage.getItem('id')
-                    .then((value) => {
-                        let interest_url = 'http://idirect.bloombraineducation.com/idirect/lms/interest_id?id=' + value;
-                        fetch(interest_url, {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'multipart/form-data',
-                            },
-                        })
-                        .then((response) => response.json())
-                        .then((a) => {
-                            console.log(a);
-                            if(a["interest"] === false) {
-                                Actions.Favourite();
-                            } else {
-                                Actions.Homepage();
-                            }
-                        })
-
+            .then((response) => {
+                if(response.ok) {
+                    response.json().then((responseJson) => {
+                        if(responseJson["success"] === 200){
+                            AsyncStorage.setItem('email', JSON.stringify(responseJson.email));
+                            AsyncStorage.setItem('id', JSON.stringify(responseJson.id));
+                            AsyncStorage.getItem('id')
+                            .then((value) => {
+                                let interest_url = 'http://idirect.bloombraineducation.com/idirect/lms/interest_id?id=' + value;
+                                fetch(interest_url, {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'multipart/form-data',
+                                    },
+                                })
+                                .then((response) => response.json())
+                                .then((a) => {
+                                    console.log(a);
+                                    if(a["interest"] === false) {
+                                        Actions.Favourite();
+                                    } else {
+                                        Actions.Homepage();
+                                    }
+                                })
+        
+                            })
+                            .catch((e) => console.log('key not found'));
+                        } 
+                        else if(responseJson["success"] === 203)
+                            this.setState({registered: false})
+                        else if(responseJson["success"] === 205)
+                            this.setState({valid: false})
                     })
-                    .catch((e) => console.log('key not found'));
-                } 
-                else if(responseJson["success"] === 203)
-                    this.setState({registered: false})
-                else if(responseJson["success"] === 205)
-                    this.setState({valid: false})
+                } else {
+                    if(response.status == 500) {
+                        console.log("500");
+                    }
+                    if(response.status == 404) {
+                        console.log("404");
+                    }
+                }
             })
             .catch((error) => {
                 this.setState({login: false})

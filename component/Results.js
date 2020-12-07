@@ -6,6 +6,7 @@ import {Actions} from 'react-native-router-flux';
 class Results extends Component {
 
     componentDidMount() {
+        console.log(this.props.unattempted);
         setTimeout(() => {
             this.setState({show: false})
         }, 3200);
@@ -318,7 +319,7 @@ class Results extends Component {
                                                     Ans {index+1} - 
                                                     </Text>
                                                     <FlatList 
-                                                        data = {item.answerOptions}
+                                                        data = {item.answerOption}
                                                         renderItem = { ({item, index}) => (
                                                             <View>
                                                                 {item.isCorrect === true ? 
@@ -643,7 +644,7 @@ class Results extends Component {
                                                     Ans {index+1} - 
                                                     </Text>
                                                     <FlatList 
-                                                        data = {item.answerOptions}
+                                                        data = {item.answerOption}
                                                         renderItem = { ({item, index}) => (
                                                             <View>
                                                                 {item.isCorrect === true ? 
@@ -951,7 +952,7 @@ class Results extends Component {
                                                     Ans {index+1} - 
                                                     </Text>
                                                     <FlatList 
-                                                        data = {item.answerOptions}
+                                                        data = {item.answerOption}
                                                         renderItem = { ({item, index}) => (
                                                             <View>
                                                                 {item.isCorrect === true ? 

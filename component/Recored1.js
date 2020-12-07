@@ -59,17 +59,28 @@ class Recorded1 extends Component {
                     'Content-Type': 'multipart/form-data',
                 },
                 })
-                .then((response) => response.json())
-                .then((responseJson) => {
-                    console.log(responseJson);
-                    this.setState({classes: responseJson})
-                    today = today.split("-").reverse().join("-");
-                    dayBeforeYesterday = dayBeforeYesterday.split("-").reverse().join("-");
-                    this.setState({today: today});
-                    this.setState({dayBeforeYesterday: dayBeforeYesterday});
-                    // this.setState({urlVideos: responseJson["1"]});
-                    // console.log(this.state.urlVideos)
+                .then((response) => {
+                    if(response.ok) {
+                        response.json().then((responseJson) => {
+                            console.log(responseJson);
+                            this.setState({classes: responseJson})
+                            today = today.split("-").reverse().join("-");
+                            dayBeforeYesterday = dayBeforeYesterday.split("-").reverse().join("-");
+                            this.setState({today: today});
+                            this.setState({dayBeforeYesterday: dayBeforeYesterday});
+                            // this.setState({urlVideos: responseJson["1"]});
+                            // console.log(this.state.urlVideos)
+                        })
+                    } else {
+                        if(response.status == 500) {
+                            console.log("500");
+                        }
+                        if(response.status == 404) {
+                            console.log("404");
+                        }
+                    }
                 })
+                
                 .catch((error) => {
                     this.setState({login: false})
                     console.error(error);
@@ -140,15 +151,25 @@ class Recorded1 extends Component {
                     'Content-Type': 'multipart/form-data',
                 },
                 })
-                .then((response) => response.json())
-                .then((responseJson) => {
-                    console.log(responseJson);
-                    this.setState({classes: responseJson})   
-                    dateFrom = this.state.dateFrom.split("-").reverse().join("-");
-                    dateTo = this.state.dateTo.split("-").reverse().join("-");
-                    this.setState({dateFrom});
-                    this.setState({dateTo});
-
+                .then((response) => {
+                    if(response.ok) {
+                        response.json().then((responseJson) => {
+                            console.log(responseJson);
+                            this.setState({classes: responseJson})   
+                            dateFrom = this.state.dateFrom.split("-").reverse().join("-");
+                            dateTo = this.state.dateTo.split("-").reverse().join("-");
+                            this.setState({dateFrom});
+                            this.setState({dateTo});
+        
+                        })
+                    } else {
+                        if(response.status == 500) {
+                            console.log("500");
+                        }
+                        if(response.status == 404) {
+                            console.log("404");
+                        }
+                    }
                 })
                 .catch((error) => {
                     this.setState({login: false})

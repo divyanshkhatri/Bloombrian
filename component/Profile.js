@@ -40,37 +40,47 @@ class Profile extends Component {
                     'Content-Type': 'multipart/form-data',
                 },
             })
-            .then((response) => response.json())
-            .then((responseJson) => {
-                console.log(responseJson);
-                this.setState({isLoading: false});
-                this.setState({username: responseJson.username})
-                this.setState({profileData: responseJson})
-                this.setState({totalProfile: Object.keys(this.state.profileData).length-1})
-                if(this.state.profileData["class_data"]) {
-                    this.setState({completedProfile: this.state.completedProfile+1})
+            .then((response) => {
+                if(response.ok) {
+                    response.json().then((responseJson) => {
+                        console.log(responseJson);
+                        this.setState({isLoading: false});
+                        this.setState({username: responseJson.username})
+                        this.setState({profileData: responseJson})
+                        this.setState({totalProfile: Object.keys(this.state.profileData).length-1})
+                        if(this.state.profileData["class_data"]) {
+                            this.setState({completedProfile: this.state.completedProfile+1})
+                        }
+                        if(this.state.profileData["email"]) {
+                            this.setState({completedProfile: this.state.completedProfile+1})
+                        }
+                        if(this.state.profileData["location"]) {
+                            this.setState({completedProfile: this.state.completedProfile+1})
+                        }
+                        if(this.state.profileData["username"]) {
+                            this.setState({completedProfile: this.state.completedProfile+1})
+                        }
+                        if(this.state.profileData["phone"]) {
+                            this.setState({completedProfile: this.state.completedProfile+1})
+                        }
+                        if(this.state.profileData["class_data"] === "1") {
+                        this.setState({superScript: "st"})
+                        } else if(this.state.profileData["class_data"] === "2") {
+                            this.setState({superScript: "nd"})
+                        } else if(this.state.profileData["class_data"] === "3") {
+                            this.setState({superScript: "rd"})
+                        }
+                        this.setState({username: this.state.username.replace(' ', '').toLowerCase()})
+                        console.log(this.state.profileData);
+                    })
+                } else {
+                    if(response.status == 500) {
+                        console.log("500");
+                    }
+                    if(response.status == 404) {
+                        console.log("404");
+                    }
                 }
-                if(this.state.profileData["email"]) {
-                    this.setState({completedProfile: this.state.completedProfile+1})
-                }
-                if(this.state.profileData["location"]) {
-                    this.setState({completedProfile: this.state.completedProfile+1})
-                }
-                if(this.state.profileData["username"]) {
-                    this.setState({completedProfile: this.state.completedProfile+1})
-                }
-                if(this.state.profileData["phone"]) {
-                    this.setState({completedProfile: this.state.completedProfile+1})
-                }
-                if(this.state.profileData["class_data"] === "1") {
-                this.setState({superScript: "st"})
-                } else if(this.state.profileData["class_data"] === "2") {
-                    this.setState({superScript: "nd"})
-                } else if(this.state.profileData["class_data"] === "3") {
-                    this.setState({superScript: "rd"})
-                }
-                this.setState({username: this.state.username.replace(' ', '').toLowerCase()})
-                console.log(this.state.profileData);
             })
             .catch((error) => {
                 this.setState({login: false})
@@ -101,7 +111,10 @@ class Profile extends Component {
                         <StatusBar 
                             backgroundColor = "black"
                         />
-                        <Image source={require("../images/loader.gif")} style = {{width: 50, height: 50}} />
+                        <Image 
+                            source={require("../images/loader.gif")} 
+                            style = {{width: 50, height: 50}} 
+                        />
                     </View>
                     )
                     : 
@@ -110,9 +123,22 @@ class Profile extends Component {
                 <StatusBar 
                     backgroundColor = "black"
                 />
-                <View style = {{marginTop: Platform.OS == "android" ? 10 : 0, backgroundColor: "black", flexDirection: 'row', justifyContent: 'space-around', alignContent: 'center', alignItems: 'center'}} >
+                <View 
+                    style = {{
+                        marginTop: Platform.OS == "android" ? 10 : 0, 
+                        backgroundColor: "black", 
+                        flexDirection: 'row', 
+                        justifyContent: 'space-around', 
+                        alignContent: 'center', 
+                        alignItems: 'center'
+                    }}
+                >
+                    <TouchableOpacity 
 
-                    <TouchableOpacity onPress = {() => Actions.Homepage()}>
+                        onPress = {() => {
+                            Actions.Homepage()
+                        }}
+                    >
                         <Image style = {{width: 30, height: 30}} source = {require('../images/back.png')} />
                     </TouchableOpacity>
                     <Text
@@ -123,11 +149,15 @@ class Profile extends Component {
                             // borderColor: 'white',
                             // borderWidth: 1,
                             // textAlign: 'center',
-                            marginLeft: -20
                         }}
-                    >My Profile</Text>
-                    <View></View>
-                    {/* <Image style = {{width: 22, height: 19, marginLeft: 30, marginTop: Platform.OS == "android" ? -7: -5}} source = {require('../images/edit.png')} /> */}
+                    >
+                        My Profile
+                    </Text>
+                    <TouchableOpacity
+                        onPress = {() => {Actions.EditProfile()}}
+                    >
+                        <Image style = {{width: 22, height: 19, marginTop: Platform.OS == "android" ? -7: -5}} source = {require('../images/edit.png')} />
+                    </TouchableOpacity>
                 </View>
                 <View style = {{height: '100%', backgroundColor: "black", height: Platform.OS == "android" ? '20%' : '20%', width: Dimensions.get('window').width, flexDirection: 'row', marginTop: 15, paddingTop: 20, marginRight: 30, height: Platform.OS == "android" ? 150 : 140}}>
                     <View style = {{

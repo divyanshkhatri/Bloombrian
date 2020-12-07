@@ -34,10 +34,21 @@ class RealSchedule1 extends Component {
                     'Content-Type': 'multipart/form-data',
                 },
             })
-            .then((response) => response.json())
-            .then((responseJson) => {
-                this.setState({schedules: responseJson[this.state.courses[this.state.course]]})
-                console.log(this.state.schedules)
+            .then((response) => {
+                if(response.ok) {
+                    response.json().then((responseJson) => {
+                        this.setState({showLoader: false})
+                        this.setState({schedules: responseJson[this.state.courses[this.state.course]]})
+                        console.log(this.state.schedules)
+                    })
+                } else {
+                    if(response.status == 500) {
+                        console.log("500");
+                    }
+                    if(response.status == 404) {
+                        console.log("404");
+                    }
+                }
             })
             .catch((error) => {
                 this.setState({login: false})
@@ -101,10 +112,20 @@ class RealSchedule1 extends Component {
                 'Content-Type': 'multipart/form-data',
             },
             })
-            .then((response) => response.json())
-            .then((responseJson) => {
-                this.setState({schedules: responseJson[this.state.courses[this.state.course]]})
-                this.setState({showModal:false})
+            .then((response) => {
+                if(response.ok){
+                    response.json().then((responseJson) => {
+                        this.setState({showLoader: false})
+                        this.setState({schedules: responseJson[this.state.courses[this.state.course]]})
+                    })
+                } else {
+                    if(response.status == 500) {
+                        console.log("500");
+                    }
+                    if(response.status == 404) {
+                        console.log("404");
+                    }
+                }
             })
             .catch((error) => {
                 // this.setState({login: false})
@@ -176,10 +197,21 @@ class RealSchedule1 extends Component {
                                         'Content-Type': 'multipart/form-data',
                                     },
                                     })
-                                    .then((response) => response.json())
-                                    .then((responseJson) => {
-                                        this.setState({schedules: responseJson[this.state.courses[this.state.course]]})
-                                        this.setState({showModal:false})
+                                    then((response) => {
+                                        if(response.ok) {
+                                        response.json().then((responseJson) => {
+                                            this.setState({showLoader: false})
+                                            this.setState({schedules: responseJson[this.state.courses[this.state.course]]})
+                                            this.setState({showModal:false})
+                                        })
+                                        } else {
+                                            if(response.status == 500) {
+                                                console.log("500");
+                                            }
+                                            if(response.status == 404) {
+                                                console.log("404");
+                                            }
+                                        }
                                     })
                                     .catch((error) => {
                                         // this.setState({login: false})
@@ -254,10 +286,22 @@ class RealSchedule1 extends Component {
                                             'Content-Type': 'multipart/form-data',
                                         },
                                         })
-                                        .then((response) => response.json())
-                                        .then((responseJson) => {
-                                            this.setState({schedules: responseJson[this.state.courses[this.state.course]]})
-                                            this.setState({showModal:false})
+                                        .then((response) => {
+                                            if(response.ok) {
+                                                response.json().then((responseJson) => {
+                                                    this.setState({showLoader: false})
+                                                    this.setState({schedules: responseJson[this.state.courses[this.state.course]]})
+                                                    this.setState({showModal:false})
+                                                })
+                                            } else {
+                                                if(response.status == 500) {
+                                                    console.log("500");
+                                                }
+                                                if(response.status == 404) {
+                                                    console.log("404");
+                                                }
+                                            }
+                                        
                                         })
                                         .catch((error) => {
                                             // this.setState({login: false})

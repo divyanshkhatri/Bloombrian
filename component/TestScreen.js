@@ -4,7 +4,6 @@ import Modal from 'react-native-modal';
 import { Actions } from 'react-native-router-flux';
 import CountDown from 'react-native-countdown-component';
 import { ScrollView } from 'react-native-gesture-handler';
-import { Easing } from 'react-native-reanimated';
 
 class TestScreen extends Component {
 
@@ -31,6 +30,7 @@ class TestScreen extends Component {
         index: 0,
         unattempted: 0,
         progressStatus: 100,  
+        count: 0,
     }
 
     anim = new Animated.Value(100); 
@@ -49,43 +49,41 @@ class TestScreen extends Component {
 		if (isCorrect) {
             this.setState({score: this.state.score + 1});
             this.setState({borderColorShow: true});
-            let disabledQuestions = [ ...this.state.disabledQuestions ];
-            disabledQuestions[this.state.currentQuestion] = {...disabledQuestions[this.state.currentQuestion], key: 1};
-            this.setState({ disabledQuestions });
+            let answeredQustions = [ ...this.state.answeredQustions ];
+            answeredQustions[this.state.currentQuestion] = 1;
+            this.setState({ answeredQustions });
         }
         else if(!isCorrect) {
-            let disabledQuestions = [ ...this.state.disabledQuestions ];
-            disabledQuestions[this.state.currentQuestion] = {...disabledQuestions[this.state.currentQuestion], key: 1};
-            this.setState({ disabledQuestions });
-            this.setState({answeredQuestions: this.state.answeredQustions.push(index)});
+            let answeredQustions = [ ...this.state.answeredQustions ];
+            answeredQustions[this.state.currentQuestion] = 1;
+            this.setState({ answeredQustions });
+            // this.setState({answeredQuestions: this.state.answeredQustions.push(index)});
             this.setState({borderColorShow: true});
         }
         const nextQuestion = this.state.currentQuestion + 1;
         
 		if (nextQuestion < this.state.questions.length) {
             this.setState({clickable: false})
+            let disabledQuestions = [ ...this.state.disabledQuestions ];
+            disabledQuestions[this.state.currentQuestion] = 1;
+            this.setState({ disabledQuestions });
             setTimeout(() => {
-                let answeredQustions = [ ...this.state.answeredQustions ];
-                answeredQustions[this.state.currentQuestion] = {...answeredQustions[this.state.currentQuestion], key: 1};
-                this.setState({ answeredQustions });
                 this.setState({currentQuestion: nextQuestion});
                 this.setState({borderColorShow: false});
                 this.setState({clickable: true})
-            }, 600);
+            }, 1500);
             
 		} else {
             this.setState({clickable: false})
-            let count = 0;
-            for(let i = 0; i<this.state.questions.length; i++) {
-                if(this.state.answeredQustions[i] == 0) 
-                    count++;
-            }
             setTimeout(() => {
-                console.log(this.state.answeredQustions);
-                Actions.Results({marks: this.state.score, total: this.state.questions.length, questions: this.state.questions, unattempted: count});
+                this.state.answeredQustions.map((val) => {
+                    if(val == 0) {this.setState({count: this.state.count+1})};
+                })
+                console.log("COOUNNTTTT = " + this.state.count);
+                Actions.Results({marks: this.state.score, total: this.state.questions.length, questions: this.state.questions, unattempted: this.state.count});
                 this.setState({borderColorShow: false});
                 this.setState({clickable: true})
-            }, 600);
+            }, 1500);
 		}
     };
 
@@ -116,7 +114,6 @@ class TestScreen extends Component {
         this.onAnimate();  
         BackHandler.addEventListener("hardwareBackPress", this.backAction);
         this.setState({questions: this.props.questions})
-        console.log(this.state.answeredQustions);
     }
 
     onAnimate = () =>{  
@@ -317,7 +314,6 @@ class TestScreen extends Component {
                                     if(this.state.answeredQustions[i] === 0) count+=1;
                                 }
                                 this.setState({unattempted: count});
-                                console.log(count);
                                 Actions.Results({marks: this.state.score, total: this.state.questions.length, questions: this.state.questions, unattempted: count});
                             }}
                         >
@@ -555,12 +551,12 @@ class TestScreen extends Component {
                                 >{this.state.questions != undefined ? this.state.questions[this.state.currentQuestion].questionText : null}</Text>
                             </View>
                             {
-                                this.state.questions != undefined ? this.state.questions[this.state.currentQuestion].answerOptions.map((answerOption, index) => (
+                                this.state.questions != undefined ? this.state.questions[this.state.currentQuestion].answerOption.map((option, index) => (
                                     (<View>
                                         <TouchableOpacity 
                                             disabled = {this.state.disabledQuestions[this.state.currentQuestion] != 0}
                                             style = {{
-                                                borderColor: ( this.state.borderColorShow && answerOption.isCorrect || this.state.answeredQustions[this.state.currentQuestion] != 0 && answerOption.isCorrect )? "#1DD348": this.state.borderColorShow && !answerOption.isCorrect && index == this.state.clickedOption ? "#FF5226" : "#1A1A1A",
+                                                borderColor: ( this.state.borderColorShow && option.isCorrect || this.state.answeredQustions[this.state.currentQuestion] != 0 && option.isCorrect )? "#1DD348": this.state.borderColorShow && !option.isCorrect && index == this.state.clickedOption ? "#FF5226" : "#1A1A1A",
                                                 borderWidth: 4,
                                                 width: Dimensions.get("window").width - 40,
                                                 minHeight: 60,
@@ -572,7 +568,7 @@ class TestScreen extends Component {
                                                 justifyContent: 'center'
                                             }}
                                             
-                                            onPress={() => this.handleAnswerOptionClick(answerOption.isCorrect, index)}
+                                            onPress={() => this.handleAnswerOptionClick(option.isCorrect, index)}
                                         >
                                             <View style = {{
                                                 flexDirection: 'row',
@@ -599,11 +595,11 @@ class TestScreen extends Component {
                                                     paddingTop: 10, 
                                                     paddingBottom: 10,
                                                 }}>
-                                                    {answerOption.answerText}
+                                                    {option.answerText}
                                                 </Text> 
                                                 {/* {
                                                     this.state.answeredQustions[this.state.currentQuestion] != 0 ?
-                                                        answerOption.isCorrect ? <Text style = {{
+                                                        option.isCorrect ? <Text style = {{
                                                             color: "#1DD348",
                                                             fontFamily: "Poppins-Bold",
                                                             position: "relative",

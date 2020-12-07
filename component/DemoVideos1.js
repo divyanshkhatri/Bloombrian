@@ -55,17 +55,27 @@ class DemoVideos1 extends Component {
                     'Content-Type': 'multipart/form-data',
                 },
                 })
-                .then((response) => response.json())
-                .then((responseJson) => {
-                    this.setState({showLoader: false});
-                    // console.log(responseJson);
-                    this.setState({classes: responseJson})
-                    today = today.split("-").reverse().join("-");
-                    dayAfterTomorrow = dayAfterTomorrow.split("-").reverse().join("-");
-                    this.setState({today: today});
-                    this.setState({dayAfterTomorrow: dayAfterTomorrow});
-                    // this.setState({urlVideos: responseJson["1"]});
-                    // console.log(this.state.urlVideos)
+                .then((response) => {
+                    if(response.ok) {
+                        response.json().then((responseJson) => {
+                            this.setState({showLoader: false});
+                            // console.log(responseJson);
+                            this.setState({classes: responseJson})
+                            today = today.split("-").reverse().join("-");
+                            dayAfterTomorrow = dayAfterTomorrow.split("-").reverse().join("-");
+                            this.setState({today: today});
+                            this.setState({dayAfterTomorrow: dayAfterTomorrow});
+                            // this.setState({urlVideos: responseJson["1"]});
+                            // console.log(this.state.urlVideos)
+                        })
+                    } else {
+                        if(response.status == 500) {
+                            console.log("500");
+                        } 
+                        if(response.status == 404) {
+                            console.log("404");
+                        }
+                    }
                 })
                 .catch((error) => {
                     this.setState({login: false})
@@ -138,11 +148,21 @@ class DemoVideos1 extends Component {
                     'Content-Type': 'multipart/form-data',
                 },
                 })
-                .then((response) => response.json())
-                .then((responseJson) => {
-                    this.setState({showLoader: false})
-                    // console.log(responseJson);
-                    this.setState({classes: responseJson})
+                .then((response) => {
+                    if(response.ok) {
+                        response.json().then((responseJson) => {
+                            this.setState({showLoader: false})
+                            // console.log(responseJson);
+                            this.setState({classes: responseJson})
+                        })
+                    } else {
+                        if(response.status == 500) {
+                            console.log("500");
+                        } 
+                        if(response.status == 404) {
+                            console.log("404");
+                        }
+                    }
                 })
                 .catch((error) => {
                     this.setState({login: false})

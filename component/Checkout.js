@@ -49,36 +49,33 @@ class Checkout extends Component {
                     'Content-Type': 'multipart/form-data',
                 },
                 })
-                .then((response) => response.json())
-                .then((responseJson) => {
-                    console.log(responseJson);
-                    const payData = {
-                        amount: responseJson["amount"], //
-                        txnId: responseJson["txnid"],
-                        productName: responseJson["productinfo"], //also id of student
-                        firstName: responseJson["firstname"], 
-                        email: responseJson["email"], 
-                        phone: responseJson["phone"], 
-                        merchantId: "7133037",
-                        key: responseJson["key"],
-                        successUrl: responseJson["surl"],
-                        failedUrl: responseJson["furl"],
-                        isDebug: false,
-                        hash: responseJson["hash"],
+                .then((response) => {
+                    if(response.ok){
+                        response.json().then((responseJson) => {
+                            const payData = {
+                                amount: responseJson["amount"], //
+                                txnId: responseJson["txnid"],
+                                productName: responseJson["productinfo"], //also id of student
+                                firstName: responseJson["firstname"], 
+                                email: responseJson["email"], 
+                                phone: responseJson["phone"], 
+                                merchantId: "7133037",
+                                key: responseJson["key"],
+                                successUrl: responseJson["surl"],
+                                failedUrl: responseJson["furl"],
+                                isDebug: false,
+                                hash: responseJson["hash"],
+                            }
+                            PayuMoney(payData).then((data) => {
+                                // Payment Success
+                                Actions.PaymentComplete();
+                            }).catch((error) => {
+                                Actions.PaymentInComplete();
+                            })
+                        })
                     }
-                    PayuMoney(payData).then((data) => {
-                        // Payment Success
-                        Actions.PaymentComplete();
-                        console.log(data);
-                    }).catch((error) => {
-                        Actions.PaymentInComplete();
-                        console.error(error);
-                    })
                 })
-                .catch((error) => {
-                    this.setState({login: false})
-                    console.error(error);
-            });
+                
         }).catch((error) => {
 
         })

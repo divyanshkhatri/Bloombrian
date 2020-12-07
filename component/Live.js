@@ -54,10 +54,19 @@ class Live extends Component {
                     'Content-Type': 'multipart/form-data',
                 },
             })
-            .then((response) => response.json())
-            .then((responseJson) => {
-                console.log(responseJson);
-                this.setState({plan: responseJson["plan"]});
+            .then((response) => {
+                if(response.ok) {
+                    response.json().then((responseJson) => {
+                        this.setState({plan: responseJson["plan"]});
+                    })
+                } else {
+                    if(response.status == 404) {
+                        console.log("404");
+                    }
+                    if(response.status == 500) {
+                        console.log("500");
+                    }
+                }
             })
             .catch((error) => {
                 console.error(error);

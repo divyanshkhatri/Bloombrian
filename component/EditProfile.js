@@ -5,9 +5,7 @@ import { Actions } from 'react-native-router-flux';
 import Geolocation from '@react-native-community/geolocation';
 import  Config from './config';
 
-// import * as Location from 'expo-location';
-
-class Register extends Component {
+class EditProfile extends Component {
 
     state = {
         hidePassword: false,
@@ -76,79 +74,12 @@ class Register extends Component {
         
     }
 
-    onPressRegister = () => {
-
-        this.setState({mail: true, name: true, pass: true, confirmPass: true, mobile: true})
-
-        console.log("Presses");
-        if(this.state.fullName == "") {
-            this.setState({name: false});
-        }
-
-        if(this.state.email == "") {
-            this.setState({mail: false});
-        }
-
-        if(this.state.password == "") {
-            this.setState({pass: false});
-        }
-
-        if(this.state.confirmPassword == "") {
-            this.setState({confirmPass: false});
-        }
-
-        if(this.state.mob == "") {
-            this.setState({mobile: false});
-        }
-
-        if(this.state.password != "" && this.state.confirmPassword != "" && this.state.password != this.state.confirmPassword) {
-            this.setState({passSame: false})
-        }
-
-        else if(this.state.fullName != ""&& this.state.email != "" && this.state.password != "" && this.state.confirmPassword != "" && this.state.mob != "" && this.state.password == this.state.confirmPassword){
-            let url = 'http://idirect.bloombraineducation.com/idirect/lms/register?username='+this.state.fullName+'&password='+this.state.password+'&email='+this.state.email+'&phone='+this.state.mob+'&location='+this.state.city
-            console.log(url);
-            fetch(url, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                },
-                })
-                .then((response) => {
-                    if(response.ok) {
-                        response.json().then((responseJson) => {
-                            console.log(responseJson);
-                            AsyncStorage.setItem('email', this.state.email);
-                            // console.log(responseJson.ID);
-                            AsyncStorage.setItem('id', JSON.stringify(responseJson.ID));
-                            Actions.Favourite();
-                        })
-                    } else {
-                        if(response.status == 500) {
-                            console.log("500");
-                        }
-                        if(response.status == 404) {
-                            console.log("404");
-                        }
-                    }
-                })
-                .catch((error) => {
-                    this.setState({login: false})
-                    console.error(error);
-            });
-       }
-        
+    onPressRegister = () => {    
+        Actions.Profile();
     }
 
     backAction = () => {
-        Alert.alert("Hold on!", "Are you sure you want to Exit?", [
-            {
-                text: "Cancel",
-                onPress: () => null,
-                style: "cancel"
-            },
-            { text: "YES", onPress: () => BackHandler.exitApp() }
-        ]);
+        Actions.Profile();
         return true;
     };
 
@@ -174,30 +105,6 @@ class Register extends Component {
         })
     }
 
-    onChangeEmail = (email) => {
-        this.setState({
-            email
-        })
-    }
-
-    onChangePassword = (password) => {
-
-        this.setState({hidePassword: true})
-
-        this.setState({
-            password
-        })
-    }
-
-    onChangeConfirmPassword = (confirmPassword) => {
-
-        this.setState({hideConfirmPassword: true})
-
-        this.setState({
-            confirmPassword
-        })
-    }
-
     onChangeMob = (mob) => {
         this.setState({
             mob
@@ -210,6 +117,7 @@ class Register extends Component {
             city
         })
     }
+
 
     render() {
         return (
@@ -234,51 +142,42 @@ class Register extends Component {
                         marginBottom: 80
                 }}>                
                     <Animated.View style = {{marginTop: this.state.padding}}>
-                    <View style = {{}}>
-                    <LinearGradient
-                            // Button Linear Gradient
-                            colors={[ '#004BAD', '#4ACDF4']}
-                            start={{x: 0, y: 1}} end={{x: 1, y: 0}}
-                            style={{ 
-                                paddingLeft: 20, 
-                                // marginTop: -10,
-                                // borderRadius: 5,
-                                width: Dimensions.get('window').width,
-                                // marginLeft: 16,
-                                height: 115,
-                                // borderRadius: 15
-                        }}>
-                            <TouchableOpacity
-                                onPress = { () => Actions.pop()}
-                            >
-                            </TouchableOpacity>
-                            <Text
+                        <View style = {{}}>
+                        <View 
                             style = {{
-                                marginTop: Platform.OS == 'android' ? 0 : 8,
-                                height: Platform.OS == 'android' ? 60: 50,
+                                flexDirection: 'row',
+                                width: '100%',
                                 // borderColor: 'white',
                                 // borderWidth: 2,
-                                paddingTop: 15,
-                                fontFamily: 'Poppins-Bold',
-                                color: 'white',
-                                fontSize: 25
+                                backgroundColor: "#101010",
+                                alignItems: 'center',
+                                height: 60,
+                                borderBottomLeftRadius: 15,
+                                borderBottomRightRadius: 15,
                             }}
-                            >
-                                Register
-                            </Text>
+                        >   
+                        <TouchableOpacity
+                            onPress = { () => {this.backAction()} }
+                        >
+                            <Image 
+                                style = {{ 
+                                    width: 22, 
+                                    height: 22,
+                                    marginLeft: 20,
+                                }}
+                                source = {require("../images/back.png")} 
+                            />
+                            </TouchableOpacity>
                             <Text
                                 style = {{
-                                    fontFamily: 'Poppins-Medium',
                                     color: 'white',
+                                    fontFamily: 'Poppins-Medium',
                                     fontSize: 14,
-                                    paddingTop: Platform.OS == "android" ? 0 : 8,
-                                    paddingRight: 80,
+                                    textAlign: 'center',
+                                    width: '78%'
                                 }}
-                            >
-                                Become a part of the Bloom Brain family,
-                                India's No. 1 Education app!
-                            </Text>
-                        </LinearGradient>
+                            >Edit Profile</Text>
+                        </View>
                         <Animated.View
                             style = {{
                                 flex: 1,
@@ -287,6 +186,47 @@ class Register extends Component {
                                 paddingTop: Platform.OS == "android" ? 40 : 40,
                             }}
                         >
+                            <View style = {{
+                                flexDirection: "row",
+                                justifyContent: "space-between",
+                                alignItems: "center",
+                                marginLeft: 30,
+                                marginRight: 30,
+                                marginBottom: 30,
+                            }}>
+                                <Image 
+                                    style = {{
+                                        width: 80, 
+                                        height: 80,
+                                        borderRadius: 40,
+                                        borderWidth: 2,
+                                        borderColor: "#4ACDF4",
+
+                                    }}
+                                    source = {require("../images/dp.png")}
+                                />
+                                <TouchableOpacity>
+                                    <View
+                                        style = {{
+                                            width: 200,
+                                            height: 38,
+                                            borderWidth: 2,
+                                            borderColor: "#4ACDF4",
+                                            justifyContent: "center",
+                                            borderRadius: 8,
+                                        }}
+                                    >
+                                    <Text
+                                        style = {{
+                                            textAlign: "center",
+                                            fontFamily: "Poppins-SemiBold",
+                                            fontSize: 14,
+                                            color: "white"
+                                        }}
+                                    >Change Profile Photo</Text>
+                                    </View>
+                                </TouchableOpacity>
+                            </View>
                         {/* <View style = {{
                             flex: 1,
                             justifyContent: 'center',
@@ -326,77 +266,7 @@ class Register extends Component {
                                 // marginTop: 15,
                                 marginBottom: Platform.OS == "android" ? 7 : 7,
                             }}
-                            >Email</Text>
-                            <View style={styles.sectionStyle}>
-                                <TextInput
-                                    style={{flex: 1, fontFamily: 'Poppins-MediumItalic', fontSize: 15, marginLeft: 20, paddingTop: 0,paddingBottom: 0, alignItems: 'center', color: 'white'}}
-                                    value = {this.state.email}
-                                    keyboardAppearance = "dark"
-                                    keyboardType = 'email-address'
-                                    autoCapitalize = 'none'
-                                    onChangeText = {(value) => {this.onChangeEmail(value)}}
-                                    placeholder="Email"
-                                    placeholderTextColor = '#707070'
-                                    underlineColorAndroid = "transparent"    
-                                />
-                            </View>
-                            {this.state.mail ? null : <Text style = {{color: '#FF5252', marginLeft: 30, marginBottom: 5, fontFamily: "Poppins-Medium", fontSize: 10}}>Please enter the Email!</Text>}
-                            <Text style = {{
-                                marginLeft: 30,
-                                color: '#4ACDF4',
-                                fontFamily: 'Poppins-SemiBold',
-                                fontSize: 11,
-                                // marginTop: 15,
-                                marginBottom: Platform.OS == "android" ? 7 : 7,
-                            }}
-                            >Password</Text>
-                            <View style={styles.sectionStyle}>
-                                <TextInput
-                                    style={{flex: 1, fontFamily: 'Poppins-MediumItalic', fontSize: 15, paddingTop: 0,paddingBottom: 0, marginLeft: 20, alignItems: 'center', color: 'white'}}
-                                    value = {this.state.password}
-                                    autoCapitalize = 'none'
-                                    keyboardAppearance = "dark"
-                                    onChangeText = {(value) => {this.onChangePassword(value)}}
-                                    placeholder="Password"
-                                    placeholderTextColor = '#707070'
-                                    underlineColorAndroid = "transparent"    
-                                    secureTextEntry = {this.state.hidePassword}
-                                />
-                            </View>
-                            {this.state.pass ? null : <Text style = {{color: '#FF5252', marginLeft: 30, marginBottom: 5, fontFamily: "Poppins-Medium", fontSize: 10}}>Please enter the Password!</Text>}
-                            <Text style = {{
-                                marginLeft: 30,
-                                color: '#4ACDF4',
-                                fontFamily: 'Poppins-SemiBold',
-                                fontSize: 11,
-                                // marginTop: 15,
-                                marginBottom: Platform.OS == "android" ? 7 : 7,
-                            }}
-                            >Confirm Password</Text>
-                            <View style={styles.sectionStyle}>
-                                <TextInput
-                                    style={{flex: 1, fontFamily: 'Poppins-MediumItalic', fontSize: 15, paddingTop: 0,paddingBottom: 0, marginLeft: 20, alignItems: 'center', color: 'white'}}
-                                    value = {this.state.confirmPassword}
-                                    autoCapitalize = 'none'
-                                    keyboardAppearance = "dark"
-                                    onChangeText = {(value) => {this.onChangeConfirmPassword(value)}}
-                                    placeholder="Confirm Password"
-                                    placeholderTextColor = '#707070'
-                                    underlineColorAndroid = "transparent"   
-                                    secureTextEntry = {this.state.hideConfirmPassword} 
-                                />
-                            </View>
-                            {this.state.passSame ? null : <Text style = {{color: '#FF5252', marginLeft: 30, marginBottom: 5, fontFamily: "Poppins-Medium", fontSize: 10}}>Passwords did not match!</Text>}
-                            {this.state.confirmPass ? null : <Text style = {{color: '#FF5252', marginLeft: 30, marginBottom: 5, fontFamily: "Poppins-Medium", fontSize: 10}}>Please enter the Password again!</Text>}
-                            <Text style = {{
-                                marginLeft: 30,
-                                color: '#4ACDF4',
-                                fontFamily: 'Poppins-SemiBold',
-                                fontSize: 11,
-                                // marginTop: 15,
-                                marginBottom: Platform.OS == "android" ? 7 : 7,
-                            }}
-                            >Mobile Number</Text>
+                            >Alteranate Mobile Number</Text>
                             <View style={styles.sectionStyle}>
                                 <TextInput
                                     style={{flex: 1, fontFamily: 'Poppins-MediumItalic', fontSize: 15, paddingTop: 0,paddingBottom: 0, marginLeft: 20, alignItems: 'center', color: 'white'}}
@@ -459,33 +329,18 @@ class Register extends Component {
                                     // backgroundColor: '#4ACDF4',
                                 }} 
                             >
-                                Register
+                                Submit
                             </Text>
                         </TouchableOpacity>
                     </View>
-                    <TouchableOpacity onPress = {() => {Actions.Signin()}}>
-                        <Text
-                            style = {{
-                                fontFamily: "Poppins-Bold",
-                                // color: 'white',
-                                textAlign: 'center',
-                                fontSize: 16,
-                                marginTop: 15,
-                                // textDecorationLine: 'underline',
-                                // textDecorationStyle: "solid",
-                                color: "#4acdf4"
-                            }}  
-                        >Want to Sign In ?
-                        </Text>
-                    </TouchableOpacity>
                     </Animated.View>
                 </ScrollView>
 
             </SafeAreaView>
         )
     }
-
 }
+export default EditProfile;
 
 const styles = StyleSheet.create({
     
@@ -511,6 +366,3 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
 });
-
-
-export default Register;

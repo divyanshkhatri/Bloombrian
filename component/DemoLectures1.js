@@ -54,11 +54,22 @@ class DemoLectures1 extends Component {
                 },
                 })
                 .then((response) => {
-                    this.setState({classes: response.json()})   
-                    dateFrom = this.state.dateFrom.split("-").reverse().join("-");
-                    dateTo = this.state.dateTo.split("-").reverse().join("-");
-                    this.setState({dateFrom});
-                    this.setState({dateTo});
+                    if(response.ok){
+                        response.json().then((responseJson) => {
+                            this.setState({classes: responseJson})   
+                            dateFrom = this.state.dateFrom.split("-").reverse().join("-");
+                            dateTo = this.state.dateTo.split("-").reverse().join("-");
+                            this.setState({dateFrom});
+                            this.setState({dateTo});
+                        })
+                    } else {
+                        if(response.status == 404) {
+                            console.log("404");
+                        }
+                        if(response.status == 500) {
+                            console.log("500");
+                        }
+                    }
                 })
                 .catch((error) => {
                     this.setState({login: false})
@@ -131,11 +142,23 @@ class DemoLectures1 extends Component {
                 },
                 })
                 .then((response) => {
-                    this.setState({classes: response.json()})   
-                    dateFrom = this.state.dateFrom.split("-").reverse().join("-");
-                    dateTo = this.state.dateTo.split("-").reverse().join("-");
-                    this.setState({dateFrom});
-                    this.setState({dateTo});
+                    if(response.ok) {
+                        response.json().then((responseJson) => {
+                            this.setState({classes: responseJson})   
+                            dateFrom = this.state.dateFrom.split("-").reverse().join("-");
+                            dateTo = this.state.dateTo.split("-").reverse().join("-");
+                            this.setState({dateFrom});
+                            this.setState({dateTo});
+                        })
+                    
+                    } else {
+                        if(response.status == 404) {
+                            console.log("404");
+                        }
+                        if(response.status == 500) {
+                            console.log("500");
+                        }
+                    }
                 })
                 .catch((error) => {
                     this.setState({login: false})

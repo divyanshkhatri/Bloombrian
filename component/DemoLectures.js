@@ -53,21 +53,26 @@ class DemoLectures extends Component {
                     'Content-Type': 'multipart/form-data',
                 },
                 })
-                .then((response) => response.json())
-                .then((responseJson) => {
-                    console.log(responseJson);
-                    this.setState({classes: responseJson})
-                    today = today.split("-").reverse().join("-");
-                    dayAfterTomorrow = dayAfterTomorrow.split("-").reverse().join("-");
-                    this.setState({today: today});
-                    this.setState({dayAfterTomorrow: dayAfterTomorrow});
-                    // this.setState({urlVideos: responseJson["1"]});
-                    // console.log(this.state.urlVideos)
+                .then((response) => {
+                    if(response.ok){
+                        response.json().then((responseJson) => {
+                            this.setState({classes: responseJson})
+                            today = today.split("-").reverse().join("-");
+                            dayAfterTomorrow = dayAfterTomorrow.split("-").reverse().join("-");
+                            this.setState({today: today});
+                            this.setState({dayAfterTomorrow: dayAfterTomorrow});
+                        })
+                    } else {
+                        if(response.status == 500) {
+                            "Internal Server Error";
+                        }
+                        if(response.status == 404) {
+                            console.log("Page not found");
+                        }
+                    }
+                
                 })
-                .catch((error) => {
-                    this.setState({login: false})
-                    console.error(error);
-            });
+                
         })
     
         
@@ -134,21 +139,25 @@ class DemoLectures extends Component {
                     'Content-Type': 'multipart/form-data',
                 },
                 })
-                .then((response) => response.json())
-                .then((responseJson) => {
-                    console.log(responseJson);
-                    this.setState({classes: responseJson})   
-                    dateFrom = this.state.dateFrom.split("-").reverse().join("-");
-                    dateTo = this.state.dateTo.split("-").reverse().join("-");
-                    this.setState({dateFrom});
-                    this.setState({dateTo});
-                    // this.setState({urlVideos: responseJson["1"]});
-                    // console.log(this.state.urlVideos)
+                .then((response) => {
+                    if(response.ok){
+                        response.json().then((responseJson) => {
+                            this.setState({classes: responseJson})   
+                            dateFrom = this.state.dateFrom.split("-").reverse().join("-");
+                            dateTo = this.state.dateTo.split("-").reverse().join("-");
+                            this.setState({dateFrom});
+                            this.setState({dateTo});
+                        })
+                        
+                    } else {
+                        if(response.status == 500) {
+                            console.log("Internal Server Error");
+                        }
+                        if(response.status == 404) {
+                            console.log("404 not found");
+                        }
+                    }
                 })
-                .catch((error) => {
-                    this.setState({login: false})
-                    console.error(error);
-            });
         })
 
         

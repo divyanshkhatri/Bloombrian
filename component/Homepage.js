@@ -56,13 +56,23 @@ class Hompage extends Component {
                     'Content-Type': 'multipart/form-data',
                 },
             })
-            .then((response) => response.json())
-            .then((responseJson) => {
-                // console.log(responseJson);
-                this.setState({profileData: responseJson})
-                this.setState({isLoading: false})
-                console.log(this.state.profileData);
-                AsyncStorage.setItem('class', responseJson.class_data);
+            .then((response) => {
+                if(response.ok){
+                    response.json().then((responseJson) => {
+                        this.setState({profileData: responseJson})
+                        this.setState({isLoading: false})
+                        console.log(this.state.profileData);
+                        AsyncStorage.setItem('class', responseJson.class_data);
+                    });
+                } else {
+                    if(response.status == 404) {
+                        console.log("404");
+                    }
+                    if(response.status == 500) {
+                        console.log("500");
+                    }
+                }
+            
             })
             .catch((error) => {
                 this.setState({login: false})
@@ -77,12 +87,21 @@ class Hompage extends Component {
                     'Content-Type': 'multipart/form-data',
                 },
             })
-            .then((response) => response.json())
-            .then((responseJson) => {
-                console.log(responseJson["1"]);
-                this.setState({carouselItems: responseJson["1"]})
-                // console.log(this.state.data["1"]);
+            .then((response) => {
+                if(response.ok) 
+                    response.json().then((responseJson) => {
+                        this.setState({carouselItems: responseJson["1"]})
+                    })
+                else {
+                    if(response.status == 404) {
+                        console.log("404");
+                    }
+                    if(response.status == 500) {
+                        console.log("500");
+                    }
+                }
             })
+
             .catch((error) => {
                 this.setState({login: false})
                 console.error(error);

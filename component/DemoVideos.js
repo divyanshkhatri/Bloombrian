@@ -55,21 +55,27 @@ class DemoVideos1 extends Component {
                     'Content-Type': 'multipart/form-data',
                 },
                 })
-                .then((response) => response.json())
-                .then((responseJson) => {
-                    this.setState({showLoader: false});
-                    // console.log(responseJson);
-                    this.setState({classes: responseJson})
-                    today = today.split("-").reverse().join("-");
-                    dayAfterTomorrow = dayAfterTomorrow.split("-").reverse().join("-");
-                    this.setState({today: today});
-                    this.setState({dayAfterTomorrow: dayAfterTomorrow});
-                    // this.setState({urlVideos: responseJson["1"]});
-                    // console.log(this.state.urlVideos)
+                .then((response) => {
+                    if(response.ok) {
+                        response.json().then((responseJson) => {
+                            this.setState({showLoader: false});
+                            this.setState({classes: responseJson})
+                            today = today.split("-").reverse().join("-");
+                            dayAfterTomorrow = dayAfterTomorrow.split("-").reverse().join("-");
+                            this.setState({today: today});
+                            this.setState({dayAfterTomorrow: dayAfterTomorrow});
+                        })
+                    } else {
+                        if(response.status == 404) {
+                            console.log("404");
+                        }
+                        if(response.status == 500) {
+                            console.log("500");
+                        }
+                    }
                 })
                 .catch((error) => {
                     this.setState({login: false})
-                    console.error(error);
             });
         })
     
@@ -138,11 +144,21 @@ class DemoVideos1 extends Component {
                     'Content-Type': 'multipart/form-data',
                 },
                 })
-                .then((response) => response.json())
-                .then((responseJson) => {
-                    this.setState({showLoader: false})
-                    // console.log(responseJson);
-                    this.setState({classes: responseJson})
+                .then((response) => {
+                    if(response.ok) {
+                        response.json().then((responseJson) => {
+                            this.setState({showLoader: false})
+                            this.setState({classes: responseJson})
+                        })
+                        
+                    } else {
+                        if(response.status == 404) {
+                            console.log("404");
+                        }
+                        if(response.status == 500) {
+                            console.log("500");
+                        }
+                    }
                 })
                 .catch((error) => {
                     this.setState({login: false})
@@ -377,21 +393,42 @@ class DemoVideos1 extends Component {
                                                         borderRadius: 10
                                                     }}>
                                                         <View>
-                                                            <ImageBackground
+                                                            {
+                                                                item.thumbnail_url != false ?
+                                                            <Image
                                                                 style = {{
                                                                     // marginTop: 20,
                                                                     // marginRight: 20,
-                                                                    width: 120, 
+                                                                    width: 140, 
                                                                     height: 100, 
                                                                     borderRadius: 10,
                                                                     marginBottom: 0,
                                                                     overflow: 'hidden',
                                                                     position: 'relative',
+                                                                    resizeMode: "stretch"
                                                                 }}
-                                                                source = {{uri: base64Icon}}
+                                                                source = {{uri: item.thumbnail_url}}
                                                             >
-                                                            </ImageBackground>
-                                                            <Text style = {{color: "#4ACDF4", fontFamily: "Poppins-Bold", fontSize: 11, position: 'absolute', top: 10, left: 130}}>Subject</Text>
+                                                            </Image>
+                                                                :
+                                                            <Image
+                                                                style = {{
+                                                                    // marginTop: 20,
+                                                                    // marginRight: 20,
+                                                                    width: 140, 
+                                                                    height: 100, 
+                                                                    borderRadius: 10,
+                                                                    marginBottom: 0,
+                                                                    overflow: 'hidden',
+                                                                    position: 'relative',
+                                                                    resizeMode: "stretch"
+                                                                    
+                                                                }}
+                                                                source = {require("../images/mathswork.png")}
+                                                            >
+                                                            </Image>
+                                                            }
+                                                            <Text style = {{color: "#4ACDF4", fontFamily: "Poppins-Bold", fontSize: 11, position: 'absolute', top: 10, left: 150}}>Subject</Text>
                                                             </View>
                                                             <View style = {{
                                                                 flex: 1,
@@ -486,17 +523,46 @@ class DemoVideos1 extends Component {
                                                                         }}>Attend</Text>
                                                                     </TouchableOpacity>
                                                                     : 
-                                                                    <Image 
-                                                                        style = {{
-                                                                            width: 15, 
-                                                                            height: 15,
-                                                                            marginRight: 15,
-                                                                            // marginTop: 5,
-                                                                            alignSelf: "center",
-                                                                            justifyContent: 'center', 
-                                                                        }}
-                                                                        source = {require("../images/lock.png")} 
-                                                                    />
+                                                                    // <Image 
+                                                                    //     style = {{
+                                                                    //         width: 15, 
+                                                                    //         height: 15,
+                                                                    //         marginRight: 15,
+                                                                    //         // marginTop: 5,
+                                                                    //         alignSelf: "center",
+                                                                    //         justifyContent: 'center', 
+                                                                    //     }}
+                                                                    //     source = {require("../images/lock.png")} 
+                                                                    // />
+                                                                    <TouchableOpacity 
+
+                                                                    onPress = {() => {
+                                                                        let time = item.time;
+                                                                        let url = item.demo_link;
+                                                                        this.onPressAttend(time, url, val);
+                                                                    }}
+                                                                    style = {{ 
+                                                                        // borderWidth: 1, 
+                                                                        // borderColor: 'white', 
+                                                                        width: 70, 
+                                                                        height: 25, 
+                                                                        marginRight: 15,
+                                                                        // marginTop: 5,
+                                                                        alignSelf: "center",
+                                                                        justifyContent: 'center', 
+                                                                        borderRadius: 5,
+                                                                        backgroundColor: '#4ACDF4'
+                                                                    }}
+                                                                >
+                                                                    <Text style = {{
+                                                                        textAlign: 'center', 
+                                                                        alignItems: 'center',
+                                                                        alignSelf: 'center', 
+                                                                        fontSize: 12, 
+                                                                        fontFamily: 'Poppins-Bold', 
+                                                                        color: "white"
+                                                                    }}>Attend</Text>
+                                                                </TouchableOpacity>
                                                                 }
                                                             </View>
                                                         </View>

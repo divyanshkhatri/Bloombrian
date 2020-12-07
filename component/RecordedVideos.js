@@ -19,7 +19,7 @@ class RecordedVideos extends Component {
     _videoRef;
 
     back = () => {
-        Actions.BottomNavigator();
+        Actions.BottomNavigator({chosen: "live"});
         return true;
     };
 
@@ -93,7 +93,7 @@ class RecordedVideos extends Component {
                 </View>
             
                 <Video
-                    source={{ uri: this.props.details["recorded_class_link"] }}
+                    source={{ uri: this.props.details["recorded_class_link"], headers: {"Content-Type": "video/mp4"} }}
                     rate={1.0}
                     onFullscreenUpdate={Platform.OS == "android" ? this.onFullscreenUpdate : () => {}}
                     volume={1.0}

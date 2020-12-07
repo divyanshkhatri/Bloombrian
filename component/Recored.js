@@ -52,7 +52,7 @@ class Recorded extends Component {
 
         AsyncStorage.getItem('id')
         .then((value) => {
-            let url = "http://idirect.bloombraineducation.com/idirect/lms/live/class/recordings?start_date=" +this.state.dayBeforeYesterday+ "&end_date=" +this.state.today+ "&id="+value;
+            let url = "http://idirect.bloombraineducation.com/idirect/lms/live/class/recordings?start_date=" +this.state.dayBeforeYesterday+ "&end_date=" +this.state.today+"&id="+value;
             // let url = "http://idirect.bloombraineducation.com/idirect/lms/live/class/recordings?start_date=10-11-2020&end_date=20-11-2020&id="+value;
             console.log(url);
             fetch(url, {
@@ -61,21 +61,25 @@ class Recorded extends Component {
                     'Content-Type': 'multipart/form-data',
                 },
                 })
-                .then((response) => response.json())
-                .then((responseJson) => {
-                    console.log(responseJson);
-                    this.setState({classes: responseJson})
-                    today = today.split("-").reverse().join("-");
-                    dayBeforeYesterday = dayBeforeYesterday.split("-").reverse().join("-");
-                    this.setState({today: today});
-                    this.setState({dayBeforeYesterday: dayBeforeYesterday});
-                    // this.setState({urlVideos: responseJson["1"]});
-                    // console.log(this.state.urlVideos)
+                .then((response) => {
+
+                    if(response.ok){
+                        response.json().then((responseJson) => {
+                            this.setState({classes: responseJson})
+                            today = today.split("-").reverse().join("-");
+                            dayBeforeYesterday = dayBeforeYesterday.split("-").reverse().join("-");
+                            this.setState({today: today});
+                            this.setState({dayBeforeYesterday: dayBeforeYesterday});
+                        })
+                    } else {
+                        if(response.status === 500) {
+                            console.log("Internal Server Error");
+                        }
+                        if(response.status === 404) {
+                            console.log("404 Not Found");
+                        }
+                    }
                 })
-                .catch((error) => {
-                    this.setState({login: false})
-                    console.error(error);
-            });
         })
     
         
@@ -142,21 +146,25 @@ class Recorded extends Component {
                     'Content-Type': 'multipart/form-data',
                 },
                 })
-                .then((response) => response.json())
-                .then((responseJson) => {
-                    console.log(responseJson);
-                    this.setState({classes: responseJson})   
-                    dateFrom = this.state.dateFrom.split("-").reverse().join("-");
-                    dateTo = this.state.dateTo.split("-").reverse().join("-");
-                    this.setState({dateFrom});
-                    this.setState({dateTo});
-                    // this.setState({urlVideos: responseJson["1"]});
-                    // console.log(this.state.urlVideos)
+                .then((response) => {
+                    if(response.ok){
+                        response.json().then((responseJson) => {
+                            this.setState({classes: responseJson})   
+                            dateFrom = this.state.dateFrom.split("-").reverse().join("-");
+                            dateTo = this.state.dateTo.split("-").reverse().join("-");
+                            this.setState({dateFrom});
+                            this.setState({dateTo});
+                        })
+                    } else {
+                        if(response.status === 500) {
+                            console.log("Internal Server Error");
+                        }
+                        if(response.status === 404) {
+                            console.log("404 Not Found");
+                        }
+                    }
+                
                 })
-                .catch((error) => {
-                    this.setState({login: false})
-                    console.error(error);
-            });
         })
 
         
@@ -367,21 +375,42 @@ class Recorded extends Component {
                                                             marginRight: 10
                                                         }}>
                                                             <View>
-                                                                <ImageBackground
-                                                                    style = {{
-                                                                        // marginTop: 20,
-                                                                        // marginRight: 20,
-                                                                        width: 100, 
-                                                                        height: 100, 
-                                                                        borderRadius: 10,
-                                                                        marginBottom: 0,
-                                                                        overflow: 'hidden',
-                                                                        position: 'relative',
-                                                                    }}
-                                                                    source = {require('../images/mathswork.png')}
-                                                                >
-                                                                </ImageBackground>
-                                                                <Text style = {{color: "#4ACDF4", fontFamily: "Poppins-Bold", fontSize: 12, position: 'absolute', top: 10, left: 110}}>{this.state.subjects[item.subject]}</Text>
+                                                                {
+                                                                    item.thumbnail_url == false ?
+                                                                    <Image
+                                                                        style = {{
+                                                                            // marginTop: 20,
+                                                                            // marginRight: 20,
+                                                                            width: 140, 
+                                                                            height: 120, 
+                                                                            borderRadius: 10,
+                                                                            marginBottom: 0,
+                                                                            overflow: 'hidden',
+                                                                            position: 'relative',
+                                                                            resizeMode: "stretch"
+                                                                        }}
+                                                                        source = {require('../images/mathswork.png')}
+                                                                    >
+                                                                    </Image>
+                                                                    : 
+                                                                    <Image
+                                                                        style = {{
+                                                                            // marginTop: 20,
+                                                                            // marginRight: 20,
+                                                                            width: 140, 
+                                                                            height: 100, 
+                                                                            borderRadius: 10,
+                                                                            marginBottom: 0,
+                                                                            overflow: 'hidden',
+                                                                            position: 'relative',
+                                                                            resizeMode: "stretch"
+                                                                        }}
+                                                                        source = {{uri: item.thumbnail_url}}
+                                                                    >
+                                                                    </Image>
+                                                                }
+                                                                <Text style = {{color: "#4ACDF4", fontFamily: "Poppins-Bold", fontSize: 12, position: 'absolute', top: 10, left: 150}}>{this.state.subjects[item.subject]}</Text>
+                                                                <Text style = {{color: "gray", fontFamily: "Poppins-Bold", fontSize: 12, position: 'absolute', top: 10, left: 280}}>{item.title}</Text>
                                                                 </View>
                                                                 <View style = {{
                                                                     flex: 1,
@@ -389,20 +418,22 @@ class Recorded extends Component {
                                                                     justifyContent: 'space-around', 
                                                                 }}>
                             
-                                                                    <Text style = {{
+                                                                    <Text 
+                                                                        numberOfLines = {2}
+                                                                        style = {{
                                                                         color: 'white',
                                                                         fontFamily: 'Poppins-SemiBold',
                                                                         paddingLeft: 15,
-                                                                        paddingRight: 50,
+                                                                        paddingRight: 30,
                                                                         marginTop: 30,
                                                                         // borderColor: 'white',
                                                                         // borderWidth: 2,
-                                                                        flexShrink: 1,
+                                                                        maxWidth: 300,
                                                                         fontSize: 14,
-                                                                        height: 40
+                                                                        height: 45
                                                                         // paddingTop:10
                                                                     }}>
-                                                                        {item.description}
+                                                                        {item.description.charAt(0).toUpperCase() + item.description.substr(1).toLowerCase()}
                                                                     </Text>
                                                                 <View style = {{marginTop: 0, flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
                                                                     <Text style = {{
