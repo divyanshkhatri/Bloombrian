@@ -180,35 +180,6 @@ class Test extends Component {
                     }}
                     />
                     </View>
-                    <TouchableOpacity 
-                    style = {{
-                        width: 140,
-                        alignItems: 'center',
-                        justifyContent: 'center'
-                    }}
-                    onPress = {() => {
-                        this.state.category === "Academics" ? this.setState({academics: true}) :
-                        this.state.category === "Invention" ? this.setState({invention: true}) : 
-                        this.setState({communication: true})
-                    }}>
-                    <Text style = {{
-                        paddingTop: Platform.OS == 'ios' ? 5 : 3,
-                        justifyContent: 'center',
-                        alignContent: 'center',
-                        textAlign: 'center', 
-                        alignSelf: 'center',
-                        fontFamily: "Poppins-SemiBold", 
-                        color: "white",
-                        fontSize: Platform.OS == "android" ? 12 : 14, 
-                        borderRadius: 15,
-                        width: 140,
-                        height: 30,
-                        overflow: 'hidden',
-                        // borderColor: 'white', 
-                        // borderWidth: 2, 
-                        backgroundColor: "#232323"
-                    }}>Change Subject</Text>
-                </TouchableOpacity>
                 </View>
                 </View>
                 {

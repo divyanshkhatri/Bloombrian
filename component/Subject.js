@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, StatusBar, SafeAreaView, Text, Dimensions, Linking, Image, ImageBackground, LogBox, Platform, TouchableOpacity, AsyncStorage, ActivityIndicator, BackHandler} from 'react-native';
+import {View, StatusBar, SafeAreaView, Text, Dimensions, Linking, Image, ImageBackground, TouchableWithoutFeedback, LogBox, Platform, TouchableOpacity, AsyncStorage, ActivityIndicator, BackHandler} from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
 import LinearGradient from 'react-native-linear-gradient';
 import { FlatList, ScrollView } from 'react-native-gesture-handler';
@@ -30,6 +30,7 @@ export default class Subject extends Component {
     }
 
     state = {
+        show: false,
         loading: true,
         showModal: false,
         subject: "",
@@ -99,7 +100,76 @@ export default class Subject extends Component {
 
     render() {
         let i = 0 ;
+        if(this.state.show == false) 
+        return (
+            <View
+            style = {{
+                height: '100%',
+                justifyContent: "center",
+                // flex: 1,
+                // flexDirection: 'column',
+                backgroundColor: 'black',
+                paddingTop: Platform.OS === 'android' ? 0 : 0,
+            }}
+            >
+                <View
+                
+                >
+                    <TouchableWithoutFeedback onPress={() => { }}>
+                    <View
+                    style = {{
+                        backgroundColor: '#232323',
+                        borderRadius: 20,
+                        padding: 35,
+                        width: 335,
+                        height: 390,
+                        alignSelf: 'center',
+                        shadowColor: '#000',
+                        shadowOffset: {
+                        width: 0,
+                        height: 2,
+                        },
+                        shadowOpacity: 0.9,
+                        shadowRadius: 3.84,
+                        elevation: 5,
+                    }}
+                    >   
+                    <Text
+                        style = {{
+                            textAlign: 'center',
+                            fontFamily: 'Poppins-Bold',
+                            fontSize: Platform.OS == "android" ? 22 : 24,
+                            color: 'white',
+                            marginBottom: 30
+                        }}
+                    >Coming Soon!</Text>
+                    <Image 
 
+                        source = {require("../images/party.png")}
+                        style = {{
+                            width: 228, 
+                            height: 160,
+                            // borderColor: 'white',
+                            // borderWidth: 2,
+                            alignSelf: 'center'
+                        }}
+                    />
+                    <Text
+                        style = {{
+                        textAlign: 'center',
+                        fontFamily: 'Poppins-Bold',
+                        fontSize: Platform.OS == "android" ? 12 : 14,
+                        color: 'white',
+                        marginTop: 30
+                    }}
+                    >Stay Tuned! We have a lot of
+                    exiting stuff coming right your way!</Text>
+                </View>
+            </TouchableWithoutFeedback>
+            </View>
+            </View>
+        )
+        else if(this.state.show == true)
         return (
 
             <SafeAreaView
@@ -112,7 +182,7 @@ export default class Subject extends Component {
                     backgroundColor: 'black',
                     paddingTop: Platform.OS === 'android' ? 0 : 0,
                 }}
-            >
+            >   
                 <StatusBar 
                     backgroundColor = "black"
                 />
@@ -1355,3 +1425,10 @@ export default class Subject extends Component {
         ) 
     }
 }
+
+
+
+
+
+
+

@@ -10,10 +10,12 @@ class RecordedVideos extends Component {
     componentDidMount() {
         BackHandler.addEventListener("hardwareBackPress", this.back);
         // this.setState({currId: this.props.titlePage.id})
+        this.setState({currVideo: this.props.details})
     }
 
     state = {
         currId: "",
+        currVideo: "",
     }
 
     _videoRef;
@@ -129,6 +131,124 @@ class RecordedVideos extends Component {
                                 </View>
                             </View>
                         </View>  
+                    </View>
+                </View>
+                <View style = {{margin: 20}}>
+                    <Text style = {{color: '#4ACDF4', fontFamily: "Poppins-Bold", fontSize: 14, marginBottom: 20,}}>
+                        Up Next
+                    </Text>
+                    <View>
+                    <FlatList
+                        style = {{height: '57%'}}
+                        data = {this.props.list}
+                        renderItem = {({item}) => {
+                            if(item["description"] !== this.state.currVideo["description"])
+                            return (
+                                <TouchableOpacity onPress = {() => {
+                                    Actions.pop();
+                                    Actions.RecordedVideos({details: item, list: this.props.list});
+                                }}>
+                                    <View style = {{
+                                        flexDirection: 'row', 
+                                        // borderWidth: 2, 
+                                        // borderColor: 'white',
+                                        // marginLeft: 16, 
+                                        // marginRight: 16,
+                                        backgroundColor: '#1C1C1C',
+                                        marginBottom: 20,
+                                        borderRadius: 10
+                                    }}>
+                                        <View>
+                                            <ImageBackground
+                                                style = {{
+                                                    // marginTop: 20,
+                                                    // marginRight: 20,
+                                                    width: 150, 
+                                                    height: 90, 
+                                                    borderRadius: 10,
+                                                    marginBottom: 0,
+                                                    borderBottomRightRadius: 0,
+                                                    borderTopRightRadius: 0,
+                                                    overflow: 'hidden',
+                                                    position: 'relative',
+                                                }}
+                                                source = {{uri: item["thumbnail_url"] === false ? "https://www.bloombraineducation.com/assets/images/youtube_logo/2.jpg" : item["thumbnail_url"]}}
+                                            >
+                                                <Text 
+                                                    style = {{
+                                                        color: 'white', 
+                                                        backgroundColor: 'black',
+                                                        position: 'absolute',
+                                                        bottom: 10,
+                                                        fontFamily: 'Poppins-Regular',
+                                                        fontSize: Platform.OS == "android" ? 8 : 10,
+                                                        right: 10,
+                                                        // borderRadius: 3,
+                                                        overflow: 'hidden',
+                                                        paddingLeft: 2,
+                                                        paddingRight: 2,
+                                                }}>
+                                        {item["video_duration"]}
+                                        </Text>
+                                            </ImageBackground>
+                                            </View>
+                                            <View style = {{
+                                                flexShrink: 1,
+                                                // justifyContent: "space-between", 
+                                                height: 90,
+                                                padding:12,
+                                            }}>
+                                                <View style = {{height: 55}}>
+                                                    <Text
+                                                        style = {{
+                                                            color: '#4ACDF4',
+                                                            fontFamily: 'Poppins-SemiBold',
+                                                            paddingRight: 10,
+                                                            // borderColor: 'white',
+                                                            // borderWidth: 2,
+                                                            flexShrink: 1,
+                                                            fontSize: 10,
+                                                            // paddingTop:10
+                                                        }}
+                                                    >
+                                                        {item["title"]}
+                                                    </Text>
+                                                    <Text style = {{
+                                                        color: 'white',
+                                                        fontFamily: 'Poppins-SemiBold',
+                                                        paddingRight: 10,
+                                                        height: 30,
+                                                        // borderColor: 'white',
+                                                        // borderWidth: 2,
+                                                        flexShrink: 1,
+                                                        fontSize: 10,
+                                                        // paddingTop:10
+                                                    }}>
+                                                        {item["description"] == false ? <Text>Class {item.class_data} {item.course} Video</Text> : item["description"]}
+                                                    </Text>
+                                                </View>
+                                            <View style = {{flexDirection: 'row'}}>
+                                                <Text style = {{
+                                                    color: 'gray',
+                                                    fontFamily: 'Poppins-SemiBold',
+                                                    // borderColor: 'white',
+                                                    // borderWidth: 2,
+                                                    flexShrink: 1,
+                                                    fontSize: 10,
+                                                    height: 20
+                                                    // paddingTop: 29
+                                                }}>
+                                                    {item.teacher_name}
+                                                </Text>
+                                                
+                                            </View>
+                                        </View>
+                                    </View>
+                                </TouchableOpacity>
+                            )
+                            }
+                        }    
+                    />
                     </View>
                 </View>
             </SafeAreaView>

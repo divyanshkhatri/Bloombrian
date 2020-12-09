@@ -1,5 +1,3 @@
-import { throwIfAudioIsDisabled } from 'expo-av/build/Audio/AudioAvailability';
-import react from 'react';
 import React, {Component} from 'react';
 import {View, Text, ScrollView, Dimensions, TouchableOpacity, FlatList, Image, ImageBackground, Platform, AsyncStorage, Linking} from 'react-native';
 import DatePicker from 'react-native-datepicker';
@@ -32,17 +30,34 @@ class Recorded1 extends Component {
         today = yyyy + "-" + mm + "-" + dd;
         yesterday = yyyyy + "-" + mmy + "-" + ddy;
         dayBeforeYesterday = yyyyby + "-" + mmby + "-" + ddby;
-        console.log(today);
-        console.log(yesterday);
-        console.log(dayBeforeYesterday);
 
         let dateArray = [...this.state.dateArray];
-        dateArray.push(today);
-        dateArray.push(yesterday);
-        dateArray.push(dayBeforeYesterday);
+        // dateArray.push(today);
+        // dateArray.push(yesterday);
+        // dateArray.push(dayBeforeYesterday);
 
+        var arr = [];
+        var startDate = '2020-10-01';
+        var endDate = today;
+        var dateMove = new Date(startDate);
+        var strDate = startDate;
+
+        while (strDate < endDate){
+            var strDate = dateMove.toISOString().slice(0,10);
+            arr.push(strDate);
+            dateMove.setDate(dateMove.getDate()+1);
+        };
+
+        dateArray = [];
+        // console.log(dateArray);
+        arr.map((val) => {
+            dateArray.push(val)
+        })
+        // dateArray.reverse();
+        // console.log(dateArray);
         this.setState({dateArray});
-
+        
+        this.setState({dateArray});
         this.setState({today: today});
         this.setState({yesterday: yesterday});
         this.setState({dayBeforeYesterday: dayBeforeYesterday})
@@ -55,7 +70,8 @@ class Recorded1 extends Component {
 
         AsyncStorage.getItem('id')
         .then((value) => {
-            let url = "http://idirect.bloombraineducation.com/idirect/lms/live/class/recordings?start_date=" +this.state.dayBeforeYesterday+ "&end_date=" +this.state.today+"&id="+value;
+            let url = "http://idirect.bloombraineducation.com/idirect/lms/live/class/recordings?start_date=01-10-2020&end_date=" +this.state.today+"&id="+value;  
+            //this.state.dayBeforeYesterday+ "
             console.log(url);
             fetch(url, {
                 method: 'POST',
@@ -69,6 +85,19 @@ class Recorded1 extends Component {
                         response.json().then((responseJson) => {
                             this.setState({showLoader: false})
                             this.setState({classes: responseJson})
+                            const values = Object.values(responseJson);
+                            console.log(values);
+                            let arrayVideos = [];
+                            for(let i = 0; i<values.length; i++){
+                                if(values[i] != []) {
+                                    for(let j = 0; j<values[i].length; j++) {
+                                        arrayVideos.push(values[i][j]);
+                                    }
+                                }
+                            }
+                            console.log(arrayVideos);
+                            this.setState({videoList: arrayVideos});
+                            console.log(this.state.videoList);
                             today = today.split("-").reverse().join("-");
                             dayBeforeYesterday = dayBeforeYesterday.split("-").reverse().join("-");
                             this.setState({today: today});
@@ -76,13 +105,13 @@ class Recorded1 extends Component {
                         })
                     } else {
                         if(response.status === 500) {
-                            this.setState({showLoader: false})
                             this.setState({status: 500});
+                            this.setState({showLoader: false})
                             console.log("Internal Server Error");
                         }
                         if(response.status === 404) {
-                            this.setState({showLoader: false})
                             this.setState({status: 500});
+                            this.setState({showLoader: false})
                             console.log("404 Not Found");
                         }
                     }
@@ -159,6 +188,19 @@ class Recorded1 extends Component {
                         response.json().then((responseJson) => {
                             this.setState({showLoader: false})
                             this.setState({classes: responseJson})   
+                            const values = Object.values(responseJson);
+                            console.log(values);
+                            let arrayVideos = [];
+                            for(let i = 0; i<values.length; i++){
+                                if(values[i] != []) {
+                                    for(let j = 0; j<values[i].length; j++) {
+                                        arrayVideos.push(values[i][j]);
+                                    }
+                                }
+                            }
+                            console.log(arrayVideos);
+                            this.setState({videoList: arrayVideos});
+                            console.log(this.state.videoList);
                             dateFrom = this.state.dateFrom.split("-").reverse().join("-");
                             dateTo = this.state.dateTo.split("-").reverse().join("-");
                             this.setState({dateFrom});
@@ -166,13 +208,13 @@ class Recorded1 extends Component {
                         })
                     } else {
                         if(response.status === 500) {
-                            this.setState({showLoader: false})
                             this.setState({status: 500});
+                            this.setState({showLoader: false})
                             console.log("Internal Server Error");
                         }
                         if(response.status === 404) {
-                            this.setState({showLoader: false})
                             this.setState({status: 404});
+                            this.setState({showLoader: false})
                             console.log("404 Not Found");
                         }
                     }
@@ -200,6 +242,7 @@ class Recorded1 extends Component {
             'extra_curricular': 'Extra-curricular'
         },
         today: "",
+        videoList: [],
         status: 200,
         yesterday: "",
         dayBeforeYesterday: "",
@@ -231,7 +274,7 @@ class Recorded1 extends Component {
                 </View>
             )
         }
-        if(this.state.status == 404) 
+        if(this.state.status == 404 && !this.state.showLoader) 
         return (
             <View
                 style = {{
@@ -241,7 +284,7 @@ class Recorded1 extends Component {
                 <Modal404 />
             </View>
         )
-        else if(this.state.status == 500) 
+        else if(this.state.status == 500 && !this.state.showLoader) 
         return (
             <View
                 style = {{
@@ -251,7 +294,7 @@ class Recorded1 extends Component {
                 <Modal500 />
             </View>
         )
-        else if(this.state.status == 200)
+        else if(this.state.status == 200 && !this.state.showLoader)
         return (
             <ScrollView 
                 style = {{paddingTop: 10, backgroundColor: '#101010', height: Platform.OS == 'ios' ? '100%' : '100%'}}
@@ -416,7 +459,7 @@ class Recorded1 extends Component {
                                                 return (
                                                     <TouchableOpacity 
                                                         style = {{marginTop: 10, marginBottom: 15}}
-                                                        onPress = {() => Actions.RecordedVideos({details: item})}>
+                                                        onPress = {() => Actions.RecordedVideos({details: item, list: this.state.videoList})}>
                                                         <View style = {{
                                                             flexDirection: 'row', 
                                                             // borderWidth: 2, 
@@ -425,7 +468,8 @@ class Recorded1 extends Component {
                                                             width: Dimensions.get("window").width - 40, 
                                                             backgroundColor: '#1C1C1C',
                                                             borderRadius: 10,
-                                                            marginRight: 10
+                                                            marginRight: 10,
+                                                            overflow: "hidden",
                                                         }}>
                                                             <View>
                                                                 {
@@ -482,7 +526,7 @@ class Recorded1 extends Component {
                                                                         // borderColor: 'white',
                                                                         // borderWidth: 2,
                                                                         maxWidth: 300,
-                                                                        fontSize: 14,
+                                                                        fontSize: Platform.OS == "android" ? 12 : 14, 
                                                                         height: 45
                                                                         // paddingTop:10
                                                                     }}>
@@ -498,7 +542,7 @@ class Recorded1 extends Component {
                                                                         // borderWidth: 2,
                                                                         flexShrink: 1,
                                                                         fontSize: 10,
-                                                                        marginTop: 5
+                                                                        marginTop: Platform.OS == "android" ? 0 : 5,
                                                                         // paddingTop: 29
                                                                     }}>
                                                                         {item.teacher_name}
@@ -508,7 +552,7 @@ class Recorded1 extends Component {
                                                                         fontSize: 10, 
                                                                         color: 'gray',
                                                                         marginRight: 15,
-                                                                        marginTop: 5,
+                                                                        marginTop: Platform.OS == "android" ? 0 : 5,
                                                                         textAlign: 'center'
                                                                     }}>{val}</Text>
                                                                 </View>
@@ -535,8 +579,8 @@ class Recorded1 extends Component {
 
                             return(
                                 <View>
-                                    <Text style = {{fontSize: 14, color: '#4ACDF4', marginLeft: 16, marginBottom: 10, fontFamily: 'Poppins-Bold'}}>{val.toString().split("-").reverse().join("-")}</Text>
-                                    <Text style = {{fontSize: 12, color: 'white', marginLeft: 16, marginBottom: 20, fontFamily: 'Poppins-SemiBold'}}>No Live Recordings Found</Text>
+                                    {/* <Text style = {{fontSize: 14, color: '#4ACDF4', marginLeft: 16, marginBottom: 10, fontFamily: 'Poppins-Bold'}}>{val.toString().split("-").reverse().join("-")}</Text>
+                                    <Text style = {{fontSize: 12, color: 'white', marginLeft: 16, marginBottom: 20, fontFamily: 'Poppins-SemiBold'}}>No Live Recordings Found</Text> */}
                                 </View>
                             )
 
@@ -545,13 +589,6 @@ class Recorded1 extends Component {
                 }
                 </View>
                 </View> 
-                <View
-                    style = {{
-                        height: 70,
-                    }}
-                >
-
-                </View>
             </ScrollView>
         ) 
     }

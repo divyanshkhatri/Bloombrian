@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Text, StatusBar, View, SafeAreaView, Image, Button, Dimensions, ImageBackground, AsyncStorage, BackHandler, Alert, TouchableOpacity, Linking } from 'react-native';
+import {Text, StatusBar, View, SafeAreaView, Image, Button, Dimensions, ImageBackground, AsyncStorage, BackHandler, Alert, TouchableOpacity, Linking, Platform } from 'react-native';
 // import { TouchableOpacity } from 'react-native-gesture-handler';
 import {Actions} from 'react-native-router-flux';
 
@@ -80,15 +80,15 @@ export default class LandingMain extends Component {
                         opacity: 0.09
                     }}></View>
                 </View> */}
-                <View style = {{marginTop: Platform.OS == "android" ? 40 : 40}}>
-                    <Image source = {require("../images/logo.png")} style = {{width: 160, height: 130, alignSelf: 'center'}}/>
-                    <Image source = {require('../images/logo1.png')} style = {{marginTop: 35, width: 259, height: 190, alignSelf: 'center'}}>
+                <View style = {{marginTop: Platform.OS == "android" ? 40 : Dimensions.get("screen").height/25}}>
+                    <Image source = {require("../images/logo.png")} style = {{width: Platform.isPad ? 320 : 160, height: Platform.isPad ? 260 : 130, alignSelf: 'center'}}/>
+                    <Image source = {require('../images/logo1.png')} style = {{marginTop: 35, width: Platform.isPad ? 450 : Dimensions.get("screen").width/1.5, height: Platform.isPad ? 340 : Dimensions.get("screen").height/4, resizeMode: "stretch",alignSelf: 'center'}}>
                     </Image>
                     <Text 
                         style = {{
                                 fontFamily: 'Poppins-SemiBold', 
                                 color: 'white', 
-                                fontSize: 18, 
+                                fontSize: Platform.isPad ? 30 : 18, 
                                 textAlign: 'center',
                                 marginTop: 40,
                                 zIndex: 1
@@ -99,18 +99,18 @@ export default class LandingMain extends Component {
                         style = {{
                             fontFamily: 'Poppins-Medium', 
                             color: 'white', 
-                            fontSize: 15, 
+                            fontSize: Platform.isPad ? 26 : 15, 
                             textAlign: 'center', 
                             // marginTop: 15
                         }}>A one - stop learning platform for your kids
                     </Text>
                     <TouchableOpacity style = {{
-                        width: Dimensions.get('window').width-50,
-                        height: 53,
+                        width: Platform.isPad ? 600 : Dimensions.get('window').width-50,
+                        height: Platform.isPad ? 60 : 53,
                         backgroundColor: '#4ACDF4',
                         alignSelf: 'center',
                         justifyContent: 'center',
-                        marginTop: Platform.OS == "android" ? 50 : 70,
+                        marginTop: Platform.OS == "android" ? 50 : Dimensions.get("window").height/15,
                         borderRadius: 11
                     }}
                         onPress = { () => Actions.Signin() }
@@ -118,14 +118,14 @@ export default class LandingMain extends Component {
                         <Text style = {{
                             textAlign: 'center',
                             fontFamily: 'Poppins-SemiBold',
-                            fontSize: 21,
+                            fontSize: Platform.isPad ? 30 : 21,
                             color: 'white',
                             justifyContent: 'center'
                         }}>Sign In</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style = {{
-                        width: Dimensions.get('window').width-50,
-                        height: 53,
+                        width: Platform.isPad ? 600 : Dimensions.get('window').width-50,
+                        height: Platform.isPad ? 60 : 53,
                         borderRadius: 11,
                         borderWidth: 2, 
                         borderColor: '#4ACDF4',
@@ -138,7 +138,7 @@ export default class LandingMain extends Component {
                         <Text style = {{
                              textAlign: 'center',
                              fontFamily: 'Poppins-SemiBold',
-                             fontSize: 22,
+                             fontSize: Platform.isPad ? 30 : 22,
                              color: 'white',
                         }}>Register</Text>
                     </TouchableOpacity>
@@ -153,7 +153,7 @@ export default class LandingMain extends Component {
                         <Text style = {{
                             textAlign: 'center',
                             fontFamily: 'Poppins-SemiBold',
-                            fontSize: 14,
+                            fontSize: Platform.isPad ? 20 : 14,
                             color: 'white',
                             // borderBottomWidth: 1,
                             // borderBottomColor: 'white',

@@ -579,7 +579,7 @@ class RealSchedule1 extends Component {
                                                                             textAlign: 'center', 
                                                                             alignItems: 'center',
                                                                             alignSelf: 'center', 
-                                                                            fontSize: 12, 
+                                                                            fontSize: Platform.OS == "android" ? 11 : 12, 
                                                                             fontFamily: 'Poppins-Bold', 
                                                                             color: "white"
                                                                         }}>Attend</Text>
@@ -750,7 +750,7 @@ class RealSchedule1 extends Component {
                                                                             textAlign: 'center', 
                                                                             alignItems: 'center',
                                                                             alignSelf: 'center', 
-                                                                            fontSize: 12, 
+                                                                            fontSize: Platform.OS == "android" ? 11 : 12,  
                                                                             fontFamily: 'Poppins-Bold', 
                                                                             color: "white"
                                                                         }}>Attend</Text>
@@ -918,7 +918,7 @@ class RealSchedule1 extends Component {
                                                                             textAlign: 'center', 
                                                                             alignItems: 'center',
                                                                             alignSelf: 'center', 
-                                                                            fontSize: 12, 
+                                                                            fontSize: Platform.OS == "android" ? 11 : 12, 
                                                                             fontFamily: 'Poppins-Bold', 
                                                                             color: "white"
                                                                         }}>Attend</Text>
@@ -1085,7 +1085,7 @@ class RealSchedule1 extends Component {
                                                                             textAlign: 'center', 
                                                                             alignItems: 'center',
                                                                             alignSelf: 'center', 
-                                                                            fontSize: 12, 
+                                                                            fontSize: Platform.OS == "android" ? 11 : 12,  
                                                                             fontFamily: 'Poppins-Bold', 
                                                                             color: "white"
                                                                         }}>Attend</Text>
@@ -1252,7 +1252,7 @@ class RealSchedule1 extends Component {
                                                                             textAlign: 'center', 
                                                                             alignItems: 'center',
                                                                             alignSelf: 'center', 
-                                                                            fontSize: 12, 
+                                                                            fontSize: Platform.OS == "android" ? 11 : 12, 
                                                                             fontFamily: 'Poppins-Bold', 
                                                                             color: "white"
                                                                         }}>Attend</Text>
@@ -1419,7 +1419,7 @@ class RealSchedule1 extends Component {
                                                                             textAlign: 'center', 
                                                                             alignItems: 'center',
                                                                             alignSelf: 'center', 
-                                                                            fontSize: 12, 
+                                                                            fontSize: Platform.OS == "android" ? 11 : 12,  
                                                                             fontFamily: 'Poppins-Bold', 
                                                                             color: "white"
                                                                         }}>Attend</Text>
@@ -1587,7 +1587,7 @@ class RealSchedule1 extends Component {
                                                                             textAlign: 'center', 
                                                                             alignItems: 'center',
                                                                             alignSelf: 'center', 
-                                                                            fontSize: 12, 
+                                                                            fontSize: Platform.OS == "android" ? 11 : 12, 
                                                                             fontFamily: 'Poppins-Bold', 
                                                                             color: "white"
                                                                         }}>Attend</Text>

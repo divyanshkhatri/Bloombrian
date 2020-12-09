@@ -41,27 +41,21 @@ class Register extends Component {
                     console.log(position);
                     fetch('https://maps.googleapis.com/maps/api/geocode/json?address=' + position["coords"].latitude + ',' + position["coords"].longitude + '&key=' + myApiKey)
                     .then((response) => {
-                        if(response.ok) {
-                            response.json().then((responseJson) => {
-                                console.log(responseJson.results[1].address_components[4])
-                                this.setState({city: responseJson.results[1].address_components[3].long_name + ", " + responseJson.results[1].address_components[4].long_name});
-                            })
-                        } else {
-                            if(response.status == 500) {
-                                console.log("500");
-                            }
-                            if(response.status == 404) {
-                                console.log("404");
-                            }
-                        }
-
+                        response.json().then((responseJson) => {
+                            console.log(responseJson.results[1].address_components[4])
+                            this.setState({city: responseJson.results[1].address_components[3].long_name + ", " + responseJson.results[1].address_components[4].long_name});
+                        })
                     })
                 },
                 (error) => {
                     // See error code charts below.
                     console.log(error.code, error.message);
                 },
-                { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
+                {     
+                    enableHighAccuracy: false,
+                    timeout: 5000,
+                    maximumAge: 10000
+                }
             );
         }
         
@@ -245,7 +239,7 @@ class Register extends Component {
                                 // borderRadius: 5,
                                 width: Dimensions.get('window').width,
                                 // marginLeft: 16,
-                                height: 115,
+                                height: Platform.isPad ? 150 : 115,
                                 // borderRadius: 15
                         }}>
                             <TouchableOpacity
@@ -255,13 +249,13 @@ class Register extends Component {
                             <Text
                             style = {{
                                 marginTop: Platform.OS == 'android' ? 0 : 8,
-                                height: Platform.OS == 'android' ? 60: 50,
+                                height: Platform.isPad ? 70 : Platform.OS == 'android' ? 60: 50,
                                 // borderColor: 'white',
                                 // borderWidth: 2,
                                 paddingTop: 15,
                                 fontFamily: 'Poppins-Bold',
                                 color: 'white',
-                                fontSize: 25
+                                fontSize: Platform.isPad ? 40 : 25
                             }}
                             >
                                 Register
@@ -270,12 +264,12 @@ class Register extends Component {
                                 style = {{
                                     fontFamily: 'Poppins-Medium',
                                     color: 'white',
-                                    fontSize: 14,
+                                    fontSize: Platform.isPad ? 20 : 14,
                                     paddingTop: Platform.OS == "android" ? 0 : 8,
                                     paddingRight: 80,
                                 }}
                             >
-                                Become a part of the Bloom Brain family,
+                                Become a part of the Bloombrain family,
                                 India's No. 1 Education app!
                             </Text>
                         </LinearGradient>
@@ -297,7 +291,7 @@ class Register extends Component {
                                 marginLeft: 30,
                                 color: '#4ACDF4',
                                 fontFamily: 'Poppins-SemiBold',
-                                fontSize: 11,
+                                fontSize: Platform.isPad ? 15 : 11,
                                 // marginTop: 15,
                                 marginBottom: Platform.OS == "android" ? 7 : 7,
                             }}
@@ -322,7 +316,7 @@ class Register extends Component {
                                 marginLeft: 30,
                                 color: '#4ACDF4',
                                 fontFamily: 'Poppins-SemiBold',
-                                fontSize: 11,
+                                fontSize: Platform.isPad ? 15 : 11,
                                 // marginTop: 15,
                                 marginBottom: Platform.OS == "android" ? 7 : 7,
                             }}
@@ -345,7 +339,7 @@ class Register extends Component {
                                 marginLeft: 30,
                                 color: '#4ACDF4',
                                 fontFamily: 'Poppins-SemiBold',
-                                fontSize: 11,
+                                fontSize: Platform.isPad ? 15 : 11,
                                 // marginTop: 15,
                                 marginBottom: Platform.OS == "android" ? 7 : 7,
                             }}
@@ -368,7 +362,7 @@ class Register extends Component {
                                 marginLeft: 30,
                                 color: '#4ACDF4',
                                 fontFamily: 'Poppins-SemiBold',
-                                fontSize: 11,
+                                fontSize: Platform.isPad ? 15 : 11,
                                 // marginTop: 15,
                                 marginBottom: Platform.OS == "android" ? 7 : 7,
                             }}
@@ -392,7 +386,7 @@ class Register extends Component {
                                 marginLeft: 30,
                                 color: '#4ACDF4',
                                 fontFamily: 'Poppins-SemiBold',
-                                fontSize: 11,
+                                fontSize: Platform.isPad ? 15 : 11,
                                 // marginTop: 15,
                                 marginBottom: Platform.OS == "android" ? 7 : 7,
                             }}
@@ -416,7 +410,7 @@ class Register extends Component {
                                 marginLeft: 30,
                                 color: '#4ACDF4',
                                 fontFamily: 'Poppins-SemiBold',
-                                fontSize: 11,
+                                fontSize: Platform.isPad ? 15 : 11,
                             }}
                             >City</Text>
                             <View style={styles.sectionStyle}>
@@ -440,7 +434,7 @@ class Register extends Component {
                             width: Dimensions.get("window").width - 50,
                             alignSelf: 'center',
                             borderRadius: 10,
-                            height: 50,
+                            height: Platform.isPad ? 60 :  50,
                             // flex: 1,
                             justifyContent: 'center',
                             marginTop: Platform.OS == "android" ? 30: 30
@@ -452,7 +446,7 @@ class Register extends Component {
                             <Text 
                                 style = {{
                                     fontFamily: 'Poppins-SemiBold',
-                                    fontSize: 22,
+                                    fontSize: Platform.isPad ? 26 : 22,
                                     textAlign: 'center',
                                     color: 'white',
                                     
@@ -469,7 +463,7 @@ class Register extends Component {
                                 fontFamily: "Poppins-Bold",
                                 // color: 'white',
                                 textAlign: 'center',
-                                fontSize: 16,
+                                fontSize: Platform.isPad ? 20 : 16,
                                 marginTop: 15,
                                 // textDecorationLine: 'underline',
                                 // textDecorationStyle: "solid",
@@ -494,7 +488,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#1C1C1C',
         borderWidth: 0.5,
         borderColor: '#1C1C1C',
-        height: 40,
+        height: Platform.isPad ? 50 : 40,
         borderRadius: 8,
         margin: 7,
         marginLeft: 25,

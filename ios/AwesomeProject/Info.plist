@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-	<string>BloomBrain</string>
+	<string>Bloombrain</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -17,11 +17,21 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0</string>
+	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
+  <key>NSMicrophoneUsageDescription</key>
+  <string>Need microphone access for uploading videos</string>
+  <key>NSCameraUsageDescription</key>
+  <string>Need camera access for uploading images</string>
+  <key>NSLocationUsageDescription</key>
+  <string>Need location access for updating nearby friends</string>
+  <key>NSLocationWhenInUseUsageDescription</key>
+  <string>This app will use your location to show cool stuffs near you.</string>
+  <key>NSPhotoLibraryUsageDescription</key>
+  <string>Need photo library access for uploading images</string>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
@@ -37,8 +47,10 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Need Location access to get current location to assign teachers from the same area</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string/>
+	<string>Need Location access to get current location to assign teachers from the same area</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Poppins-Black.ttf</string>
@@ -80,6 +92,8 @@
 	<array>
 		<string>armv7</string>
 	</array>
+	<key>UIRequiresFullScreen</key>
+	<true/>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>

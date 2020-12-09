@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
-import {View, StatusBar, Text, Image, SafeAreaView, TextInput, Animated, Keyboard, TouchableOpacity, StyleSheet, BackHandler, AsyncStorage, Alert, Dimensions} from 'react-native';
+import {View, StatusBar, Text, Image, SafeAreaView, TextInput, Animated, Keyboard, Platform, TouchableOpacity, StyleSheet, BackHandler, AsyncStorage, Alert, Dimensions} from 'react-native';
 import {Actions} from 'react-native-router-flux';
 
 class Signin extends Component {
 
     state = {
-        padding: new Animated.Value(55),
+        padding: new Animated.Value(Dimensions.get("window").height/15),
         email: "",
         pass: "",
         valid: true,
@@ -114,7 +114,7 @@ class Signin extends Component {
     }
     
     _keyboardDidHide = () => {
-        Animated.timing( this.state.padding, { toValue: 65, duration: 100, useNativeDriver: false}).start();
+        Animated.timing( this.state.padding, { toValue: Dimensions.get("window").height/15, duration: 100, useNativeDriver: false}).start();
         // this.setState({padding: 120})
     }
     
@@ -137,7 +137,7 @@ class Signin extends Component {
                     backgroundColor = "black"
                 />
                 <View style = {{marginTop: Platform.OS == "android" ? 30 : 30}}>
-                    <Image style = {{width: 225, height: 170, alignSelf: 'center',}} source = {require('../images/logo.png')}/>
+                    <Image style = {{width: Platform.isPad ? 450 : Dimensions.get("window").width/1.5, height: Platform.isPad ? 340 : Dimensions.get("window").height/5, alignSelf: 'center',}} source = {require('../images/logo.png')}/>
                     <Animated.View style = {{
                         marginTop: this.state.padding,
                     }}>
@@ -150,7 +150,8 @@ class Signin extends Component {
                             fontFamily: 'Poppins-Bold',
                             fontWeight: "800",
                             color: '#4ACDF4',
-                            fontSize: 26
+                            marginBottom: Platform.isPad ? 10 : 0,
+                            fontSize: Platform.isPad ? 28: 26
                         }}>Hi there!</Text>
                     <Text
                         style = {{
@@ -159,7 +160,8 @@ class Signin extends Component {
                             fontFamily: 'Poppins-Medium',
                             fontWeight: "800",
                             color: 'white',
-                            fontSize: 18
+                            marginBottom: Platform.isPad ? 10 : 0,
+                            fontSize: Platform.isPad ? 22 : 18
                         }}
                     >Nice to see you again.</Text>
                         <View style = {{
@@ -181,7 +183,7 @@ class Signin extends Component {
                                     keyboardType = "email-address"
                                     autoCapitalize = "none"
                                     autoCorrect = {false}
-                                    style={{ flex: 1, fontFamily: 'Poppins-MediumItalic', fontSize: 17, marginLeft: 10, color: 'white'}}
+                                    style={{ flex: 1, fontFamily: 'Poppins-MediumItalic', fontSize: Platform.isPad ? 20 : 17, marginLeft: 10, color: 'white'}}
                                     value = {this.state.email}
                                     onChangeText = {(value) => {this.setState({email: value})}}
                                     placeholder="Email"
@@ -195,7 +197,7 @@ class Signin extends Component {
                                 style={styles.imageStyle}
                             />
                             <TextInput
-                                style={{flex: 1, fontFamily: 'Poppins-MediumItalic', fontSize: 17, marginLeft: 10, color: 'white'}}
+                                style={{flex: 1, fontFamily: 'Poppins-MediumItalic', fontSize: Platform.isPad ? 20 : 17, marginLeft: 10, color: 'white'}}
                                 value = {this.state.password}
                                 keyboardAppearance = {"dark"}
                                 autoCapitalize = "none"
@@ -216,7 +218,7 @@ class Signin extends Component {
                     <View>
                         <Text style = {{
                             fontFamily: "Poppins-SemiBold",
-                            fontSize: 12,
+                            fontSize: Platform.isPad ? 18 :  12,
                             color: 'white',
                             textAlign: 'center',
                             marginTop: !this.state.valid || !this.state.registered || !this.state.notEmpty ? 12: 5,
@@ -229,7 +231,7 @@ class Signin extends Component {
                     <TouchableOpacity style = {{
                         // flex: 1,
                         width: Dimensions.get('window').width - 45,
-                        height: 50,
+                        height: Platform.isPad ? 60 : 50,
                         backgroundColor: '#4ACDF4',
                         alignSelf: 'center',
                         justifyContent: 'center',
@@ -241,7 +243,7 @@ class Signin extends Component {
                         <Text style = {{
                             textAlign: 'center',
                             fontFamily: 'Poppins-SemiBold',
-                            fontSize: 21,
+                            fontSize: Platform.isPad ? 24 : 21,
                             color: 'white',
                             justifyContent: 'center',
                         }}>Sign In</Text>
@@ -249,17 +251,17 @@ class Signin extends Component {
                     <View>
                         <Text style = {{
                             fontFamily: "Poppins-Medium",
-                            fontSize: 15,
+                            fontSize: Platform.isPad ? 18 : 15,
                             color: 'white',
                             textAlign: 'center',
-                            marginTop: !this.state.notEmpty ? 40 : 50
+                            marginTop: !this.state.notEmpty ? 40 : Dimensions.get("window").height/20
                         }}>
                         Don't have an account? <Text
 
                             onPress = {() => {Actions.Register()}}
                             style = {{
                                 fontFamily: "Poppins-Medium",
-                                fontSize: 15,
+                                fontSize: Platform.isPad ? 18 : 15,
                                 // color: 'white',
                                 textAlign: 'center',
                                 // marginTop: -40 ,
@@ -292,7 +294,7 @@ const styles = StyleSheet.create({
       backgroundColor: '#151515',
     //   borderWidth: 0.5,
     //   borderColor: '#1C1C1C',
-      height: 50,
+      height: Platform.isPad ? 60 : 50,
       borderRadius: 15,
       margin: 10,
     //   marginBottom: 3,

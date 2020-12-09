@@ -7,7 +7,7 @@ import Modal404 from './Modal404';
 import Modal500 from './Modal500';
 moment().format();
 
-class DemoVideos1 extends Component {
+class DemoVideos extends Component {
 
     async componentDidMount() {
         var today = new Date();
@@ -414,7 +414,8 @@ class DemoVideos1 extends Component {
                                                         marginRight: 16,
                                                         backgroundColor: '#1C1C1C',
                                                         marginBottom: 20,
-                                                        borderRadius: 10
+                                                        borderRadius: 10,
+                                                        overflow: "hidden"
                                                     }}>
                                                         <View>
                                                             {
@@ -772,4 +773,4 @@ class DemoVideos1 extends Component {
 
 }
 
-export default DemoVideos1;
+export default DemoVideos;

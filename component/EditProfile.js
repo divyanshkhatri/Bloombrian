@@ -25,6 +25,8 @@ class EditProfile extends Component {
         confirmPass: true,
         mobile: true,
         place: true,
+        school: "",
+        scl: true,
 
     }
 
@@ -59,7 +61,7 @@ class EditProfile extends Component {
                     // See error code charts below.
                     console.log(error.code, error.message);
                 },
-                { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
+                { enableHighAccuracy: true, timeout: 30000, maximumAge: 10000 }
             );
         }
         
@@ -108,6 +110,13 @@ class EditProfile extends Component {
     onChangeMob = (mob) => {
         this.setState({
             mob
+        })
+        
+    }
+
+    onChangeSchool = (school) => {
+        this.setState({
+            school
         })
         
     }
@@ -257,7 +266,6 @@ class EditProfile extends Component {
                                     }}
                                 />
                             </View>
-                            {this.state.name ? null : <Text style = {{color: '#FF5252', marginLeft: 30, marginBottom: 5, fontFamily: "Poppins-Medium", fontSize: 10}}>Please enter the Name!</Text>}
                             <Text style = {{
                                 marginLeft: 30,
                                 color: '#4ACDF4',
@@ -279,7 +287,27 @@ class EditProfile extends Component {
                                     underlineColorAndroid = "transparent"    
                                 />
                             </View>
-                            {this.state.mobile ? null : <Text style = {{color: '#FF5252', marginLeft: 30, marginBottom: 5, fontFamily: "Poppins-Medium", fontSize: 10}}>Please enter the mobile number!</Text>}
+                            <Text style = {{
+                                marginLeft: 30,
+                                color: '#4ACDF4',
+                                fontFamily: 'Poppins-SemiBold',
+                                fontSize: 11,
+                                // marginTop: 15,
+                                marginBottom: Platform.OS == "android" ? 7 : 7,
+                            }}
+                            >School</Text>
+                            <View style={styles.sectionStyle}>
+                                <TextInput
+                                    style={{flex: 1, fontFamily: 'Poppins-MediumItalic', fontSize: 15, paddingTop: 0,paddingBottom: 0, marginLeft: 20, alignItems: 'center', color: 'white'}}
+                                    value = {this.state.school}
+                                    keyboardAppearance = "dark"
+                                    keyboardType = 'numeric'
+                                    onChangeText = {(value) => {this.onChangeSchool(value)}}
+                                    placeholder="School"
+                                    placeholderTextColor = '#707070'
+                                    underlineColorAndroid = "transparent"    
+                                />
+                            </View>
                             <Text style = {{
                                 // marginTop: 10,
                                 marginBottom: Platform.OS == "android" ? 7 : 7,
@@ -302,6 +330,7 @@ class EditProfile extends Component {
                                     underlineColorAndroid = "transparent"    
                                 />
                             </View>
+                            
                         </Animated.View>
                     </View>
                     <View

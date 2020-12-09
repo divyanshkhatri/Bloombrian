@@ -464,7 +464,8 @@ class RealSchedule extends Component {
                                                         marginRight: 10,
                                                         backgroundColor: '#1C1C1C',
                                                         marginBottom: 20,
-                                                        borderRadius: 10
+                                                        borderRadius: 10,
+                                                        overflow: "hidden",
                                                     }}>
                                                         <View>
                                                             {
@@ -635,7 +636,8 @@ class RealSchedule extends Component {
                                                         marginRight: 10,
                                                         backgroundColor: '#1C1C1C',
                                                         marginBottom: 20,
-                                                        borderRadius: 10
+                                                        borderRadius: 10,
+                                                        overflow: "hidden"
                                                     }}>
                                                         <View>
                                                             {
@@ -750,7 +752,7 @@ class RealSchedule extends Component {
                                                                             textAlign: 'center', 
                                                                             alignItems: 'center',
                                                                             alignSelf: 'center', 
-                                                                            fontSize: 12, 
+                                                                            fontSize: Platform.OS == "android" ? 11 : 12, 
                                                                             fontFamily: 'Poppins-Bold', 
                                                                             color: "white"
                                                                         }}>Attend</Text>
@@ -803,7 +805,8 @@ class RealSchedule extends Component {
                                                         marginRight: 10,
                                                         backgroundColor: '#1C1C1C',
                                                         marginBottom: 20,
-                                                        borderRadius: 10
+                                                        borderRadius: 10,
+                                                        overflow: "hidden"
                                                     }}>
                                                         <View>
                                                             {
@@ -918,7 +921,7 @@ class RealSchedule extends Component {
                                                                             textAlign: 'center', 
                                                                             alignItems: 'center',
                                                                             alignSelf: 'center', 
-                                                                            fontSize: 12, 
+                                                                            fontSize: Platform.OS == "android" ? 11 : 12, 
                                                                             fontFamily: 'Poppins-Bold', 
                                                                             color: "white"
                                                                         }}>Attend</Text>
@@ -970,7 +973,8 @@ class RealSchedule extends Component {
                                                         marginRight: 10,
                                                         backgroundColor: '#1C1C1C',
                                                         marginBottom: 20,
-                                                        borderRadius: 10
+                                                        borderRadius: 10,
+                                                        overflow: "hidden"
                                                     }}>
                                                         <View>
                                                             {
@@ -1085,7 +1089,7 @@ class RealSchedule extends Component {
                                                                             textAlign: 'center', 
                                                                             alignItems: 'center',
                                                                             alignSelf: 'center', 
-                                                                            fontSize: 12, 
+                                                                            fontSize: Platform.OS == "android" ? 11 : 12, 
                                                                             fontFamily: 'Poppins-Bold', 
                                                                             color: "white"
                                                                         }}>Attend</Text>
@@ -1137,7 +1141,8 @@ class RealSchedule extends Component {
                                                         marginRight: 10,
                                                         backgroundColor: '#1C1C1C',
                                                         marginBottom: 20,
-                                                        borderRadius: 10
+                                                        borderRadius: 10,
+                                                        overflow: "hidden"
                                                     }}>
                                                         <View>
                                                             {
@@ -1252,7 +1257,7 @@ class RealSchedule extends Component {
                                                                             textAlign: 'center', 
                                                                             alignItems: 'center',
                                                                             alignSelf: 'center', 
-                                                                            fontSize: 12, 
+                                                                            fontSize: Platform.OS == "android" ? 11 : 12, 
                                                                             fontFamily: 'Poppins-Bold', 
                                                                             color: "white"
                                                                         }}>Attend</Text>
@@ -1304,7 +1309,8 @@ class RealSchedule extends Component {
                                                         marginRight: 10,
                                                         backgroundColor: '#1C1C1C',
                                                         marginBottom: 20,
-                                                        borderRadius: 10
+                                                        borderRadius: 10,
+                                                        overflow: "hidden"
                                                     }}>
                                                         <View>
                                                             {
@@ -1419,7 +1425,7 @@ class RealSchedule extends Component {
                                                                             textAlign: 'center', 
                                                                             alignItems: 'center',
                                                                             alignSelf: 'center', 
-                                                                            fontSize: 12, 
+                                                                            fontSize: Platform.OS == "android" ? 11 : 12, 
                                                                             fontFamily: 'Poppins-Bold', 
                                                                             color: "white"
                                                                         }}>Attend</Text>
@@ -1472,7 +1478,8 @@ class RealSchedule extends Component {
                                                         marginRight: 10,
                                                         backgroundColor: '#1C1C1C',
                                                         marginBottom: 20,
-                                                        borderRadius: 10
+                                                        borderRadius: 10,
+                                                        overflow: "hidden"
                                                     }}>
                                                         <View>
                                                             {
@@ -1587,7 +1594,7 @@ class RealSchedule extends Component {
                                                                             textAlign: 'center', 
                                                                             alignItems: 'center',
                                                                             alignSelf: 'center', 
-                                                                            fontSize: 12, 
+                                                                            fontSize: Platform.OS == "android" ? 11 : 12, 
                                                                             fontFamily: 'Poppins-Bold', 
                                                                             color: "white"
                                                                         }}>Attend</Text>

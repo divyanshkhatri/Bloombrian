@@ -13,9 +13,9 @@ let bottomNavBarHeight = deviceHeight - windowHeight;
 class BottomNavigator extends Component {
 
     state = {
-        dashboardText: true,
+        dashboardText: false,
         videoText: false,
-        liveText: false,
+        liveText: true,
         testText: false
     }
     componentDidMount() {
@@ -58,9 +58,9 @@ class BottomNavigator extends Component {
         <View style={{
             flex: 1,
         }}>
-            <View>{ this.state.dashboardText ? <Subject /> : null}</View>
-            <View>{ this.state.testText ? <Test /> : null}</View> 
             <View>{ this.state.liveText ? <Live /> : null}</View>
+            <View>{ this.state.testText ? <Test /> : null}</View> 
+            <View>{ this.state.dashboardText ? <Subject /> : null}</View>
             <View>{ this.state.videoText ? <Video /> : null}</View>
             <View style={{
 
@@ -97,78 +97,59 @@ class BottomNavigator extends Component {
                     justifyContent: 'space-around',
                     // alignSelf: 'center'
                 }}>
-
-                <View style={{
-                    flexDirection: 'column', 
-                    alignItems: 'center',
-                    // position: 'absolute',
-
-                    // left: margin.marginD, 
-                    height: 30, 
-                    width: 20
-                }}>
-                    <TouchableOpacity 
-                        onPress={() => {
-                            this.setState({
-                                dashboardText: true,
-                                videoText: false,
-                                liveText: false,
-                                testText: false
-                            })
-                        }}
-                    >
-                        <Image
-
-                            style={{ 
-                                width: 25, 
-                                height: 25, 
-                                tintColor: this.state.dashboardText? "#32C6F3" : "#585858",    
-                            }}
-                            source={require('../images/dashboard.png')}
-                        >
-
-                        </Image>
-                        
-                    </TouchableOpacity>
-                </View>
                 
                 <View style={{
-                    flexDirection: 'row', 
-                    alignItems: 'center',
-                    // position: 'absolute
-                    // left: margin.marginV,
-                    flexDirection: 'row',
-                    height: 30,
-                    width: 20
-                }}>
-
+                        // alignItems: 'center',
+                        // borderWidth: 2, 
+                        // marginTop: 9,
+                        alignItems: 'center',
+                        // borderColor: 'white',
+                        // position: 'absolute',
+                        // right: margin.marginL,
+                        justifyContent: "center",
+                        height: 30,
+                        width: 30
+                        
+                    }}>
                     <TouchableOpacity
                         onPress={() => {
                             this.setState({
                                 dashboardText: false,
-                                videoText: true,
-                                liveText: false,
+                                videoText: false,
+                                liveText: true,
                                 testText: false
                             })
                         }}
+                        style = {{
+                            width: 60, 
+                            height: 50,
+                            borderWidth: 2,
+                            borderColor: "#2B2A29",
+                            justifyContent: 'center',
+                            alignItems: "center"
+                        }}
                     >
                         <Image
-                            style={{ 
-                                // marginHorizontal: 3, 
-                                width: 25, 
-                                height: 25,
-                                tintColor: this.state.videoText ? "#32C6F3" : "#585858"
-                            }}
-                            source={require('../images/videos.png')}
+                            source={require('../images/live.png')}
+
+                            style={{
+                                    // borderWidth: 2,
+                                    // borderColor: 'white',
+                                    // marginHorizontal: 16,
+                                    width: 30, 
+                                    height: 30,
+                                    // marginTop: 12,
+                                    tintColor: this.state.liveText ? "#32C6F3" : "#585858",
+                                }}
+                            // containerStyle={{ marginHorizontal: 20, marginTop: 20 }}
                         />
-                    
+                
                     </TouchableOpacity>
                 </View>
-
-                    <View style={{
+                <View style={{
                         // justifyContent: 'flex-start',
-                        flexDirection: 'row', 
                         alignItems: 'center',
+                        justifyContent: "center",
                         // borderWidth: 2, 
                         // borderColor: 'white',
                         // position: 'absolute',
@@ -187,6 +168,17 @@ class BottomNavigator extends Component {
                                     testText: true
                                 })
                             }}
+
+                            style = {{
+                                width: 60, 
+                                height: 50,
+                                borderWidth: 2,
+                                borderColor: "#2B2A29",
+                                // borderWidth: 2,
+                                // borderColor: "white",
+                                justifyContent: 'center',
+                                alignItems: "center"
+                            }}
                         >
                             <Image
                                 source={require('../images/test.png')}
@@ -204,48 +196,94 @@ class BottomNavigator extends Component {
                         </TouchableOpacity>
                         
                     </View>
-                    <View style={{
-                        
-                        flexDirection: 'row', 
-                        // alignItems: 'center',
-                        // borderWidth: 2, 
-                        // marginTop: 9,
-                        alignItems: 'center',
-                        // borderColor: 'white',
-                        // position: 'absolute',
-                        // right: margin.marginL,
+                <View style={{
+                    alignItems: 'center',
+                    // position: 'absolute',
+                    // borderWidth: 2, 
+                    // borderColor: "white",
+                    // left: margin.marginD, 
+                    height: 30, 
+                    width: 30
+                }}>
+                    <TouchableOpacity 
+                        onPress={() => {
+                            this.setState({
+                                dashboardText: true,
+                                videoText: false,
+                                liveText: false,
+                                testText: false
+                            })
+                        }}
+                        style = {{
+                            width: 60, 
+                            height: 50,
+                            // borderWidth: 2,
+                            // borderColor: "white",
+                            // justifyContent: 'center',
+                            borderWidth: 2,
+                            borderColor: "#2B2A29",
+                            alignItems: "center"
+                        }}
+                    >
+                        <Image
 
-                        height: 30,
-                        width: 26
-                        
-                    }}>
-                        <TouchableOpacity
-                            onPress={() => {
-                                this.setState({
-                                    dashboardText: false,
-                                    videoText: false,
-                                    liveText: true,
-                                    testText: false
-                                })
+                            style={{ 
+                                width: 25, 
+                                height: 25, 
+                                tintColor: this.state.dashboardText? "#32C6F3" : "#585858",    
                             }}
+                            source={require('../images/dashboard.png')}
                         >
-                                <Image
-                                    source={require('../images/live.png')}
 
-                                    style={{
-                                            // borderWidth: 2,
-                                            // borderColor: 'white',
-                                            // marginHorizontal: 16,
-                                            width: 30, 
-                                            height: 30,
-                                            // marginTop: 12,
-                                            tintColor: this.state.liveText ? "#32C6F3" : "#585858",
-                                        }}
-                                    // containerStyle={{ marginHorizontal: 20, marginTop: 20 }}
-                                />
+                        </Image>
+                        
+                    </TouchableOpacity>
+                </View>
+                
+                <View style={{
+                    alignItems: 'center',
+                    // position: 'absolute
+                    // left: margin.marginV,
+                    justifyContent: "center",
+                    // borderWidth: 2, 
+                    // borderColor: "white",
+                    height: 30,
+                    width: 30
+                }}>
+
+                    <TouchableOpacity
+                        onPress={() => {
+                            this.setState({
+                                dashboardText: false,
+                                videoText: true,
+                                liveText: false,
+                                testText: false
+                            })
+                        }}
+
+                        style = {{
+                            width: 60, 
+                            height: 50,
+                            // borderWidth: 2,
+                            // borderColor: "white",
+                            borderWidth: 2,
+                            borderColor: "#2B2A29",
+                            justifyContent: 'center',
+                            alignItems: "center"
+                        }}
+                    >
+                        <Image
+                            style={{ 
+                                // marginHorizontal: 3, 
+                                width: 25, 
+                                height: 25,
+                                tintColor: this.state.videoText ? "#32C6F3" : "#585858"
+                            }}
+                            source={require('../images/videos.png')}
+                        />
                     
-                        </TouchableOpacity>
-                    </View>
+                    </TouchableOpacity>
+                </View>
                 </View>
                 {/* </View> */}
             </View>

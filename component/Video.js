@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {SafeAreaView, StatusBar, View, Image, Text, Dimensions, AsyncStorage, FlatList, ImageBackground, Platform, BackHandler,TouchableOpacity} from 'react-native';
+import {SafeAreaView, StatusBar, View, Image, Text, Dimensions, AsyncStorage, TouchableWithoutFeedback, FlatList, ImageBackground, Platform, BackHandler,TouchableOpacity, TouchableOpacityBase} from 'react-native';
 import RNPickerSelect, { defaultStyles } from 'react-native-picker-select';
 import LinearGradient from 'react-native-linear-gradient';
 import Modal from 'react-native-modal';
@@ -32,6 +32,7 @@ class Video extends Component {
 
     state = {
         category: "",
+        show: false,
         subject: "",
         s: [
             {
@@ -97,6 +98,74 @@ class Video extends Component {
     }
 
     render() {
+        if(this.state.show == false) 
+        return (
+            <View
+            style = {{
+                height: '100%',
+                justifyContent: "center",
+                // flex: 1,
+                // flexDirection: 'column',
+                backgroundColor: 'black',
+                paddingTop: Platform.OS === 'android' ? 0 : 0,
+            }}
+            >
+                    <View>
+                        <TouchableWithoutFeedback onPress={() => { }}>
+                        <View
+                        style = {{
+                            backgroundColor: '#232323',
+                            borderRadius: 20,
+                            padding: 35,
+                            width: 335,
+                            height: 390,
+                            alignSelf: 'center',
+                            shadowColor: '#000',
+                            shadowOffset: {
+                            width: 0,
+                            height: 2,
+                            },
+                            shadowOpacity: 0.9,
+                            shadowRadius: 3.84,
+                            elevation: 5,
+                        }}
+                        >   
+                        <Text
+                            style = {{
+                                textAlign: 'center',
+                                fontFamily: 'Poppins-Bold',
+                                fontSize: Platform.OS == "android" ? 22 : 24,
+                                color: 'white',
+                                marginBottom: 30
+                            }}
+                        >Coming Soon!</Text>
+                        <Image 
+
+                            source = {require("../images/party.png")}
+                            style = {{
+                                width: 228, 
+                                height: 160,
+                                // borderColor: 'white',
+                                // borderWidth: 2,
+                                alignSelf: 'center'
+                            }}
+                        />
+                        <Text
+                            style = {{
+                            textAlign: 'center',
+                            fontFamily: 'Poppins-Bold',
+                            fontSize: Platform.OS == "android" ? 12 : 14,
+                            color: 'white',
+                            marginTop: 30
+                        }}
+                        >Stay Tuned! We have a lot of
+                        exiting stuff coming right your way!</Text>
+                    </View>
+                    </TouchableWithoutFeedback>
+                    </View>
+            </View>
+        )
+        else if(this.state.show == true)
         return (
             <SafeAreaView
                 style = {{
@@ -107,6 +176,9 @@ class Video extends Component {
                     paddingTop: Platform.OS === 'android' ? 5 : 0
                 }}
             >
+                <TouchableOpacity
+                    activeOpacity = {1}
+                >
                 <StatusBar 
                     backgroundColor = "black"
                 />
@@ -190,6 +262,73 @@ class Video extends Component {
                         }}>Change Subject</Text>
                     </TouchableOpacity>
                 </View>
+                <Modal 
+                    visible = {false}
+                    animationType = "fade"
+                    backdropOpacity = {0.8}
+                >   
+                    <TouchableWithoutFeedback 
+                        style = {{
+                            height: '100%'
+                        }}
+                        onPress={() => {
+                        this.setState({showModalCong: !this.state.showModalCong})
+                    }}>
+                    <View>
+                        <TouchableWithoutFeedback onPress={() => { }}>
+                        <View
+                        style = {{
+                            backgroundColor: '#232323',
+                            borderRadius: 20,
+                            padding: 35,
+                            width: 335,
+                            height: 390,
+                            alignSelf: 'center',
+                            shadowColor: '#000',
+                            shadowOffset: {
+                            width: 0,
+                            height: 2,
+                            },
+                            shadowOpacity: 0.9,
+                            shadowRadius: 3.84,
+                            elevation: 5,
+                        }}
+                        >   
+                        <Text
+                            style = {{
+                                textAlign: 'center',
+                                fontFamily: 'Poppins-Bold',
+                                fontSize: Platform.OS == "android" ? 22 : 24,
+                                color: 'white',
+                                marginBottom: 30
+                            }}
+                        >Coming Soon!</Text>
+                        <Image 
+
+                            source = {require("../images/party.png")}
+                            style = {{
+                                width: 228, 
+                                height: 160,
+                                // borderColor: 'white',
+                                // borderWidth: 2,
+                                alignSelf: 'center'
+                            }}
+                        />
+                        <Text
+                            style = {{
+                            textAlign: 'center',
+                            fontFamily: 'Poppins-Bold',
+                            fontSize: Platform.OS == "android" ? 12 : 14,
+                            color: 'white',
+                            marginTop: 30
+                        }}
+                        >Stay Tuned! We have a lot of
+                        exiting stuff coming right your way!</Text>
+                    </View>
+                    </TouchableWithoutFeedback>
+                    </View>
+                    </TouchableWithoutFeedback>
+                </Modal>
                 
                 <Modal 
                     isVisible = {this.state.invention}
@@ -1154,6 +1293,7 @@ class Video extends Component {
                     {/* <Text style = {{color: 'white'}}>{this.state.topic[this.state.chosenTopic].videos.urlVideos[0].id}</Text> */}
 
                 </View>
+                </TouchableOpacity>
             </SafeAreaView>
         )
     }
