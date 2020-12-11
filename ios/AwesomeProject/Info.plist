@@ -20,16 +20,6 @@
 	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
-  <key>NSMicrophoneUsageDescription</key>
-  <string>Need microphone access for uploading videos</string>
-  <key>NSCameraUsageDescription</key>
-  <string>Need camera access for uploading images</string>
-  <key>NSLocationUsageDescription</key>
-  <string>Need location access for updating nearby friends</string>
-  <key>NSLocationWhenInUseUsageDescription</key>
-  <string>This app will use your location to show cool stuffs near you.</string>
-  <key>NSPhotoLibraryUsageDescription</key>
-  <string>Need photo library access for uploading images</string>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>LSRequiresIPhoneOS</key>
@@ -47,10 +37,18 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>NSCameraUsageDescription</key>
+	<string>Need camera access for uploading images</string>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>Need Location access to get current location to assign teachers from the same area</string>
+	<key>NSLocationUsageDescription</key>
+	<string>Need location access for updating nearby friends</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Need Location access to get current location to assign teachers from the same area</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Need microphone access for uploading videos</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Need photo library access for uploading images</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Poppins-Black.ttf</string>

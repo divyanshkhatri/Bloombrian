@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, StatusBar, Text, SafeAreaView, TouchableOpacity, Image, Dimensions, TouchableWithoutFeedback, Platform} from 'react-native';
+import {View, StatusBar, Text, SafeAreaView, ScrollView, TouchableOpacity, Image, Dimensions, TouchableWithoutFeedback, Platform} from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import {Actions} from 'react-native-router-flux';
 
@@ -26,6 +26,7 @@ class Results extends Component {
                     height: '100%'
                 }}
             >
+                <ScrollView>
                 <StatusBar 
                     backgroundColor = "black"
                 />
@@ -1009,6 +1010,7 @@ class Results extends Component {
                             </TouchableWithoutFeedback>
                     </View>
                 }
+                </ScrollView>
             </SafeAreaView>
         )
     }

@@ -49,11 +49,12 @@ class Register extends Component {
                 },
                 (error) => {
                     // See error code charts below.
+                    console.log("error");
                     console.log(error.code, error.message);
                 },
                 {     
-                    enableHighAccuracy: false,
-                    timeout: 5000,
+                    enableHighAccuracy: true,
+                    timeout: 50000,
                     maximumAge: 10000
                 }
             );

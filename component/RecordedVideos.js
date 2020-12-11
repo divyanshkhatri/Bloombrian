@@ -224,7 +224,7 @@ class RecordedVideos extends Component {
                                                         fontSize: 10,
                                                         // paddingTop:10
                                                     }}>
-                                                        {item["description"] == false ? <Text>Class {item.class_data} {item.course} Video</Text> : item["description"]}
+                                                        {item.description.charAt(0).toUpperCase() + item.description.substr(1).toLowerCase()}
                                                     </Text>
                                                 </View>
                                             <View style = {{flexDirection: 'row'}}>

@@ -507,7 +507,9 @@ class Recorded extends Component {
                                                                     </Image>
                                                                 }
                                                                 <Text style = {{color: "#4ACDF4", fontFamily: "Poppins-Bold", fontSize: 12, position: 'absolute', top: 10, left: 150}}>{this.state.subjects[item.subject]}</Text>
-                                                                <Text style = {{color: "gray", fontFamily: "Poppins-Bold", fontSize: 12, position: 'absolute', top: 10, left: 280}}>{item.title}</Text>
+                                                                <Text 
+                                                                    numberOfLines = {1}
+                                                                    style = {{color: "gray", fontFamily: "Poppins-Bold", fontSize: 12, position: 'absolute', top: 10, left: 260, width: 70,}}>{item.title}</Text>
                                                                 </View>
                                                                 <View style = {{
                                                                     flex: 1,

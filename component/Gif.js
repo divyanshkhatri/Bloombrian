@@ -8,7 +8,7 @@ class Gif extends Component {
 
     state = {
         email: "",
-        time: Platform.OS == "android" ? 2600 : 3400,
+        time: Platform.OS == "android" ? 2600 : 3200,
         showLoader: true,
         showModal: false,
     }

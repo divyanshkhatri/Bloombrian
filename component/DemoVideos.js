@@ -550,46 +550,17 @@ class DemoVideos extends Component {
                                                                         }}>Attend</Text>
                                                                     </TouchableOpacity>
                                                                     : 
-                                                                    // <Image 
-                                                                    //     style = {{
-                                                                    //         width: 15, 
-                                                                    //         height: 15,
-                                                                    //         marginRight: 15,
-                                                                    //         // marginTop: 5,
-                                                                    //         alignSelf: "center",
-                                                                    //         justifyContent: 'center', 
-                                                                    //     }}
-                                                                    //     source = {require("../images/lock.png")} 
-                                                                    // />
-                                                                    <TouchableOpacity 
-
-                                                                    onPress = {() => {
-                                                                        let time = item.time;
-                                                                        let url = item.demo_link;
-                                                                        this.onPressAttend(time, url, val);
-                                                                    }}
-                                                                    style = {{ 
-                                                                        // borderWidth: 1, 
-                                                                        // borderColor: 'white', 
-                                                                        width: 70, 
-                                                                        height: 25, 
-                                                                        marginRight: 15,
-                                                                        // marginTop: 5,
-                                                                        alignSelf: "center",
-                                                                        justifyContent: 'center', 
-                                                                        borderRadius: 5,
-                                                                        backgroundColor: '#4ACDF4'
-                                                                    }}
-                                                                >
-                                                                    <Text style = {{
-                                                                        textAlign: 'center', 
-                                                                        alignItems: 'center',
-                                                                        alignSelf: 'center', 
-                                                                        fontSize: 12, 
-                                                                        fontFamily: 'Poppins-Bold', 
-                                                                        color: "white"
-                                                                    }}>Attend</Text>
-                                                                </TouchableOpacity>
+                                                                    <Image 
+                                                                        style = {{
+                                                                            width: 15, 
+                                                                            height: 15,
+                                                                            marginRight: 15,
+                                                                            // marginTop: 5,
+                                                                            alignSelf: "center",
+                                                                            justifyContent: 'center', 
+                                                                        }}
+                                                                        source = {require("../images/lock.png")} 
+                                                                    />
                                                                 }
                                                             </View>
                                                         </View>
