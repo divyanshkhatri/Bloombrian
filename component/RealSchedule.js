@@ -211,7 +211,7 @@ class RealSchedule extends Component {
                                 showsVerticalScrollIndicator
                                 options={this.state.courses}
                                 dropdownStyle = {{
-                                    width: 350,
+                                    width: Dimensions.get("screen").width - 30,
                                     backgroundColor: "#1A1A1A",
                                     borderWidth: 0,
                                     borderRadius: 10,
@@ -439,7 +439,7 @@ class RealSchedule extends Component {
                                         <View style = {{
                                             position: 'absolute',
                                             zIndex: 10,
-                                            left: 220,
+                                            left: Dimensions.get("screen").width - 165,
                                             flexDirection: 'row',
                                             alignItems: "center",
                                             alignContent: "center",

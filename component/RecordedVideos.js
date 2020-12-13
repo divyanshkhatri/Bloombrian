@@ -188,60 +188,60 @@ class RecordedVideos extends Component {
                                                         paddingLeft: 2,
                                                         paddingRight: 2,
                                                 }}>
-                                        {item["video_duration"]}
-                                        </Text>
-                                            </ImageBackground>
-                                            </View>
-                                            <View style = {{
-                                                flexShrink: 1,
-                                                // justifyContent: "space-between", 
-                                                height: 90,
-                                                padding:12,
-                                            }}>
-                                                <View style = {{height: 55}}>
-                                                    <Text
-                                                        style = {{
-                                                            color: '#4ACDF4',
+                                                    {item["video_duration"]}
+                                                </Text>
+                                                    </ImageBackground>
+                                                    </View>
+                                                    <View style = {{
+                                                        flexShrink: 1,
+                                                        // justifyContent: "space-between", 
+                                                        height: 90,
+                                                        padding:12,
+                                                    }}>
+                                                    <View style = {{height: 55}}>
+                                                        <Text
+                                                            style = {{
+                                                                color: '#4ACDF4',
+                                                                fontFamily: 'Poppins-SemiBold',
+                                                                paddingRight: 10,
+                                                                // borderColor: 'white',
+                                                                // borderWidth: 2,
+                                                                flexShrink: 1,
+                                                                fontSize: 10,
+                                                                // paddingTop:10
+                                                            }}
+                                                        >
+                                                            {item["title"]}
+                                                        </Text>
+                                                        <Text style = {{
+                                                            color: 'white',
                                                             fontFamily: 'Poppins-SemiBold',
                                                             paddingRight: 10,
+                                                            height: 30,
                                                             // borderColor: 'white',
                                                             // borderWidth: 2,
                                                             flexShrink: 1,
                                                             fontSize: 10,
                                                             // paddingTop:10
-                                                        }}
-                                                    >
-                                                        {item["title"]}
-                                                    </Text>
+                                                        }}>
+                                                            {item.description.charAt(0).toUpperCase() + item.description.substr(1).toLowerCase()}
+                                                        </Text>
+                                                    </View>
+                                                <View style = {{flexDirection: 'row'}}>
                                                     <Text style = {{
-                                                        color: 'white',
+                                                        color: 'gray',
                                                         fontFamily: 'Poppins-SemiBold',
-                                                        paddingRight: 10,
-                                                        height: 30,
                                                         // borderColor: 'white',
                                                         // borderWidth: 2,
                                                         flexShrink: 1,
                                                         fontSize: 10,
-                                                        // paddingTop:10
+                                                        height: 20
+                                                        // paddingTop: 29
                                                     }}>
-                                                        {item.description.charAt(0).toUpperCase() + item.description.substr(1).toLowerCase()}
+                                                        {item.teacher_name}
                                                     </Text>
+                                                    
                                                 </View>
-                                            <View style = {{flexDirection: 'row'}}>
-                                                <Text style = {{
-                                                    color: 'gray',
-                                                    fontFamily: 'Poppins-SemiBold',
-                                                    // borderColor: 'white',
-                                                    // borderWidth: 2,
-                                                    flexShrink: 1,
-                                                    fontSize: 10,
-                                                    height: 20
-                                                    // paddingTop: 29
-                                                }}>
-                                                    {item.teacher_name}
-                                                </Text>
-                                                
-                                            </View>
                                         </View>
                                     </View>
                                 </TouchableOpacity>
