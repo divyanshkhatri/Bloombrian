@@ -32,6 +32,8 @@ target 'AwesomeProject' do
 
   pod 'react-native-netinfo', :path => '../node_modules/@react-native-community/netinfo'
 
+  pod 'react-native-blur', :path => '../node_modules/@react-native-community/blur'
+
   target 'AwesomeProjectTests' do
     inherit! :complete
     # Pods for testing

@@ -10,6 +10,7 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "@react-native-community/blur": "^3.6.0",
     "@react-native-community/geolocation": "^2.0.2",
     "@react-native-community/netinfo": "^5.9.9",
     "@react-native-community/picker": "^1.8.1",
@@ -24,6 +25,7 @@
     "react-native": "^0.63.4",
     "react-native-action-button": "^2.8.5",
     "react-native-af-video-player": "^0.2.1",
+    "react-native-animated-linear-gradient": "^1.2.2",
     "react-native-animated-splash-screen": "^2.0.5",
     "react-native-collapsible": "^1.5.3",
     "react-native-config": "^1.4.1",
@@ -31,6 +33,7 @@
     "react-native-dash": "^0.0.11",
     "react-native-datepicker": "^1.7.2",
     "react-native-emoji": "^1.8.0",
+    "react-native-fade": "^2.0.2",
     "react-native-fast-image": "^8.3.3",
     "react-native-firebase": "^5.6.0",
     "react-native-geocoding": "^0.4.0",

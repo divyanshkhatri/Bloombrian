@@ -249,7 +249,7 @@ class DemoVideos1 extends Component {
         else if(this.state.status == 200)
         return (
             <ScrollView 
-                style = {{paddingTop: 10, backgroundColor: '#101010', height: Platform.OS == 'ios' ? '84%' : '84%'}}
+                style = {{paddingTop: 10, backgroundColor: '#101010', height: Platform.OS == 'ios' ? '100%' : '100%'}}
                 showsHorizontalScrollIndicator = {false}
                 showsVerticalScrollIndicator = {false}    
             >
@@ -405,20 +405,18 @@ class DemoVideos1 extends Component {
                                             if(item.length != 0) {
                                                 let base64Icon = `data:image/png;base64,${item.thumbnail_url}`;
                                                 return (
-                                                    <View 
-                                                        style = {{
-                                                            flexDirection: 'row', 
-                                                            // borderWidth: 2, 
-                                                            // borderColor: 'white',
-                                                            height: 100,
-                                                            marginLeft: 16, 
-                                                            marginRight: 16,
-                                                            backgroundColor: '#1C1C1C',
-                                                            marginBottom: 20,
-                                                            borderRadius: 10,
-                                                            overflow: "hidden"
-                                                        }}
-                                                    >
+                                                    <View style = {{
+                                                        flexDirection: 'row', 
+                                                        // borderWidth: 2, 
+                                                        // borderColor: 'white',
+                                                        height: 100,
+                                                        marginLeft: 16, 
+                                                        marginRight: 16,
+                                                        backgroundColor: '#1C1C1C',
+                                                        marginBottom: 20,
+                                                        borderRadius: 10,
+                                                        overflow: "hidden"
+                                                    }}>
                                                         <View>
                                                             {
                                                                 item.thumbnail_url != false ?
@@ -426,9 +424,11 @@ class DemoVideos1 extends Component {
                                                                 style = {{
                                                                     // marginTop: 20,
                                                                     // marginRight: 20,
-                                                                    width: 140, 
+                                                                    width: 160, 
                                                                     height: 100, 
                                                                     borderRadius: 10,
+                                                                    // borderTopRightRadius: 0,
+                                                                    // borderBottomRightRadius: 0,
                                                                     marginBottom: 0,
                                                                     overflow: 'hidden',
                                                                     position: 'relative',
@@ -442,9 +442,11 @@ class DemoVideos1 extends Component {
                                                                 style = {{
                                                                     // marginTop: 20,
                                                                     // marginRight: 20,
-                                                                    width: 140, 
+                                                                    width: 160, 
                                                                     height: 100, 
                                                                     borderRadius: 10,
+                                                                    borderTopRightRadius: 0,
+                                                                    borderBottomRightRadius: 0,
                                                                     marginBottom: 0,
                                                                     overflow: 'hidden',
                                                                     position: 'relative',
@@ -455,7 +457,7 @@ class DemoVideos1 extends Component {
                                                             >
                                                             </Image>
                                                             }
-                                                            <Text style = {{color: "#4ACDF4", fontFamily: "Poppins-Bold", fontSize: 11, position: 'absolute', top: 10, left: 150}}>Subject</Text>
+                                                            <Text style = {{color: "#4ACDF4", fontFamily: "Poppins-Bold", fontSize: 11, position: 'absolute', top: 10, left: 170}}>Subject</Text>
                                                             </View>
                                                             <View style = {{
                                                                 flex: 1,
@@ -464,17 +466,17 @@ class DemoVideos1 extends Component {
                                                             }}>
                         
                                                                 <Text 
-                                                                numberOfLines = {1}
+                                                                numberOfLines = {2}
                                                                 style = {{
                                                                     color: 'white',
-                                                                    fontFamily: 'Poppins-SemiBold',
+                                                                    fontFamily: 'Poppins-Bold',
                                                                     paddingLeft: 10,
-                                                                    paddingRight: 20,
+                                                                    paddingRight: 10,
                                                                     marginTop: 30,
                                                                     // borderColor: 'white',
                                                                     // borderWidth: 2,
                                                                     flexShrink: 1,
-                                                                    fontSize: 14,
+                                                                    fontSize: 13,
                                                                     height: 35
                                                                     // paddingTop:10
                                                                 }}>
@@ -482,8 +484,8 @@ class DemoVideos1 extends Component {
                                                                 </Text>
                                                                 <View  
                                                                 style = {{
-                                                                    marginTop: -10, 
-                                                                    flex: 1, 
+                                                                    marginTop: -15, 
+                                                                    // flex: 1, 
                                                                     flexDirection: 'row', 
                                                                     justifyContent: 'space-between',
                                                                     // borderWidth: 1, 
@@ -494,7 +496,7 @@ class DemoVideos1 extends Component {
                                                                     fontFamily: 'Poppins-SemiBold',
                                                                     paddingLeft: 12,
                                                                     paddingRight: 12,
-                                                                    width: 110,
+                                                                    maxWidth: 110,
                                                                     // borderColor: 'white',
                                                                     // borderWidth: 2,
                                                                     flexShrink: 1,
@@ -511,7 +513,7 @@ class DemoVideos1 extends Component {
                                                                     fontFamily: 'Poppins-SemiBold',
                                                                             // borderColor: 'white',
                                                                             // borderWidth: 2,
-                                                                    width: 80,
+                                                                    width: 60,
                                                                     flexShrink: 1,
                                                                     fontSize: 10,
                                                                     alignSelf: "center"
@@ -532,7 +534,7 @@ class DemoVideos1 extends Component {
                                                                         style = {{ 
                                                                             // borderWidth: 1, 
                                                                             // borderColor: 'white', 
-                                                                            width: 70, 
+                                                                            width: 50, 
                                                                             height: 25, 
                                                                             marginRight: 15,
                                                                             // marginTop: 5,
@@ -546,7 +548,7 @@ class DemoVideos1 extends Component {
                                                                             textAlign: 'center', 
                                                                             alignItems: 'center',
                                                                             alignSelf: 'center', 
-                                                                            fontSize: 12, 
+                                                                            fontSize: Platform.OS == "android" ? 10 : 11, 
                                                                             fontFamily: 'Poppins-Bold', 
                                                                             color: "white"
                                                                         }}>Attend</Text>
@@ -596,7 +598,7 @@ class DemoVideos1 extends Component {
                     })
                 }
                 </View>
-                <View style = {{height: Platform.OS == "android" ? 40: -0}}></View>
+                <View style = {{height: Platform.OS == "android" ? 80: 50}}></View>
                                
             </ScrollView>
         ) 

@@ -449,11 +449,16 @@ class RealSchedule1 extends Component {
                                                     time = time.toString();
                                                     let timeh = time.split(".")[0];
                                                     let timem = time.split(".")[1];
-                                                    timem = "0."+timem;
-                                                    console.log(timem);
-                                                    timem = timem*60;
-                                                    timem = Math.round(timem);
-                                                    timem = timem.toString();
+                                                    if(timem == undefined) {
+                                                        timem = "00";
+                                                    } else {
+                                                        timem = "0."+timem;
+                                                        console.log(timem);
+                                                        timem = timem*60; 
+                                                        timem = Math.round(timem);
+                                                        timem = timem.toString();
+                                                    }
+                                                   
                                                     return (
                                                     <View style = {{
                                                         flexDirection: 'row', 
@@ -464,7 +469,8 @@ class RealSchedule1 extends Component {
                                                         marginRight: 10,
                                                         backgroundColor: '#1C1C1C',
                                                         marginBottom: 20,
-                                                        borderRadius: 10
+                                                        borderRadius: 10,
+                                                        overflow: "hidden",
                                                     }}>
                                                         <View>
                                                             {
@@ -473,7 +479,7 @@ class RealSchedule1 extends Component {
                                                                     style = {{
                                                                         // marginTop: 20,
                                                                         // marginRight: 20,
-                                                                        width: 140, 
+                                                                        width: 160, 
                                                                         height: 100, 
                                                                         borderRadius: 10,
                                                                         marginBottom: 0,
@@ -490,7 +496,7 @@ class RealSchedule1 extends Component {
                                                                     style = {{
                                                                         // marginTop: 20,
                                                                         // marginRight: 20,
-                                                                        width: 140, 
+                                                                        width: 160, 
                                                                         height: 100, 
                                                                         borderRadius: 10,
                                                                         marginBottom: 0,
@@ -503,7 +509,7 @@ class RealSchedule1 extends Component {
                                                                 >
                                                                 </Image>
                                                             }
-                                                            <Text style = {{color: "#4ACDF4", fontFamily: "Poppins-Bold", fontSize: 13, position: 'absolute', top: 10, left: 150}}>Subject</Text>
+                                                            <Text style = {{color: "#4ACDF4", fontFamily: "Poppins-Bold", fontSize: Platform.OS == "android" ? 10.5 : 12, position: 'absolute', top: 10, left: 170}}>Subject</Text>
                                                             </View>
                                                             <View style = {{
                                                                 flex: 1,
@@ -515,12 +521,12 @@ class RealSchedule1 extends Component {
                                                                     color: 'white',
                                                                     fontFamily: 'Poppins-Bold',
                                                                     paddingLeft: 15,
-                                                                    paddingRight: 50,
+                                                                    paddingRight: 20,
                                                                     marginTop: 30,
                                                                     // borderColor: 'white',
                                                                     // borderWidth: 2,
                                                                     flexShrink: 1,
-                                                                    fontSize: 15,
+                                                                    fontSize: Platform.OS == "android" ? 11.5 : 13,
                                                                     height: 40
                                                                     // paddingTop:10
                                                                 }}>
@@ -531,11 +537,11 @@ class RealSchedule1 extends Component {
                                                                     color: 'gray',
                                                                     fontFamily: 'Poppins-SemiBold',
                                                                     marginLeft: 12,
-                                                                    maxWidth: 125,
+                                                                    maxWidth: 60,
                                                                     // borderColor: 'white',
                                                                     // borderWidth: 2,
                                                                     flexShrink: 1,
-                                                                    fontSize: 10,
+                                                                    fontSize: Platform.OS == "android" ? 8 : 10,
                                                                     marginTop: 10
                                                                     // paddingTop: 29
                                                                 }}>
@@ -547,9 +553,10 @@ class RealSchedule1 extends Component {
                                                                     fontFamily: 'Poppins-SemiBold',
                                                                     // borderColor: 'white',
                                                                     // borderWidth: 2,
-                                                                    maxWidth: 60,
+                                                                    width: 50,
                                                                     flexShrink: 1,
-                                                                    fontSize: 10,
+                                                                    textAlign: "center",
+                                                                    fontSize: Platform.OS == "android" ? 8 : 10,
                                                                     marginTop: 10
                                                                     // paddingTop: 29
                                                                 }}>
@@ -566,7 +573,7 @@ class RealSchedule1 extends Component {
                                                                         style = {{ 
                                                                             // borderWidth: 1, 
                                                                             // borderColor: 'white', 
-                                                                            width: 60, 
+                                                                            width: 50, 
                                                                             height: 25, 
                                                                             marginRight: 15,
                                                                             marginTop: 5,
@@ -579,7 +586,7 @@ class RealSchedule1 extends Component {
                                                                             textAlign: 'center', 
                                                                             alignItems: 'center',
                                                                             alignSelf: 'center', 
-                                                                            fontSize: Platform.OS == "android" ? 11 : 12, 
+                                                                            fontSize: Platform.OS == "android" ? 10 : 11,  
                                                                             fontFamily: 'Poppins-Bold', 
                                                                             color: "white"
                                                                         }}>Attend</Text>
@@ -620,11 +627,15 @@ class RealSchedule1 extends Component {
                                                     time = time.toString();
                                                     let timeh = time.split(".")[0];
                                                     let timem = time.split(".")[1];
-                                                    timem = "0."+timem;
-                                                    console.log(timem);
-                                                    timem = timem*60;
-                                                    timem = Math.round(timem);
-                                                    timem = timem.toString();
+                                                    if(timem == undefined) {
+                                                        timem = "00";
+                                                    } else {
+                                                        timem = "0."+timem;
+                                                        console.log(timem);
+                                                        timem = timem*60; 
+                                                        timem = Math.round(timem);
+                                                        timem = timem.toString();
+                                                    }
                                                     return (
                                                     <View style = {{
                                                         flexDirection: 'row', 
@@ -635,16 +646,17 @@ class RealSchedule1 extends Component {
                                                         marginRight: 10,
                                                         backgroundColor: '#1C1C1C',
                                                         marginBottom: 20,
-                                                        borderRadius: 10
+                                                        borderRadius: 10,
+                                                        overflow: "hidden"
                                                     }}>
                                                         <View>
-                                                            {
+                                                        {
                                                                 item.thumbnail_url != false ?
                                                                 <Image
                                                                     style = {{
                                                                         // marginTop: 20,
                                                                         // marginRight: 20,
-                                                                        width: 140, 
+                                                                        width: 160, 
                                                                         height: 100, 
                                                                         borderRadius: 10,
                                                                         marginBottom: 0,
@@ -661,7 +673,7 @@ class RealSchedule1 extends Component {
                                                                     style = {{
                                                                         // marginTop: 20,
                                                                         // marginRight: 20,
-                                                                        width: 140, 
+                                                                        width: 160, 
                                                                         height: 100, 
                                                                         borderRadius: 10,
                                                                         marginBottom: 0,
@@ -674,7 +686,7 @@ class RealSchedule1 extends Component {
                                                                 >
                                                                 </Image>
                                                             }
-                                                            <Text style = {{color: "#4ACDF4", fontFamily: "Poppins-Bold", fontSize: 13, position: 'absolute', top: 10, left: 150}}>Subject</Text>
+                                                            <Text style = {{color: "#4ACDF4", fontFamily: "Poppins-Bold", fontSize: Platform.OS == "android" ? 10.5 : 12, position: 'absolute', top: 10, left: 170}}>Subject</Text>
                                                             </View>
                                                             <View style = {{
                                                                 flex: 1,
@@ -686,12 +698,12 @@ class RealSchedule1 extends Component {
                                                                     color: 'white',
                                                                     fontFamily: 'Poppins-Bold',
                                                                     paddingLeft: 15,
-                                                                    paddingRight: 50,
+                                                                    paddingRight: 20,
                                                                     marginTop: 30,
                                                                     // borderColor: 'white',
                                                                     // borderWidth: 2,
                                                                     flexShrink: 1,
-                                                                    fontSize: 15,
+                                                                    fontSize: Platform.OS == "android" ? 11.5 : 13,
                                                                     height: 40
                                                                     // paddingTop:10
                                                                 }}>
@@ -702,11 +714,11 @@ class RealSchedule1 extends Component {
                                                                     color: 'gray',
                                                                     fontFamily: 'Poppins-SemiBold',
                                                                     marginLeft: 12,
-                                                                    maxWidth: 125,
+                                                                    maxWidth: 60,
                                                                     // borderColor: 'white',
                                                                     // borderWidth: 2,
                                                                     flexShrink: 1,
-                                                                    fontSize: 10,
+                                                                    fontSize: Platform.OS == "android" ? 8 : 10,
                                                                     marginTop: 10
                                                                     // paddingTop: 29
                                                                 }}>
@@ -718,9 +730,10 @@ class RealSchedule1 extends Component {
                                                                     fontFamily: 'Poppins-SemiBold',
                                                                     // borderColor: 'white',
                                                                     // borderWidth: 2,
-                                                                    maxWidth: 60,
+                                                                    width: 50,
                                                                     flexShrink: 1,
-                                                                    fontSize: 10,
+                                                                    textAlign: "center",
+                                                                    fontSize: Platform.OS == "android" ? 8 : 10,
                                                                     marginTop: 10
                                                                     // paddingTop: 29
                                                                 }}>
@@ -737,7 +750,7 @@ class RealSchedule1 extends Component {
                                                                         style = {{ 
                                                                             // borderWidth: 1, 
                                                                             // borderColor: 'white', 
-                                                                            width: 60, 
+                                                                            width: 50, 
                                                                             height: 25, 
                                                                             marginRight: 15,
                                                                             marginTop: 5,
@@ -750,7 +763,7 @@ class RealSchedule1 extends Component {
                                                                             textAlign: 'center', 
                                                                             alignItems: 'center',
                                                                             alignSelf: 'center', 
-                                                                            fontSize: Platform.OS == "android" ? 11 : 12,  
+                                                                            fontSize: Platform.OS == "android" ? 10 : 11,  
                                                                             fontFamily: 'Poppins-Bold', 
                                                                             color: "white"
                                                                         }}>Attend</Text>
@@ -788,11 +801,15 @@ class RealSchedule1 extends Component {
                                                     time = time.toString();
                                                     let timeh = time.split(".")[0];
                                                     let timem = time.split(".")[1];
-                                                    timem = "0."+timem;
-                                                    console.log(timem);
-                                                    timem = timem*60;
-                                                    timem = Math.round(timem);
-                                                    timem = timem.toString();
+                                                    if(timem == undefined) {
+                                                        timem = "00";
+                                                    } else {
+                                                        timem = "0."+timem;
+                                                        console.log(timem);
+                                                        timem = timem*60; 
+                                                        timem = Math.round(timem);
+                                                        timem = timem.toString();
+                                                    }
                                                     return (
                                                     <View style = {{
                                                         flexDirection: 'row', 
@@ -803,16 +820,17 @@ class RealSchedule1 extends Component {
                                                         marginRight: 10,
                                                         backgroundColor: '#1C1C1C',
                                                         marginBottom: 20,
-                                                        borderRadius: 10
+                                                        borderRadius: 10,
+                                                        overflow: "hidden"
                                                     }}>
                                                         <View>
-                                                            {
+                                                        {
                                                                 item.thumbnail_url != false ?
                                                                 <Image
                                                                     style = {{
                                                                         // marginTop: 20,
                                                                         // marginRight: 20,
-                                                                        width: 140, 
+                                                                        width: 160, 
                                                                         height: 100, 
                                                                         borderRadius: 10,
                                                                         marginBottom: 0,
@@ -829,7 +847,7 @@ class RealSchedule1 extends Component {
                                                                     style = {{
                                                                         // marginTop: 20,
                                                                         // marginRight: 20,
-                                                                        width: 140, 
+                                                                        width: 160, 
                                                                         height: 100, 
                                                                         borderRadius: 10,
                                                                         marginBottom: 0,
@@ -842,7 +860,7 @@ class RealSchedule1 extends Component {
                                                                 >
                                                                 </Image>
                                                             }
-                                                            <Text style = {{color: "#4ACDF4", fontFamily: "Poppins-Bold", fontSize: 13, position: 'absolute', top: 10, left: 150}}>Subject</Text>
+                                                            <Text style = {{color: "#4ACDF4", fontFamily: "Poppins-Bold", fontSize: Platform.OS == "android" ? 10.5 : 12, position: 'absolute', top: 10, left: 170}}>Subject</Text>
                                                             </View>
                                                             <View style = {{
                                                                 flex: 1,
@@ -854,12 +872,12 @@ class RealSchedule1 extends Component {
                                                                     color: 'white',
                                                                     fontFamily: 'Poppins-Bold',
                                                                     paddingLeft: 15,
-                                                                    paddingRight: 50,
+                                                                    paddingRight: 20,
                                                                     marginTop: 30,
                                                                     // borderColor: 'white',
                                                                     // borderWidth: 2,
                                                                     flexShrink: 1,
-                                                                    fontSize: 15,
+                                                                    fontSize: Platform.OS == "android" ? 11.5 : 13,
                                                                     height: 40
                                                                     // paddingTop:10
                                                                 }}>
@@ -870,11 +888,11 @@ class RealSchedule1 extends Component {
                                                                     color: 'gray',
                                                                     fontFamily: 'Poppins-SemiBold',
                                                                     marginLeft: 12,
-                                                                    maxWidth: 125,
+                                                                    maxWidth: 60,
                                                                     // borderColor: 'white',
                                                                     // borderWidth: 2,
                                                                     flexShrink: 1,
-                                                                    fontSize: 10,
+                                                                    fontSize: Platform.OS == "android" ? 8 : 10,
                                                                     marginTop: 10
                                                                     // paddingTop: 29
                                                                 }}>
@@ -886,9 +904,10 @@ class RealSchedule1 extends Component {
                                                                     fontFamily: 'Poppins-SemiBold',
                                                                     // borderColor: 'white',
                                                                     // borderWidth: 2,
-                                                                    maxWidth: 60,
+                                                                    width: 50,
                                                                     flexShrink: 1,
-                                                                    fontSize: 10,
+                                                                    textAlign: "center",
+                                                                    fontSize: Platform.OS == "android" ? 8 : 10,
                                                                     marginTop: 10
                                                                     // paddingTop: 29
                                                                 }}>
@@ -905,7 +924,7 @@ class RealSchedule1 extends Component {
                                                                         style = {{ 
                                                                             // borderWidth: 1, 
                                                                             // borderColor: 'white', 
-                                                                            width: 60, 
+                                                                            width: 50, 
                                                                             height: 25, 
                                                                             marginRight: 15,
                                                                             marginTop: 5,
@@ -918,7 +937,7 @@ class RealSchedule1 extends Component {
                                                                             textAlign: 'center', 
                                                                             alignItems: 'center',
                                                                             alignSelf: 'center', 
-                                                                            fontSize: Platform.OS == "android" ? 11 : 12, 
+                                                                            fontSize: Platform.OS == "android" ? 10 : 11,  
                                                                             fontFamily: 'Poppins-Bold', 
                                                                             color: "white"
                                                                         }}>Attend</Text>
@@ -955,11 +974,15 @@ class RealSchedule1 extends Component {
                                                     time = time.toString();
                                                     let timeh = time.split(".")[0];
                                                     let timem = time.split(".")[1];
-                                                    timem = "0."+timem;
-                                                    console.log(timem);
-                                                    timem = timem*60;
-                                                    timem = Math.round(timem);
-                                                    timem = timem.toString();
+                                                    if(timem == undefined) {
+                                                        timem = "00";
+                                                    } else {
+                                                        timem = "0."+timem;
+                                                        console.log(timem);
+                                                        timem = timem*60; 
+                                                        timem = Math.round(timem);
+                                                        timem = timem.toString();
+                                                    }
                                                     return (
                                                     <View style = {{
                                                         flexDirection: 'row', 
@@ -970,16 +993,17 @@ class RealSchedule1 extends Component {
                                                         marginRight: 10,
                                                         backgroundColor: '#1C1C1C',
                                                         marginBottom: 20,
-                                                        borderRadius: 10
+                                                        borderRadius: 10,
+                                                        overflow: "hidden"
                                                     }}>
                                                         <View>
-                                                            {
+                                                        {
                                                                 item.thumbnail_url != false ?
                                                                 <Image
                                                                     style = {{
                                                                         // marginTop: 20,
                                                                         // marginRight: 20,
-                                                                        width: 140, 
+                                                                        width: 160, 
                                                                         height: 100, 
                                                                         borderRadius: 10,
                                                                         marginBottom: 0,
@@ -996,7 +1020,7 @@ class RealSchedule1 extends Component {
                                                                     style = {{
                                                                         // marginTop: 20,
                                                                         // marginRight: 20,
-                                                                        width: 140, 
+                                                                        width: 160, 
                                                                         height: 100, 
                                                                         borderRadius: 10,
                                                                         marginBottom: 0,
@@ -1009,7 +1033,7 @@ class RealSchedule1 extends Component {
                                                                 >
                                                                 </Image>
                                                             }
-                                                            <Text style = {{color: "#4ACDF4", fontFamily: "Poppins-Bold", fontSize: 13, position: 'absolute', top: 10, left: 150}}>Subject</Text>
+                                                            <Text style = {{color: "#4ACDF4", fontFamily: "Poppins-Bold", fontSize: Platform.OS == "android" ? 10.5 : 12, position: 'absolute', top: 10, left: 170}}>Subject</Text>
                                                             </View>
                                                             <View style = {{
                                                                 flex: 1,
@@ -1021,12 +1045,12 @@ class RealSchedule1 extends Component {
                                                                     color: 'white',
                                                                     fontFamily: 'Poppins-Bold',
                                                                     paddingLeft: 15,
-                                                                    paddingRight: 50,
+                                                                    paddingRight: 20,
                                                                     marginTop: 30,
                                                                     // borderColor: 'white',
                                                                     // borderWidth: 2,
                                                                     flexShrink: 1,
-                                                                    fontSize: 15,
+                                                                    fontSize: Platform.OS == "android" ? 11.5 : 13,
                                                                     height: 40
                                                                     // paddingTop:10
                                                                 }}>
@@ -1037,11 +1061,11 @@ class RealSchedule1 extends Component {
                                                                     color: 'gray',
                                                                     fontFamily: 'Poppins-SemiBold',
                                                                     marginLeft: 12,
-                                                                    maxWidth: 125,
+                                                                    maxWidth: 60,
                                                                     // borderColor: 'white',
                                                                     // borderWidth: 2,
                                                                     flexShrink: 1,
-                                                                    fontSize: 10,
+                                                                    fontSize: Platform.OS == "android" ? 8 : 10,
                                                                     marginTop: 10
                                                                     // paddingTop: 29
                                                                 }}>
@@ -1053,9 +1077,10 @@ class RealSchedule1 extends Component {
                                                                     fontFamily: 'Poppins-SemiBold',
                                                                     // borderColor: 'white',
                                                                     // borderWidth: 2,
-                                                                    maxWidth: 60,
+                                                                    width: 50,
                                                                     flexShrink: 1,
-                                                                    fontSize: 10,
+                                                                    textAlign: "center",
+                                                                    fontSize: Platform.OS == "android" ? 8 : 10,
                                                                     marginTop: 10
                                                                     // paddingTop: 29
                                                                 }}>
@@ -1072,7 +1097,7 @@ class RealSchedule1 extends Component {
                                                                         style = {{ 
                                                                             // borderWidth: 1, 
                                                                             // borderColor: 'white', 
-                                                                            width: 60, 
+                                                                            width: 50, 
                                                                             height: 25, 
                                                                             marginRight: 15,
                                                                             marginTop: 5,
@@ -1085,7 +1110,7 @@ class RealSchedule1 extends Component {
                                                                             textAlign: 'center', 
                                                                             alignItems: 'center',
                                                                             alignSelf: 'center', 
-                                                                            fontSize: Platform.OS == "android" ? 11 : 12,  
+                                                                            fontSize: Platform.OS == "android" ? 10 : 11,  
                                                                             fontFamily: 'Poppins-Bold', 
                                                                             color: "white"
                                                                         }}>Attend</Text>
@@ -1122,11 +1147,15 @@ class RealSchedule1 extends Component {
                                                     time = time.toString();
                                                     let timeh = time.split(".")[0];
                                                     let timem = time.split(".")[1];
-                                                    timem = "0."+timem;
-                                                    console.log(timem);
-                                                    timem = timem*60;
-                                                    timem = Math.round(timem);
-                                                    timem = timem.toString();
+                                                    if(timem == undefined) {
+                                                        timem = "00";
+                                                    } else {
+                                                        timem = "0."+timem;
+                                                        console.log(timem);
+                                                        timem = timem*60; 
+                                                        timem = Math.round(timem);
+                                                        timem = timem.toString();
+                                                    }
                                                     return (
                                                     <View style = {{
                                                         flexDirection: 'row', 
@@ -1137,16 +1166,17 @@ class RealSchedule1 extends Component {
                                                         marginRight: 10,
                                                         backgroundColor: '#1C1C1C',
                                                         marginBottom: 20,
-                                                        borderRadius: 10
+                                                        borderRadius: 10,
+                                                        overflow: "hidden"
                                                     }}>
                                                         <View>
-                                                            {
+                                                        {
                                                                 item.thumbnail_url != false ?
                                                                 <Image
                                                                     style = {{
                                                                         // marginTop: 20,
                                                                         // marginRight: 20,
-                                                                        width: 140, 
+                                                                        width: 160, 
                                                                         height: 100, 
                                                                         borderRadius: 10,
                                                                         marginBottom: 0,
@@ -1163,7 +1193,7 @@ class RealSchedule1 extends Component {
                                                                     style = {{
                                                                         // marginTop: 20,
                                                                         // marginRight: 20,
-                                                                        width: 140, 
+                                                                        width: 160, 
                                                                         height: 100, 
                                                                         borderRadius: 10,
                                                                         marginBottom: 0,
@@ -1176,7 +1206,7 @@ class RealSchedule1 extends Component {
                                                                 >
                                                                 </Image>
                                                             }
-                                                            <Text style = {{color: "#4ACDF4", fontFamily: "Poppins-Bold", fontSize: 13, position: 'absolute', top: 10, left: 150}}>Subject</Text>
+                                                            <Text style = {{color: "#4ACDF4", fontFamily: "Poppins-Bold", fontSize: Platform.OS == "android" ? 10.5 : 12, position: 'absolute', top: 10, left: 170}}>Subject</Text>
                                                             </View>
                                                             <View style = {{
                                                                 flex: 1,
@@ -1188,12 +1218,12 @@ class RealSchedule1 extends Component {
                                                                     color: 'white',
                                                                     fontFamily: 'Poppins-Bold',
                                                                     paddingLeft: 15,
-                                                                    paddingRight: 50,
+                                                                    paddingRight: 20,
                                                                     marginTop: 30,
                                                                     // borderColor: 'white',
                                                                     // borderWidth: 2,
                                                                     flexShrink: 1,
-                                                                    fontSize: 15,
+                                                                    fontSize: Platform.OS == "android" ? 11.5 : 13,
                                                                     height: 40
                                                                     // paddingTop:10
                                                                 }}>
@@ -1204,11 +1234,11 @@ class RealSchedule1 extends Component {
                                                                     color: 'gray',
                                                                     fontFamily: 'Poppins-SemiBold',
                                                                     marginLeft: 12,
-                                                                    maxWidth: 125,
+                                                                    maxWidth: 60,
                                                                     // borderColor: 'white',
                                                                     // borderWidth: 2,
                                                                     flexShrink: 1,
-                                                                    fontSize: 10,
+                                                                    fontSize: Platform.OS == "android" ? 8 : 10,
                                                                     marginTop: 10
                                                                     // paddingTop: 29
                                                                 }}>
@@ -1220,9 +1250,10 @@ class RealSchedule1 extends Component {
                                                                     fontFamily: 'Poppins-SemiBold',
                                                                     // borderColor: 'white',
                                                                     // borderWidth: 2,
-                                                                    maxWidth: 60,
+                                                                    width: 50,
                                                                     flexShrink: 1,
-                                                                    fontSize: 10,
+                                                                    textAlign: "center",
+                                                                    fontSize: Platform.OS == "android" ? 8 : 10,
                                                                     marginTop: 10
                                                                     // paddingTop: 29
                                                                 }}>
@@ -1239,7 +1270,7 @@ class RealSchedule1 extends Component {
                                                                         style = {{ 
                                                                             // borderWidth: 1, 
                                                                             // borderColor: 'white', 
-                                                                            width: 60, 
+                                                                            width: 50, 
                                                                             height: 25, 
                                                                             marginRight: 15,
                                                                             marginTop: 5,
@@ -1252,7 +1283,7 @@ class RealSchedule1 extends Component {
                                                                             textAlign: 'center', 
                                                                             alignItems: 'center',
                                                                             alignSelf: 'center', 
-                                                                            fontSize: Platform.OS == "android" ? 11 : 12, 
+                                                                            fontSize: Platform.OS == "android" ? 10 : 11,  
                                                                             fontFamily: 'Poppins-Bold', 
                                                                             color: "white"
                                                                         }}>Attend</Text>
@@ -1289,11 +1320,15 @@ class RealSchedule1 extends Component {
                                                     time = time.toString();
                                                     let timeh = time.split(".")[0];
                                                     let timem = time.split(".")[1];
-                                                    timem = "0."+timem;
-                                                    console.log(timem);
-                                                    timem = timem*60;
-                                                    timem = Math.round(timem);
-                                                    timem = timem.toString();
+                                                    if(timem == undefined) {
+                                                        timem = "00";
+                                                    } else {
+                                                        timem = "0."+timem;
+                                                        console.log(timem);
+                                                        timem = timem*60; 
+                                                        timem = Math.round(timem);
+                                                        timem = timem.toString();
+                                                    }
                                                     return (
                                                     <View style = {{
                                                         flexDirection: 'row', 
@@ -1304,16 +1339,17 @@ class RealSchedule1 extends Component {
                                                         marginRight: 10,
                                                         backgroundColor: '#1C1C1C',
                                                         marginBottom: 20,
-                                                        borderRadius: 10
+                                                        borderRadius: 10,
+                                                        overflow: "hidden"
                                                     }}>
                                                         <View>
-                                                            {
+                                                        {
                                                                 item.thumbnail_url != false ?
                                                                 <Image
                                                                     style = {{
                                                                         // marginTop: 20,
                                                                         // marginRight: 20,
-                                                                        width: 140, 
+                                                                        width: 160, 
                                                                         height: 100, 
                                                                         borderRadius: 10,
                                                                         marginBottom: 0,
@@ -1330,7 +1366,7 @@ class RealSchedule1 extends Component {
                                                                     style = {{
                                                                         // marginTop: 20,
                                                                         // marginRight: 20,
-                                                                        width: 140, 
+                                                                        width: 160, 
                                                                         height: 100, 
                                                                         borderRadius: 10,
                                                                         marginBottom: 0,
@@ -1343,7 +1379,7 @@ class RealSchedule1 extends Component {
                                                                 >
                                                                 </Image>
                                                             }
-                                                            <Text style = {{color: "#4ACDF4", fontFamily: "Poppins-Bold", fontSize: 13, position: 'absolute', top: 10, left: 150}}>Subject</Text>
+                                                            <Text style = {{color: "#4ACDF4", fontFamily: "Poppins-Bold", fontSize: Platform.OS == "android" ? 10.5 : 12, position: 'absolute', top: 10, left: 170}}>Subject</Text>
                                                             </View>
                                                             <View style = {{
                                                                 flex: 1,
@@ -1355,12 +1391,12 @@ class RealSchedule1 extends Component {
                                                                     color: 'white',
                                                                     fontFamily: 'Poppins-Bold',
                                                                     paddingLeft: 15,
-                                                                    paddingRight: 50,
+                                                                    paddingRight: 20,
                                                                     marginTop: 30,
                                                                     // borderColor: 'white',
                                                                     // borderWidth: 2,
                                                                     flexShrink: 1,
-                                                                    fontSize: 15,
+                                                                    fontSize: Platform.OS == "android" ? 11.5 : 13,
                                                                     height: 40
                                                                     // paddingTop:10
                                                                 }}>
@@ -1371,11 +1407,11 @@ class RealSchedule1 extends Component {
                                                                     color: 'gray',
                                                                     fontFamily: 'Poppins-SemiBold',
                                                                     marginLeft: 12,
-                                                                    maxWidth: 125,
+                                                                    maxWidth: 60,
                                                                     // borderColor: 'white',
                                                                     // borderWidth: 2,
                                                                     flexShrink: 1,
-                                                                    fontSize: 10,
+                                                                    fontSize: Platform.OS == "android" ? 8 : 10,
                                                                     marginTop: 10
                                                                     // paddingTop: 29
                                                                 }}>
@@ -1387,9 +1423,10 @@ class RealSchedule1 extends Component {
                                                                     fontFamily: 'Poppins-SemiBold',
                                                                     // borderColor: 'white',
                                                                     // borderWidth: 2,
-                                                                    maxWidth: 60,
+                                                                    width: 50,
                                                                     flexShrink: 1,
-                                                                    fontSize: 10,
+                                                                    textAlign: "center",
+                                                                    fontSize: Platform.OS == "android" ? 8 : 10,
                                                                     marginTop: 10
                                                                     // paddingTop: 29
                                                                 }}>
@@ -1406,7 +1443,7 @@ class RealSchedule1 extends Component {
                                                                         style = {{ 
                                                                             // borderWidth: 1, 
                                                                             // borderColor: 'white', 
-                                                                            width: 60, 
+                                                                            width: 50, 
                                                                             height: 25, 
                                                                             marginRight: 15,
                                                                             marginTop: 5,
@@ -1419,7 +1456,7 @@ class RealSchedule1 extends Component {
                                                                             textAlign: 'center', 
                                                                             alignItems: 'center',
                                                                             alignSelf: 'center', 
-                                                                            fontSize: Platform.OS == "android" ? 11 : 12,  
+                                                                            fontSize: Platform.OS == "android" ? 10 : 11,  
                                                                             fontFamily: 'Poppins-Bold', 
                                                                             color: "white"
                                                                         }}>Attend</Text>
@@ -1457,11 +1494,15 @@ class RealSchedule1 extends Component {
                                                     time = time.toString();
                                                     let timeh = time.split(".")[0];
                                                     let timem = time.split(".")[1];
-                                                    timem = "0."+timem;
-                                                    console.log(timem);
-                                                    timem = timem*60;
-                                                    timem = Math.round(timem);
-                                                    timem = timem.toString();
+                                                    if(timem == undefined) {
+                                                        timem = "00";
+                                                    } else {
+                                                        timem = "0."+timem;
+                                                        console.log(timem);
+                                                        timem = timem*60; 
+                                                        timem = Math.round(timem);
+                                                        timem = timem.toString();
+                                                    }
                                                     return (
                                                     <View style = {{
                                                         flexDirection: 'row', 
@@ -1472,16 +1513,17 @@ class RealSchedule1 extends Component {
                                                         marginRight: 10,
                                                         backgroundColor: '#1C1C1C',
                                                         marginBottom: 20,
-                                                        borderRadius: 10
+                                                        borderRadius: 10,
+                                                        overflow: "hidden"
                                                     }}>
                                                         <View>
-                                                            {
+                                                        {
                                                                 item.thumbnail_url != false ?
                                                                 <Image
                                                                     style = {{
                                                                         // marginTop: 20,
                                                                         // marginRight: 20,
-                                                                        width: 140, 
+                                                                        width: 160, 
                                                                         height: 100, 
                                                                         borderRadius: 10,
                                                                         marginBottom: 0,
@@ -1498,7 +1540,7 @@ class RealSchedule1 extends Component {
                                                                     style = {{
                                                                         // marginTop: 20,
                                                                         // marginRight: 20,
-                                                                        width: 140, 
+                                                                        width: 160, 
                                                                         height: 100, 
                                                                         borderRadius: 10,
                                                                         marginBottom: 0,
@@ -1511,7 +1553,7 @@ class RealSchedule1 extends Component {
                                                                 >
                                                                 </Image>
                                                             }
-                                                            <Text style = {{color: "#4ACDF4", fontFamily: "Poppins-Bold", fontSize: 13, position: 'absolute', top: 10, left: 150}}>Subject</Text>
+                                                            <Text style = {{color: "#4ACDF4", fontFamily: "Poppins-Bold", fontSize: Platform.OS == "android" ? 10.5 : 12, position: 'absolute', top: 10, left: 170}}>Subject</Text>
                                                             </View>
                                                             <View style = {{
                                                                 flex: 1,
@@ -1523,12 +1565,12 @@ class RealSchedule1 extends Component {
                                                                     color: 'white',
                                                                     fontFamily: 'Poppins-Bold',
                                                                     paddingLeft: 15,
-                                                                    paddingRight: 50,
+                                                                    paddingRight: 20,
                                                                     marginTop: 30,
                                                                     // borderColor: 'white',
                                                                     // borderWidth: 2,
                                                                     flexShrink: 1,
-                                                                    fontSize: 15,
+                                                                    fontSize: Platform.OS == "android" ? 11.5 : 13,
                                                                     height: 40
                                                                     // paddingTop:10
                                                                 }}>
@@ -1539,11 +1581,11 @@ class RealSchedule1 extends Component {
                                                                     color: 'gray',
                                                                     fontFamily: 'Poppins-SemiBold',
                                                                     marginLeft: 12,
-                                                                    maxWidth: 125,
+                                                                    maxWidth: 60,
                                                                     // borderColor: 'white',
                                                                     // borderWidth: 2,
                                                                     flexShrink: 1,
-                                                                    fontSize: 10,
+                                                                    fontSize: Platform.OS == "android" ? 8 : 10,
                                                                     marginTop: 10
                                                                     // paddingTop: 29
                                                                 }}>
@@ -1555,9 +1597,10 @@ class RealSchedule1 extends Component {
                                                                     fontFamily: 'Poppins-SemiBold',
                                                                     // borderColor: 'white',
                                                                     // borderWidth: 2,
-                                                                    maxWidth: 60,
+                                                                    width: 50,
                                                                     flexShrink: 1,
-                                                                    fontSize: 10,
+                                                                    textAlign: "center",
+                                                                    fontSize: Platform.OS == "android" ? 8 : 10,
                                                                     marginTop: 10
                                                                     // paddingTop: 29
                                                                 }}>
@@ -1574,7 +1617,7 @@ class RealSchedule1 extends Component {
                                                                         style = {{ 
                                                                             // borderWidth: 1, 
                                                                             // borderColor: 'white', 
-                                                                            width: 60, 
+                                                                            width: 50, 
                                                                             height: 25, 
                                                                             marginRight: 15,
                                                                             marginTop: 5,
@@ -1587,7 +1630,7 @@ class RealSchedule1 extends Component {
                                                                             textAlign: 'center', 
                                                                             alignItems: 'center',
                                                                             alignSelf: 'center', 
-                                                                            fontSize: Platform.OS == "android" ? 11 : 12, 
+                                                                            fontSize: Platform.OS == "android" ? 10 : 11,  
                                                                             fontFamily: 'Poppins-Bold', 
                                                                             color: "white"
                                                                         }}>Attend</Text>
@@ -1615,7 +1658,7 @@ class RealSchedule1 extends Component {
                 </View>  
                 <View 
                     style = {{
-                        height: 70
+                        height: Platform.OS == "android" ? 110 : 60
                     }}
                 >
                 </View>                 

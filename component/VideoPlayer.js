@@ -117,22 +117,22 @@ class VideoPlayer extends Component {
                         <View style = {{flexDirection: 'row'}}>
                             <Image source = {require('../images/faculty.png')} style = {{width: 28.95, height: 23.16, marginRight: 8}}/>
                             <View>    
-                                <Text style = {{color: "white", fontFamily: "Poppins-Medium", fontSize: 9}}>Faculty</Text> 
-                                <Text style = {{color: "white", fontFamily: "Poppins-Bold", fontSize: 10}}>{this.props.titlePage.teacher_name}</Text> 
+                                <Text style = {{color: "white", fontFamily: "Poppins-SemiBold", fontSize: 9}}>Faculty</Text> 
+                                <Text style = {{color: "white", fontFamily: "Poppins-ExtraBold", fontSize: 10}}>{this.props.titlePage.teacher_name}</Text> 
                             </View>
                         </View>
                         <View style = {{flexDirection: 'row'}}>
                             <Image source = {require('../images/grade.png')} style = {{width: 19.44, height: 22.22, marginRight: 8}}/>
                             <View>
-                                <Text style = {{color: "white", fontFamily: "Poppins-Medium", fontSize: 9}}>Class</Text> 
-                                <Text style = {{color: "white", fontFamily: "Poppins-Bold", fontSize: 10}}>Class {this.props.titlePage.class_data}</Text> 
+                                <Text style = {{color: "white", fontFamily: "Poppins-SemiBold", fontSize: 9}}>Class</Text> 
+                                <Text style = {{color: "white", fontFamily: "Poppins-ExtraBold", fontSize: 10}}>Class {this.props.titlePage.class_data}</Text> 
                             </View>
                         </View>
                         <View style = {{flexDirection: 'row'}}>
                             <Image source = {require('../images/subject.png')} style = {{width: 16.87, height: 24,  marginRight: 8}}/>
                             <View>
-                                <Text style = {{color: "white", fontFamily: "Poppins-Medium", fontSize: 9}}>Subject</Text> 
-                                <Text style = {{color: "white", fontFamily: "Poppins-Bold", fontSize: 10}}>{this.props.titlePage.course}</Text> 
+                                <Text style = {{color: "white", fontFamily: "Poppins-SemiBold", fontSize: 9}}>Subject</Text> 
+                                <Text style = {{color: "white", fontFamily: "Poppins-ExtraBold", fontSize: 10}}>{this.props.titlePage.course}</Text> 
                             </View>
                         </View>
                     </View>  
@@ -147,6 +147,19 @@ class VideoPlayer extends Component {
                         data = {this.props.videos}
                         renderItem = {({item}) => {
                             if(item["id"] !== this.state.currId)
+                            time = item["video_duration"];
+                            time = time.toString();
+                            let timeh = time.split(".")[0];
+                            let timem = time.split(".")[1];
+                            if(timem == undefined) {
+                                timem = "00";
+                            } else {
+                                timem = "0."+timem;
+                                console.log(timem);
+                                timem = timem*60; 
+                                timem = Math.round(timem);
+                                timem = timem.toString();
+                            }
                             return (
                                 <TouchableOpacity onPress = {() => {
                                     Actions.pop();
@@ -163,11 +176,12 @@ class VideoPlayer extends Component {
                                         borderRadius: 10
                                     }}>
                                         <View>
+                                            {
                                             <ImageBackground
                                                 style = {{
                                                     // marginTop: 20,
                                                     // marginRight: 20,
-                                                    width: 150, 
+                                                    width: 160, 
                                                     height: 90, 
                                                     borderRadius: 10,
                                                     marginBottom: 0,
@@ -176,25 +190,31 @@ class VideoPlayer extends Component {
                                                     overflow: 'hidden',
                                                     position: 'relative',
                                                 }}
-                                                source = {{uri: item["thumbnail_url"] === false ? "https://www.bloombraineducation.com/assets/images/youtube_logo/2.jpg" : item["thumbnail_url"]}}
+                                                source = { !new RegExp('^(https?:\\/\\/)?'+ // protocol
+                                                '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ // domain name
+                                                '((\\d{1,3}\\.){3}\\d{1,3}))'+ // OR ip (v4) address
+                                                '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // port and path
+                                                '(\\?[;&a-z\\d%_.~+=-]*)?'+ // query string
+                                                '(\\#[-a-z\\d_]*)?$','i').test(item["thumbnail_url"]) ? require("../images/picks1.jpeg") : {uri: item["thumbnail_url"]}}
                                             >
                                                 <Text 
-                                            style = {{
-                                                color: 'white', 
-                                                backgroundColor: 'black',
-                                                position: 'absolute',
-                                                bottom: 10,
-                                                fontFamily: 'Poppins-Regular',
-                                                fontSize: 10,
-                                                right: 10,
-                                                // borderRadius: 3,
-                                                overflow: 'hidden',
-                                                paddingLeft: 2,
-                                                paddingRight: 2,
-                                        }}>
-                                        {item["video_duration"].toString().split(".")[0]}:{Math.round(("0."+item["video_duration"].toString().split(".")[1])*60).toString()}
-                                        </Text>
+                                                    style = {{
+                                                        color: 'white', 
+                                                        backgroundColor: 'black',
+                                                        position: 'absolute',
+                                                        bottom: 10,
+                                                        fontFamily: 'Poppins-Regular',
+                                                        fontSize: 10,
+                                                        right: 10,
+                                                        // borderRadius: 3,
+                                                        overflow: 'hidden',
+                                                        paddingLeft: 2,
+                                                        paddingRight: 2,
+                                                }}>
+                                                {timeh + ":" + timem}
+                                                </Text>
                                             </ImageBackground>
+                                            }
                                             </View>
                                             <View style = {{
                                                 flexShrink: 1,
@@ -203,19 +223,29 @@ class VideoPlayer extends Component {
                                                 padding:12,
                                             }}>
                                                 <View style = {{height: 55}}>
-                                                    <Text style = {{
-                                                        color: 'white',
-                                                        fontFamily: 'Poppins-SemiBold',
-                                                        paddingRight: 10,
-                                                        // borderColor: 'white',
-                                                        // borderWidth: 2,
-                                                        flexShrink: 1,
-                                                        fontSize: 13,
-                                                        // paddingTop:10
-                                                    }}>
+                                                    <Text 
+                                                        numberOfLines = {2}
+                                                        style = {{
+                                                            color: '#4ACDF4',
+                                                            fontFamily: 'Poppins-Bold',
+                                                            paddingRight: 10,
+                                                            // borderColor: 'white',
+                                                            // borderWidth: 2,
+                                                            flexShrink: 1,
+                                                            fontSize: Platform.OS == "android" ? 13 : 14,
+                                                            // paddingTop:10
+                                                        }}
+                                                    >
                                                         {item["description"] == false ? <Text>Class {item.class_data} {item.course} Video</Text> : item["description"]}
                                                     </Text>
-                                                    <Text style = {{marginTop: 4, color: "white", fontFamily: "Poppins-SemiBold", fontSize: 8}}>
+                                                    <Text 
+                                                        style = {{
+                                                            marginTop: 4, 
+                                                            color: "white", 
+                                                            fontFamily: "Poppins-SemiBold", 
+                                                            fontSize: Platform.OS == "android" ? 9 : 10,
+                                                        }}
+                                                    >
                                                     {item.course}{">"}Class {item.class_data}
                                                 </Text>
                                                 </View>
@@ -226,7 +256,7 @@ class VideoPlayer extends Component {
                                                     // borderColor: 'white',
                                                     // borderWidth: 2,
                                                     flexShrink: 1,
-                                                    fontSize: 10,
+                                                    fontSize: Platform.OS == "android" ? 9 : 10,
                                                     height: 20
                                                     // paddingTop: 29
                                                 }}>

@@ -241,6 +241,7 @@ class Recorded extends Component {
             'academics': 'Academics',
             'extra_curricular': 'Extra-curricular'
         },
+        show: true,
         today: "",
         videoList: [],
         status: 200,
@@ -257,6 +258,7 @@ class Recorded extends Component {
     }
 
     render() {
+        let ind = 0;
         if(this.state.showLoader) {
             return (
                 <View style = {{
@@ -439,11 +441,29 @@ class Recorded extends Component {
                         // )
                         if(this.state.classes[val] !== undefined && this.state.classes[val].length != 0){
                             return (
+
                                 <View style = {{marginTop: 0}}>
                                     {
+                                    
                                     val == this.state.today ? <Text style = {{fontSize: 14, marginLeft: 16, width: 250, marginTop: Platform.OS == 'android' ? 0: 0, color: '#4ACDF4', fontFamily: 'Poppins-Bold'}}>Upcoming</Text> :
                                     val == this.state.tomorrow ? <Text style = {{fontSize: 14, marginLeft: 16, width: 250, marginTop: 0, color: '#4ACDF4', fontFamily: 'Poppins-Bold'}}>Tomorrow</Text> :
                                     <Text style = {{fontSize: 14, color: '#4ACDF4', marginLeft: 16, marginTop: Platform.OS == 'android' ? 0: 0, width: 250, fontFamily: 'Poppins-Bold'}}>{val.toString().split("-").reverse().join("-")}</Text>}
+                                    {
+                                        this.state.classes[val].length > 1 ? 
+                                            <Image 
+                                                source = {require("../images/swipe.gif")}
+                                                style = {{
+                                                    position: "absolute",
+                                                    top: 50,
+                                                    left: Dimensions.get("screen").width - 90,
+                                                    width: 60,
+                                                    height: 60,
+                                                    zIndex: 100,
+                                                }}
+                                            />
+                                        : 
+                                            null
+                                    }
                                     <FlatList 
                                         horizontal = {true}
                                         showsHorizontalScrollIndicator = {false}
@@ -454,12 +474,17 @@ class Recorded extends Component {
                                         data = {this.state.classes[val]}
                                         keyExtractor = {(item) => item.id}
                                         renderItem = {({item}) => {
-                                            
+                                            ind = ind + 1;
+                                            console.log(ind);
                                             if(item.length != 0) {
+                                                console.log(item);
                                                 return (
+                                                    <View>
+                                                        
                                                     <TouchableOpacity 
                                                         style = {{marginTop: 10, marginBottom: 15}}
                                                         onPress = {() => Actions.RecordedVideos({details: item, list: this.state.videoList})}>
+                                                        
                                                         <View style = {{
                                                             flexDirection: 'row', 
                                                             // borderWidth: 2, 
@@ -470,7 +495,7 @@ class Recorded extends Component {
                                                             borderRadius: 10,
                                                             marginRight: 10,
                                                             overflow: "hidden",
-                                                        }}>
+                                                        }}>        
                                                             <View>
                                                                 {
                                                                     item.thumbnail_url == false ?
@@ -509,7 +534,7 @@ class Recorded extends Component {
                                                                 <Text style = {{color: "#4ACDF4", fontFamily: "Poppins-Bold", fontSize: 12, position: 'absolute', top: 10, left: 150}}>{this.state.subjects[item.subject]}</Text>
                                                                 <Text 
                                                                     numberOfLines = {1}
-                                                                    style = {{color: "gray", fontFamily: "Poppins-Bold", fontSize: 12, position: 'absolute', top: 10, left: 260, width: 70,}}>{item.title}</Text>
+                                                                    style = {{color: "gray", fontFamily: "Poppins-Bold", fontSize: 12, position: 'absolute', textAlign: "center", top: 10, left: 260, width: 70,}}>{item.title}</Text>
                                                                 </View>
                                                                 <View style = {{
                                                                     flex: 1,
@@ -561,6 +586,7 @@ class Recorded extends Component {
                                                             </View>
                                                         </View>
                                                     </TouchableOpacity>
+                                                    </View>
                                                 )
                                                 
                                             } else if(item.length == 0) {
@@ -591,6 +617,13 @@ class Recorded extends Component {
                 }
                 </View>
                 </View> 
+                <View
+                    style = {{
+                        height: 30,
+                    }}
+                >
+
+                </View>
             </ScrollView>
         ) 
     }

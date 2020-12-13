@@ -16,11 +16,13 @@ import
         AsyncStorage, 
         Platform,
         ImageBackground,
-        TouchableOpacity
+        TouchableOpacity,
+        LogBox
     } from 'react-native';
 
 import Carousel, {Pagination} from 'react-native-snap-carousel';
 import LinearGradient from 'react-native-linear-gradient';
+import AnimatedLinearGradient, {presetColors} from 'react-native-animated-linear-gradient'
 import {Actions} from 'react-native-router-flux';
 import Modal from 'react-native-modal';
 import Modal500 from './Modal500';
@@ -48,6 +50,7 @@ class Hompage extends Component {
 
     componentDidMount() {
         BackHandler.addEventListener("hardwareBackPress", this.backAction);
+        LogBox.ignoreLogs(['Animated: `useNativeDriver`']);
         AsyncStorage.getItem('id')
         .then((value) => {
             this.setState({id: value})
@@ -247,94 +250,116 @@ class Hompage extends Component {
                     }
                 }
             >
-                <LinearGradient
-                    // Button Linear Gradient
-                    colors={[ item.gradient1, item.gradient2]}
-                    style={{ 
+                <View
+                    style = {{
                         paddingTop: 25, 
                         alignItems: 'center',
                         borderRadius: 5,
                         width: Platform.isPad ? 180 : Platform.OS == "android" ? 170 : Dimensions.get('window').width/2.2,
                         marginLeft: 16,
                         height: Platform.OS == 'android' ? 240 : 190,
-                        borderRadius: 15
-                    }}>
-                    <Image 
-                        source = {item.imageUrl}
-                        style = {{
-                            height: 22,
-                            width: 25
+                        borderRadius: 15,
+                        overflow: "hidden"
+                    }}
+                >
+                    <AnimatedLinearGradient
+                        // Button Linear Gradient
+                        customColors={[ item.gradient1, item.gradient2]}
+                        speed = {1200}
+                        points = {{
+                            start: {x: 1, y: 0.6}, 
+                            end: {x: 0, y: 0.4}
                         }}
-                    />
-                    <Text
-                        style={{
-                            marginTop: 5,
-                            fontFamily: 'Poppins-SemiBold',
-                            fontSize: 15,
-                            color: '#fff',
-                        }}>
-                        {item.title}
-                    </Text>
-                    <Text 
-                    style = {{
-                        paddingLeft: 4,
-                        paddingRight: 4,
-                        textAlign: 'center',
-                        marginTop: 5,
-                        fontFamily: 'Poppins-Regular',
-                        fontSize: Platform.OS == "android" ? 9 : 10,
-                        color: '#fff',
-                    }}>
-                    Get a head start for your school curriculum by our thorough videos.
-                    </Text>
-                    <Text
-                    style = {{
-                        paddingLeft: 4,
-                        paddingRight: 4,
-                        marginTop: 5,
-                        textAlign: 'center',
-                        fontFamily: 'Poppins-Regular',
-                        fontSize: 8,
-                        // alignSelf: "flex-start",
-                        paddingTop: 5,
-                        // paddingLeft: 13,
-                        color: '#fff',
-                    }}>
-                        Total Chapters: 12
-                    </Text>
-                    <Text
-                    style = {{
-                        marginTop: 5,
-                        fontFamily: 'Poppins-Regular',
-                        fontSize: 8,
-                        // alignSelf: "flex-start",
-                        textAlign: 'center',
-                        paddingTop: -2,
-                        // paddingLeft: 13,
-                        color: '#fff',
-                    }}>
-                        Total Videos: 140
-                    </Text>
-                    <Text
-                    style = {{
-                        backgroundColor: item.backgroundColor,
-                        borderColor: 'white',
-                        borderRadius: 10,
-                        paddingTop: 2.5,
-                        width: Platform.OS == "android" ? 90: 80,
-                        height: Platform.OS == "android" ? 24 : 21,
-                        marginTop: 12,
-                        // marginLeft: 13,
-                        textAlign: 'center',
-                        fontFamily: 'Poppins-SemiBold',
-                        fontSize: 11,
-                        alignSelf: "center",
-                        overflow: 'hidden',
-                        color: '#fff',
-                    }}>
-                        Explore Now
-                    </Text>
-                </LinearGradient>
+                    >
+                        <View
+                            style = {{
+                                paddingTop: 25, 
+                                alignItems: 'center',
+                                borderRadius: 5,
+                                overflow: "hidden",
+                                width: Platform.isPad ? 180 : Platform.OS == "android" ? 170 : Dimensions.get('window').width/2.2,
+                                height: Platform.OS == 'android' ? 240 : 190,
+                                borderRadius: 15
+                            }}
+                        >
+                            <Image 
+                                source = {item.imageUrl}
+                                style = {{
+                                    height: 22,
+                                    width: 25
+                                }}
+                            />
+                            <Text
+                                style={{
+                                    marginTop: 5,
+                                    fontFamily: 'Poppins-SemiBold',
+                                    fontSize: 15,
+                                    color: '#fff',
+                                }}>
+                                {item.title}
+                            </Text>
+                            <Text 
+                            style = {{
+                                paddingLeft: 4,
+                                paddingRight: 4,
+                                textAlign: 'center',
+                                marginTop: 5,
+                                fontFamily: 'Poppins-Regular',
+                                fontSize: Platform.OS == "android" ? 9 : 10,
+                                color: '#fff',
+                            }}>
+                            Get a head start for your school curriculum by our thorough videos.
+                            </Text>
+                            <Text
+                            style = {{
+                                paddingLeft: 4,
+                                paddingRight: 4,
+                                marginTop: 5,
+                                textAlign: 'center',
+                                fontFamily: 'Poppins-Regular',
+                                fontSize: 8,
+                                // alignSelf: "flex-start",
+                                paddingTop: 5,
+                                // paddingLeft: 13,
+                                color: '#fff',
+                            }}>
+                                Total Chapters: 12
+                            </Text>
+                            <Text
+                            style = {{
+                                marginTop: 5,
+                                fontFamily: 'Poppins-Regular',
+                                fontSize: 8,
+                                // alignSelf: "flex-start",
+                                textAlign: 'center',
+                                paddingTop: -2,
+                                // paddingLeft: 13,
+                                color: '#fff',
+                            }}>
+                                Total Videos: 140
+                            </Text>
+                            <Text
+                            style = {{
+                                backgroundColor: item.backgroundColor,
+                                borderColor: 'white',
+                                borderRadius: 10,
+                                paddingTop: 2.5,
+                                width: Platform.OS == "android" ? 90: 80,
+                                height: Platform.OS == "android" ? 24 : 21,
+                                marginTop: 12,
+                                // marginLeft: 13,
+                                textAlign: 'center',
+                                fontFamily: 'Poppins-SemiBold',
+                                fontSize: 11,
+                                alignSelf: "center",
+                                overflow: 'hidden',
+                                color: '#fff',
+                            }}>
+                                Explore Now
+                            </Text>
+                        </View>
+                    </AnimatedLinearGradient>
+                </View>
             </TouchableWithoutFeedback>
 
         )
@@ -1406,28 +1431,46 @@ class Hompage extends Component {
                                 </View>
                             </View>
                         </TouchableWithoutFeedback>
-                        {Platform.isPad ? 
-                            <TouchableOpacity
-                                onPress = {() => {Actions.push('Live1')}}>
-                                <LinearGradient
-                            // Button Linear Gradient
-                                    colors={['#1285D1', '#32C1ED', '#6EDEFF']}
-                                    start={[0, 1]} end={[1, 0]}
+
+                        <TouchableOpacity
+                            onPress = {() => {Actions.push('Live1')}}>
+                                <View
                                     style = {{
+                                        width: this.windowWidth-32,
+                                        height: Platform.isPad ? 100 : Platform.OS == "android" ? 80 : 80,
                                         marginTop: Platform.OS == "android" ? 0 : 0,
                                         alignSelf: 'center',
-                                        alignItems: 'center',
-                                        flexDirection: 'row',
-                                        width: this.windowWidth-32,
-                                        borderColor: 'white',
-                                        borderWidth: 1,
-                                        height: Platform.isPad ? 100 : Platform.OS == "android" ? 80 : 80,
+                                        // flexDirection: 'row',
+                                        // borderColor: 'white',
+                                        // borderWidth: 1,
                                         paddingLeft: 20,
                                         borderRadius: 16,
                                         overflow: 'hidden',
-        
-                                        // justifyContent: "center"
-                                    }}>
+                                    }}
+                                >
+                                <AnimatedLinearGradient
+                            // Button Linear Gradient
+                                    customColors={[ '#6EDEFF', '#32C1ED', '#1281DD']}
+                                    // customColors={presetColors.firefox}
+                                    speed={600}
+                                    // start={{x: 0.0, y: 0.25}} 
+                                    // end={{x: 0.5, y: 1.0}}
+                                    points = {{
+                                        start: {x: 1, y: 0.6}, 
+                                        end: {x: 0, y: 0.4}
+                                    }}
+                                >
+                                <View
+                                    style = {{  
+                                        height: Platform.isPad ? 100 : Platform.OS == "android" ? 80 : 80,
+                                        justifyContent: "center",
+                                        alignItems: "center",
+                                        flexDirection: "row",
+                                        paddingLeft: 20,
+                                        // borderWidth: 2,
+                                        // borderColor: "pink"
+                                    }}
+                                >  
                                 <Image 
                                     style = {{
                                         width: Platform.isPad ? 30 : 20,
@@ -1435,120 +1478,51 @@ class Hompage extends Component {
                                     }}
                                     source = {require("../images/wifi.png")} 
                                 />
-                                {/* <TouchableWithoutFeedback 
+                            {/* <TouchableWithoutFeedback 
+                                style = {{
+                                    boderWidth: 2,
+                                    borderColor: 'white'
+                                }}
+                                onPress = {() => {
+                                    this.setState({showModalCong: true})
+                                    console.log(this.state.showModalCong);
+                                }}> */}
+                                <Text
                                     style = {{
-                                        boderWidth: 2,
-                                        borderColor: 'white'
+                                        marginLeft: 8,
+                                        fontFamily: 'Poppins-SemiBold',
+                                        fontSize: Platform.isPad ? 20 : Platform.OS == "android" ? 14 : 16,
+                                        color: 'white'
                                     }}
-                                    onPress = {() => {
-                                        this.setState({showModalCong: true})
-                                        console.log(this.state.showModalCong);
-                                    }}> */}
-                                    <Text
-                                        style = {{
-                                            marginLeft: 8,
-                                            fontFamily: 'Poppins-SemiBold',
-                                            fontSize: Platform.isPad ? 20 : Platform.OS == "android" ? 14 : 16,
-                                            color: 'white'
-                                        }}
-                                    >Your Class is Live Now!</Text>
-                                {/* </TouchableWithoutFeedback> */}
-                                <View
-                                    style = {{
-                                        flex: 1,
-                                        flexDirection: 'row',
-                                        justifyContent: 'flex-end',
-                                        paddingRight: 20,
-                                    }}
-                                >
-                                <Image 
-                                    style = {{
-                                        // flexShrink: 1,
-                                        // flex: 1,
-                                        width: Platform.isPad ? 16 : 12,
-                                        height: Platform.isPad ? 25.66 : 20,
-                                    
-                                        // justifyContent: 'flex-end'
-                                        // borderWidth: 2,
-                                        // borderColor: 'purple',
-                                    }}
-                                    source = {require("../images/arrow.png")} 
-                                />
-                                </View>
-                                </LinearGradient>
-                            </TouchableOpacity>
-                        : 
+                                >Your Class is Live Now!</Text>
+                            {/* </TouchableWithoutFeedback> */}
+                            <View
+                                style = {{
+                                    flex: 1,
+                                    flexDirection: 'row',
+                                    justifyContent: 'flex-end',
+                                    paddingRight: 20,
+                                }}
+                            >
+                            <Image 
+                                style = {{
+                                    // flexShrink: 1,
+                                    // flex: 1,
+                                    width: Platform.isPad ? 16 : 12,
+                                    height: Platform.isPad ? 25.66 : 20,
                                 
-                            <TouchableOpacity style = {{borderRadius: 16}} onPress = {() => {Actions.push('Live1')}}>
-                                <ImageBackground
-                            // Button Linear Gradient
-                                    source = {require("../images/live1.png")}
-                                    style = {{
-                                        marginTop: Platform.OS == "android" ? 10 : 0,
-                                        alignSelf: 'center',
-                                        alignItems: 'center',
-                                        flexDirection: 'row',
-                                        width: Dimensions.get("window").width - 32,
-                                        // borderColor: 'white',
-                                        // borderWidth: 3,
-                                        height: Platform.OS == "android" ? 80 : 80,
-                                        paddingLeft: 20,
-                                        borderRadius: 16,
-                                        overflow: 'hidden',
-                                    }}    
-                                    // resizeMode = {"contain"}
-                                >
-                                <Image 
-                                    style = {{
-                                        width: 20,
-                                        height: 20,
-                                        alignSelf: "center"
-                                    }}
-                                    source = {require("../images/wifi.png")} 
-                                />
-                                {/* <TouchableWithoutFeedback 
-                                    style = {{
-                                        boderWidth: 2,
-                                        borderColor: 'white'
-                                    }}
-                                    onPress = {() => {
-                                        this.setState({showModalCong: true})
-                                        console.log(this.state.showModalCong);
-                                    }}> */}
-                                    <Text
-                                        style = {{
-                                            marginLeft: 8,
-                                            fontFamily: 'Poppins-SemiBold',
-                                            fontSize: Platform.OS == "android" ? 14 : 16,
-                                            color: 'white'
-                                        }}
-                                    >Your Class is Live Now!</Text>
-                                {/* </TouchableWithoutFeedback> */}
-                                <View
-                                    style = {{
-                                        flex: 1,
-                                        flexDirection: 'row',
-                                        justifyContent: 'flex-end',
-                                        paddingRight: 20,
-                                    }}
-                                >
-                                <Image 
-                                    style = {{
-                                        // flexShrink: 1,
-                                        // flex: 1,
-                                        width: 12,
-                                        height: 20,
-                                    
-                                        // justifyContent: 'flex-end'
-                                        // borderWidth: 2,
-                                        // borderColor: 'purple',
-                                    }}
-                                    source = {require("../images/arrow.png")} 
-                                />
-                                </View>
-                                </ImageBackground>
-                            </TouchableOpacity>
-                        }
+                                    // justifyContent: 'flex-end'
+                                    // borderWidth: 2,
+                                    // borderColor: 'purple',
+                                }}
+                                source = {require("../images/arrow.png")} 
+                            />
+                            </View>
+                            </View>
+                        </AnimatedLinearGradient>
+                        </View>
+                        </TouchableOpacity>
+                        
                         <Text
                             style = {{
                                 marginTop: Platform.OS == "android" ? 20 : 15, 
