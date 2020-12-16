@@ -6,6 +6,7 @@ import {Actions} from 'react-native-router-flux';
 import { List } from 'react-native-paper';
 import Modal500 from './Modal500';
 import Modal404 from './Modal404';
+import Fade from 'react-native-fade';
 
 
 moment().format();
@@ -13,44 +14,74 @@ moment().format();
 class RealSchedule1 extends Component {
 
     async componentDidMount() {
-        AsyncStorage.getItem('class')
-        .then((value) => {
-            let url = "http://idirect.bloombraineducation.com/idirect/lms/live/class/schedule?class="+value+"&course="+this.state.courses[this.state.course];
-            console.log(url);
-            fetch(url, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                },
-            })
-            .then((response) => {
-                if(response.ok) {
-                    response.json().then((responseJson) => {
-                        this.setState({showLoader: false})
-                        this.setState({schedules: responseJson[this.state.courses[this.state.course]]})
-                        console.log(this.state.schedules)
-                    })
-                } else {
-                    if(response.status == 500) {
-                        this.setState({showLoader: false})
-                        this.setState({status: 500});
-                        console.log("500");
-                    }
-                    if(response.status == 404) {
-                        this.setState({showLoader: false})
-                        this.setState({status: 404});
-                        console.log("404");
-                    }
-                }
-            })
-            
-            .catch((error) => {
-                this.setState({login: false})
-                console.error(error);
-            });
+        let url = "http://idirect.bloombraineducation.com/idirect/lms/live/class/schedule/courses"; 
+        console.log(url);
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
         })
-        .catch((error) => {
-            console.log(error);
+        .then((response) => {
+            if(response.ok) {
+                response.json().then((responseJson) => {
+                    this.setState({showLoader: false})
+                    this.setState({courses: responseJson["courses"]});
+                    this.setState({course: responseJson["courses"][0]})
+                    console.log(responseJson["courses"][0]);
+                    console.log(responseJson)
+                    AsyncStorage.getItem('class')
+                    .then((value) => {
+                        let url = "http://idirect.bloombraineducation.com/idirect/lms/live/class/schedule?class="+value+"&course="+this.state.course;
+                        console.log(url);
+                        fetch(url, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'multipart/form-data',
+                            },
+                        })
+                        .then((response) => {
+                            if(response.ok) {
+                                response.json().then((responseJson) => {
+                                    this.setState({showLoader: false})
+                                    this.setState({schedules: responseJson[this.state.course]})
+                                    console.log(this.state.schedules)
+                                })
+                            } else {
+                                if(response.status == 500) {
+                                    this.setState({showLoader: false})
+                                    this.setState({status: 500});
+                                    console.log("500");
+                                }
+                                if(response.status == 404) {
+                                    this.setState({showLoader: false})
+                                    this.setState({status: 404});
+                                    console.log("404");
+                                }
+                            }
+                        })
+                        .catch((error) => {
+                            this.setState({login: false})
+                            console.error(error);
+                        });
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    })
+
+                })
+            } else {
+                if(response.status == 500) {
+                    this.setState({showLoader: false})
+                    this.setState({status: 500});
+                    console.log("500");
+                }
+                if(response.status == 404) {
+                    this.setState({showLoader: false})
+                    this.setState({status: 404});
+                    console.log("404");
+                }
+            }
         })
     }
 
@@ -61,6 +92,7 @@ class RealSchedule1 extends Component {
 
 
     state = {
+        visible: true,
         subjects: {
             'english': 'English',
             'science': 'Science',
@@ -78,14 +110,9 @@ class RealSchedule1 extends Component {
         },
         status: 200,
         showLoader: true,
-        courses : {
-            'All Subjects'           : 'beginner',
-            'Spoken English Program' : 'advance',
-            'Coding 1:5'             : 'pro',
-            'Coding 1:1'             :'coding',
-        },
+        courses : undefined,
         class: 1,
-        course: "All Subjects",
+        course: undefined,
         chosen: true,
         showModal: false,
         errorString: "",
@@ -142,95 +169,127 @@ class RealSchedule1 extends Component {
             >
                 <View style = {{marginTop: 20, marginBottom: 40 }}>
                 <View style = {{marginTop: -20}}>
-                    <View style = {{flexDirection: "row", justifyContent: "space-between", marginBottom: 10}}>
-                        <View style = {{flexDirection: "row", alignItems: "center"}}>
+                    <View 
+                        style = {{
+                            flexDirection: "row", 
+                            justifyContent: "space-around", 
+                            marginBottom: 10,
+                            }}
+                        >
+                        <View 
+                            style = {{
+                                flexDirection: "row", 
+                                alignItems: "center",
+                                // borderWidth: 2,
+                                // borderColor: "white"
+                            }}
+                        >
                             <Text 
                                 style = {{
                                     marginLeft: 18,
                                     fontFamily: "Poppins-ExtraBold",
-                                    fontSize: 18,
+                                    fontSize: 14,
                                     color: "#4ACDFF"
                                 }}
                             >
                                 Course:  </Text>
-                            <ModalDropdown 
-                            style = {{
-                                justifyContent: "center",
+                            {   
+                                this.state.courses != undefined ?
+                                <ModalDropdown 
 
-                                maxWidth: 140,
-                            }}
-                            textStyle = {{
-                                color: 'white',
-                                fontFamily: 'Poppins-ExtraBold',
-                                fontSize: 16
-                            }}
-                            defaultValue = {"All Subjects"}
-                            options={['All Subjects', 'Spoken English Program', 'Coding 1:5', 'Coding 1:1']}
-                            dropdownStyle = {{
-                                width: 200,
-                                backgroundColor: "#1A1A1A",
-                                borderWidth: 0,
-                                borderRadius: 10,
-                            }}
-                            dropdownTextStyle = {{
-                                color: "white",
-                                fontSize: 14,
-                                fontFamily: "Poppins-SemiBold",
-                                backgroundColor: "#1A1A1A",
-                                borderWidth: 0,
-                                textAlign: "center"
-                            }}
-                            dropdownTextHighlightStyle = {{
-                                color: "#4ACDF4",
-                                fontSize: 14,
-                                fontFamily: "Poppins-SemiBold",
-                                backgroundColor: "#1A1A1A",
-                                borderWidth: 0,
-                            }}
-                            renderSeparator = {() => {return <View></View>}}
-                            onSelect = {(index, value) => {
-                                this.setState({showLoader: true})
-                                let url = "http://idirect.bloombraineducation.com/idirect/lms/live/class/schedule?class="+this.state.class+"&course="+this.state.courses[value];
-                                console.log(url);
-                                fetch(url, {
-                                    method: 'POST',
-                                    headers: {
-                                        'Content-Type': 'multipart/form-data',
-                                    },
+                                style = {{
+                                    justifyContent: "center",
+                                    maxWidth: 100,
+                                    overflow: "hidden"
+                                }}
+                                textStyle = {{
+                                    color: 'white',
+                                    fontFamily: 'Poppins-ExtraBold',
+                                    fontSize: 14
+                                }}
+                                
+                                showsVerticalScrollIndicator
+                                options={this.state.courses}
+                                dropdownStyle = {{
+                                    width: Dimensions.get("screen").width - 30,
+                                    backgroundColor: "#1A1A1A",
+                                    borderWidth: 0,
+                                    borderRadius: 10,
+                                    marginLeft: Platform.OS == "android" ? -Dimensions.get("screen").width/5 : -Dimensions.get("screen").width/5.5,
+                                    opacity: 1,
+                                    overflow: "hidden"
+                                }}
+                                dropdownTextStyle = {{
+                                    color: "white",
+                                    fontSize: Platform.OS == "android" ? 12 : 14,
+                                    fontFamily: "Poppins-SemiBold",
+                                    backgroundColor: "#1A1A1A",
+                                    borderWidth: 0,
+                                    textAlign: "center"
+                                }}
+                                onDropdownWillShow = {() => {this.setState({visible: false})}}
+                                onDropdownWillHide = {() => {this.setState({visible: true})}}
+                                dropdownTextHighlightStyle = {{
+                                    color: "#4ACDF4",
+                                    fontSize: Platform.OS == "android" ? 12 : 14,
+                                    fontFamily: "Poppins-Bold",
+                                    backgroundColor: "#1A1A1A",
+                                    borderWidth: 0,
+                                }}
+                                defaultValue = {this.state.course}
+                                renderSeparator = {() => {return <View></View>}}
+                                onSelect = {(index, value) => {
+                                    this.setState({showLoader: true})
+                                    this.setState({
+                                        course: value
                                     })
-                                    .then((response) => {
-                                        if(response.ok) {
-                                        response.json().then((responseJson) => {
-                                            this.setState({showLoader: false})
-                                            this.setState({schedules: responseJson[this.state.courses[this.state.course]]})
-                                            this.setState({showModal:false})
+                                    let url = "http://idirect.bloombraineducation.com/idirect/lms/live/class/schedule?class="+this.state.class+"&course="+value;
+                                    console.log(url);
+                                    fetch(url, {
+                                        method: 'POST',
+                                        headers: {
+                                            'Content-Type': 'multipart/form-data',
+                                        },
                                         })
-                                        } else {
-                                            if(response.status == 500) {
-                                                console.log("500");
+                                        .then((response) => {
+                                            if(response.ok) {
+                                            response.json().then((responseJson) => {
+                                                this.setState({showLoader: false})
+                                                this.setState({schedules: responseJson[value]})
+                                                this.setState({showModal:false})
+                                            })
+                                            } else {
+                                                if(response.status == 500) {
+                                                    console.log("500");
+                                                }
+                                                if(response.status == 404) {
+                                                    console.log("404");
+                                                }
                                             }
-                                            if(response.status == 404) {
-                                                console.log("404");
-                                            }
-                                        }
-                                    })
-                                    
-                                    .catch((error) => {
-                                        // this.setState({login: false})
-                                        console.error(error);
-                                });
-                                this.setState({
-                                    course: value
-                                })
-                            } }
-                            />
-                        
+                                        })
+                                        
+                                        .catch((error) => {
+                                            // this.setState({login: false})
+                                            console.error(error);
+                                    });
+                                } }
+                                />
+                                : null
+                            }
                             <Image 
                                 style = {{width: 15, height: 15, marginLeft: 5}}
                                 source = {require("../images/icon.png")}
                             />
                         </View>
-                        <View style = {{flexDirection: "row", justifyContent: "center", alignItems: 'center'}}>
+                        <View 
+                            style = {{
+                                flexDirection: "row", 
+                                justifyContent: "center", 
+                                alignItems: 'center',
+                                // borderWidth: 2,
+                                // borderColor: "white"
+                            }}
+                        >
                         <Text style = {{
                             color: "#4ACDF4",
                             fontFamily: "Poppins-Bold"
@@ -252,7 +311,7 @@ class RealSchedule1 extends Component {
                                     this.state.class == 9 ? '9th' : this.state.class == 10 ? '10th' : 
                                     this.state.class == 11 ? '11th' : '12th' 
                                 }
-                                options={['1st', '2nd', '3rd', '4th', '5th', '6th', '7th', '8th', '9th']}
+                                options={['1st', '2nd', '3rd', '4th', '5th', '6th', '7th', '8th', '9th', '10th', '11th', '12th']}
                                 dropdownStyle = {{
                                     width: 60,
                                     height: 170,
@@ -263,9 +322,11 @@ class RealSchedule1 extends Component {
                                     overflow: "hidden",
                                     marginBottom: 0,
                                 }}
+                                onDropdownWillShow = {() => {this.setState({visible: false})}}
+                                onDropdownWillHide = {() => {this.setState({visible: true})}}
                                 dropdownTextStyle = {{
                                     color: "white",
-                                    fontSize: 14,
+                                    fontSize: Platform.OS == "android" ? 12 : 14,
                                     fontFamily: "Poppins-SemiBold",
                                     backgroundColor: "#1A1A1A",
                                     borderWidth: 0,
@@ -281,7 +342,7 @@ class RealSchedule1 extends Component {
                                 renderSeparator = {() => {return <View></View>}}
                                 onSelect = {(index, value) => {
                                     this.setState({showLoader: true})
-                                    let url = "http://idirect.bloombraineducation.com/idirect/lms/live/class/schedule?class="+(parseInt(index)+1)+"&course="+this.state.courses[this.state.course];
+                                    let url = "http://idirect.bloombraineducation.com/idirect/lms/live/class/schedule?class="+(parseInt(index)+1)+"&course="+this.state.course;
                                     console.log(url);
                                     fetch(url, {
                                         method: 'POST',
@@ -293,7 +354,7 @@ class RealSchedule1 extends Component {
                                             if(response.ok) {
                                                 response.json().then((responseJson) => {
                                                     this.setState({showLoader: false})
-                                                    this.setState({schedules: responseJson[this.state.courses[this.state.course]]})
+                                                    this.setState({schedules: responseJson[this.state.course]})
                                                     this.setState({showModal:false})
                                                 })
                                             } else {
@@ -366,6 +427,7 @@ class RealSchedule1 extends Component {
                     this.state.schedules ? this.state.schedules.map((value, index) => {
                         let title = "Batch " + (index+1).toString();
                         return (
+                            <Fade visible={this.state.visible} direction="up">
                             <View>
                                 <List.Accordion
                                     title = {title}
@@ -378,7 +440,7 @@ class RealSchedule1 extends Component {
                                         <View style = {{
                                             position: 'absolute',
                                             zIndex: 10,
-                                            left: 220,
+                                            left: Platform.OS == "android" ? Dimensions.get("screen").width/1.9 : Dimensions.get("screen").width/1.8,
                                             flexDirection: 'row',
                                             alignItems: "center",
                                             alignContent: "center",
@@ -1650,6 +1712,7 @@ class RealSchedule1 extends Component {
                                 </View>
                                 </List.Accordion>
                             </View>
+                            </Fade>
                         )
                     })
                     : <View></View>

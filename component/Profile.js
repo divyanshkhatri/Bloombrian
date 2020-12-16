@@ -3,7 +3,6 @@ import {StatusBar, View, Text, Image, SafeAreaView, ImageBackground, Dimensions,
 import LinearGradient from 'react-native-linear-gradient';
 import {Actions} from 'react-native-router-flux';
 import Modal500 from './Modal500';
-import Modal404 from './Modal404';
 
 class Profile extends Component {
 
@@ -101,7 +100,7 @@ class Profile extends Component {
             <SafeAreaView
                 style = {{
                     // flex: 1,
-                    height: '100%',
+                    height: Dimensions.get("window").height,
                     // flexDirection: 'column',
                     backgroundColor: 'black',
                     paddingTop: Platform.OS === 'android' ? 10 : 0,
@@ -257,7 +256,7 @@ class Profile extends Component {
                             <View style = {{
                                 backgroundColor: '#0A0A0A',
                                 height: '110%',
-                                paddingBottom: 60
+                                marginBottom: 0
                                 // borderWidth: 2, 
                                 // borderColor: 'purple'
                             }}>
@@ -288,7 +287,7 @@ class Profile extends Component {
                                         style = {{
                                             // marginLeft: 8,
                                             fontFamily: 'Poppins-Bold',
-                                            fontSize: Platform.OS == "android" ? 10 : 11,
+                                            fontSize: Platform.OS == "android" ? 11 : 11,
                                             color: 'white',
                                             marginRight: 70,
                                             // borderWidth: 2, 

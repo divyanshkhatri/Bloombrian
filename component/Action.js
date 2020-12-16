@@ -2,18 +2,19 @@ import ActionButton from 'react-native-action-button';
 import React, {Component} from 'react';
 import {View, Text, Image} from 'react-native';
 
-class Actions extends Component {
+class Action extends Component {
     render() {
         return (
             <View>
                 <ActionButton 
                     style = {{
-                    }}          
-                    offsetX = {30}
-                    offsetY = {0}              
+                        position: "absolute",
+                        zIndex: 10
+                    }}                       
                     size = {50}
+
                     buttonColor="#1A1A1A"
-                    verticalOrientation = "bottom"
+                    verticalOrientation = "down"
                 >
                     <ActionButton.Item 
                         style = {{
@@ -63,4 +64,4 @@ class Actions extends Component {
     }
 }
 
-export default Actions;
+export default Action;

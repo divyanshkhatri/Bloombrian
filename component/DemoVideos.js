@@ -5,6 +5,7 @@ import Modal from 'react-native-modal';
 import moment from 'moment';
 import Modal404 from './Modal404';
 import Modal500 from './Modal500';
+import {Actions} from 'react-native-router-flux';
 moment().format();
 
 class DemoVideos extends Component {
@@ -390,200 +391,206 @@ class DemoVideos extends Component {
                         // )
                         if(this.state.classes[val] !== undefined && this.state.classes[val].length != 0){
                             return (
-                                <View>
-                                    {
-                                    val == this.state.today ? <Text style = {{fontSize: 14, marginLeft: 16, width: 250, marginTop: Platform.OS == 'android' ? -25: -20, color: '#4ACDF4', fontFamily: 'Poppins-Bold'}}>Upcoming</Text> :
-                                    val == this.state.tomorrow ? <Text style = {{fontSize: 14, marginLeft: 16, width: 250, marginTop:-25, color: '#4ACDF4', fontFamily: 'Poppins-Bold'}}>Tomorrow</Text> :
-                                    <Text style = {{fontSize: 14, color: '#4ACDF4', marginLeft: 16, marginTop: -25, width: 250, fontFamily: 'Poppins-Bold'}}>{val.toString().split("-").reverse().join("-")}</Text>}
-                                    <FlatList
-                                        // contentContainerStyle = {{borderColor: "white", borderWidth: 2, }}
-                                        ListHeaderComponent = {<View style = {{marginBottom: 15}}></View>}
-                                        ListFooterComponent = {<View style = {{marginBottom: 40}}></View>}
-                                        data = {this.state.classes[val]}
-                                        keyExtractor = {(item) => item.id}
-                                        renderItem = {({item}) => {
-                                            if(item.length != 0) {
-                                                let base64Icon = `data:image/png;base64,${item.thumbnail_url}`;
-                                                return (
-                                                    <View style = {{
-                                                        flexDirection: 'row', 
-                                                        // borderWidth: 2, 
-                                                        // borderColor: 'white',
-                                                        height: 100,
-                                                        marginLeft: 16, 
-                                                        marginRight: 16,
-                                                        backgroundColor: '#1C1C1C',
-                                                        marginBottom: 20,
-                                                        borderRadius: 10,
-                                                        overflow: "hidden"
-                                                    }}>
-                                                        <View>
-                                                            {
-                                                                item.thumbnail_url != false ?
-                                                            <Image
-                                                                style = {{
-                                                                    // marginTop: 20,
-                                                                    // marginRight: 20,
-                                                                    width: 160, 
-                                                                    height: 100, 
-                                                                    borderRadius: 10,
-                                                                    // borderTopRightRadius: 0,
-                                                                    // borderBottomRightRadius: 0,
-                                                                    marginBottom: 0,
-                                                                    overflow: 'hidden',
-                                                                    position: 'relative',
-                                                                    resizeMode: "stretch"
-                                                                }}
-                                                                source = {{uri: item.thumbnail_url}}
-                                                            >
-                                                            </Image>
-                                                                :
-                                                            <Image
-                                                                style = {{
-                                                                    // marginTop: 20,
-                                                                    // marginRight: 20,
-                                                                    width: 160, 
-                                                                    height: 100, 
-                                                                    borderRadius: 10,
-                                                                    borderTopRightRadius: 0,
-                                                                    borderBottomRightRadius: 0,
-                                                                    marginBottom: 0,
-                                                                    overflow: 'hidden',
-                                                                    position: 'relative',
-                                                                    resizeMode: "stretch"
-                                                                    
-                                                                }}
-                                                                source = {require("../images/mathswork.png")}
-                                                            >
-                                                            </Image>
-                                                            }
-                                                            <Text style = {{color: "#4ACDF4", fontFamily: "Poppins-Bold", fontSize: 11, position: 'absolute', top: 10, left: 170}}>Subject</Text>
-                                                            </View>
-                                                            <View style = {{
-                                                                flex: 1,
-                                                                flexShrink: 1,
-                                                                justifyContent: 'space-around', 
-                                                            }}>
-                        
-                                                                <Text 
-                                                                numberOfLines = {2}
-                                                                style = {{
-                                                                    color: 'white',
-                                                                    fontFamily: 'Poppins-Bold',
-                                                                    paddingLeft: 10,
-                                                                    paddingRight: 10,
-                                                                    marginTop: 30,
-                                                                    // borderColor: 'white',
-                                                                    // borderWidth: 2,
-                                                                    flexShrink: 1,
-                                                                    fontSize: 13,
-                                                                    height: 35
-                                                                    // paddingTop:10
-                                                                }}>
-                                                                    {this.state.subjects[item.subject]}
-                                                                </Text>
-                                                                <View  
-                                                                style = {{
-                                                                    marginTop: -15, 
-                                                                    // flex: 1, 
-                                                                    flexDirection: 'row', 
-                                                                    justifyContent: 'space-between',
-                                                                    // borderWidth: 1, 
-                                                                    // borderColor: "white"
-                                                                }}>
-                                                                <Text style = {{
-                                                                    color: 'gray',
-                                                                    fontFamily: 'Poppins-SemiBold',
-                                                                    paddingLeft: 12,
-                                                                    paddingRight: 12,
-                                                                    maxWidth: 110,
-                                                                    // borderColor: 'white',
-                                                                    // borderWidth: 2,
-                                                                    flexShrink: 1,
-                                                                    fontSize: 10,
-                                                                    alignSelf: "center"
-                                                                    // marginTop: 10
-                                                                    // paddingTop: 29
-                                                                }}>
-                                                                    {item.teacher_name}
-                                                                </Text>
-                                                                
-                                                                <Text style = {{
-                                                                    color: 'gray',
-                                                                    fontFamily: 'Poppins-SemiBold',
-                                                                            // borderColor: 'white',
-                                                                            // borderWidth: 2,
-                                                                    width: 60,
-                                                                    flexShrink: 1,
-                                                                    fontSize: 10,
-                                                                    alignSelf: "center"
-                                                                    // marginTop: 10
-                                                                    // paddingTop: 29
-                                                                }}>
-                                                                    {item.time} pm
-                                                                </Text>
+                                
+                                    <View>
+                                        {
+                                        val == this.state.today ? <Text style = {{fontSize: 14, marginLeft: 16, width: 250, marginTop: Platform.OS == 'android' ? -25: -20, color: '#4ACDF4', fontFamily: 'Poppins-Bold'}}>Upcoming</Text> :
+                                        val == this.state.tomorrow ? <Text style = {{fontSize: 14, marginLeft: 16, width: 250, marginTop:-25, color: '#4ACDF4', fontFamily: 'Poppins-Bold'}}>Tomorrow</Text> :
+                                        <Text style = {{fontSize: 14, color: '#4ACDF4', marginLeft: 16, marginTop: -25, width: 250, fontFamily: 'Poppins-Bold'}}>{val.toString().split("-").reverse().join("-")}</Text>}
+                                        <FlatList
+                                            // contentContainerStyle = {{borderColor: "white", borderWidth: 2, }}
+                                            ListHeaderComponent = {<View style = {{marginBottom: 15}}></View>}
+                                            ListFooterComponent = {<View style = {{marginBottom: 40}}></View>}
+                                            data = {this.state.classes[val]}
+                                            keyExtractor = {(item) => item.id}
+                                            renderItem = {({item}) => {
+                                                if(item.length != 0) {
+                                                    let base64Icon = `data:image/png;base64,${item.thumbnail_url}`;
+                                                    return (
+                                                        <TouchableOpacity
+                                                            disabled = {this.state.plan == false ? true : false}
+                                                            onPress= {() => Actions.Payment()}
+                                                        >
+                                                        <View style = {{
+                                                            flexDirection: 'row', 
+                                                            // borderWidth: 2, 
+                                                            // borderColor: 'white',
+                                                            height: 100,
+                                                            marginLeft: 16, 
+                                                            marginRight: 16,
+                                                            backgroundColor: '#1C1C1C',
+                                                            marginBottom: 20,
+                                                            borderRadius: 10,
+                                                            overflow: "hidden"
+                                                        }}>
+                                                            <View>
                                                                 {
-                                                                    item.lock == false ? 
-                                                                    <TouchableOpacity 
-
-                                                                        onPress = {() => {
-                                                                            let time = item.time;
-                                                                            let url = item.demo_link;
-                                                                            this.onPressAttend(time, url, val);
-                                                                        }}
-                                                                        style = {{ 
-                                                                            // borderWidth: 1, 
-                                                                            // borderColor: 'white', 
-                                                                            width: 50, 
-                                                                            height: 25, 
-                                                                            marginRight: 15,
-                                                                            // marginTop: 5,
-                                                                            alignSelf: "center",
-                                                                            justifyContent: 'center', 
-                                                                            borderRadius: 5,
-                                                                            backgroundColor: '#4ACDF4'
-                                                                        }}
-                                                                    >
-                                                                        <Text style = {{
-                                                                            textAlign: 'center', 
-                                                                            alignItems: 'center',
-                                                                            alignSelf: 'center', 
-                                                                            fontSize: Platform.OS == "android" ? 10 : 11, 
-                                                                            fontFamily: 'Poppins-Bold', 
-                                                                            color: "white"
-                                                                        }}>Attend</Text>
-                                                                    </TouchableOpacity>
-                                                                    : 
-                                                                    <Image 
-                                                                        style = {{
-                                                                            width: 15, 
-                                                                            height: 15,
-                                                                            marginRight: 15,
-                                                                            // marginTop: 5,
-                                                                            alignSelf: "center",
-                                                                            justifyContent: 'center', 
-                                                                        }}
-                                                                        source = {require("../images/lock.png")} 
-                                                                    />
+                                                                    item.thumbnail_url != false ?
+                                                                <Image
+                                                                    style = {{
+                                                                        // marginTop: 20,
+                                                                        // marginRight: 20,
+                                                                        width: 160, 
+                                                                        height: 100, 
+                                                                        borderRadius: 10,
+                                                                        // borderTopRightRadius: 0,
+                                                                        // borderBottomRightRadius: 0,
+                                                                        marginBottom: 0,
+                                                                        overflow: 'hidden',
+                                                                        position: 'relative',
+                                                                        resizeMode: "stretch"
+                                                                    }}
+                                                                    source = {{uri: item.thumbnail_url}}
+                                                                >
+                                                                </Image>
+                                                                    :
+                                                                <Image
+                                                                    style = {{
+                                                                        // marginTop: 20,
+                                                                        // marginRight: 20,
+                                                                        width: 160, 
+                                                                        height: 100, 
+                                                                        borderRadius: 10,
+                                                                        borderTopRightRadius: 0,
+                                                                        borderBottomRightRadius: 0,
+                                                                        marginBottom: 0,
+                                                                        overflow: 'hidden',
+                                                                        position: 'relative',
+                                                                        resizeMode: "stretch"
+                                                                        
+                                                                    }}
+                                                                    source = {require("../images/mathswork.png")}
+                                                                >
+                                                                </Image>
                                                                 }
+                                                                <Text style = {{color: "#4ACDF4", fontFamily: "Poppins-Bold", fontSize: 11, position: 'absolute', top: 10, left: 170}}>Subject</Text>
+                                                                </View>
+                                                                <View style = {{
+                                                                    flex: 1,
+                                                                    flexShrink: 1,
+                                                                    justifyContent: 'space-around', 
+                                                                }}>
+                            
+                                                                    <Text 
+                                                                    numberOfLines = {2}
+                                                                    style = {{
+                                                                        color: 'white',
+                                                                        fontFamily: 'Poppins-Bold',
+                                                                        paddingLeft: 10,
+                                                                        paddingRight: 10,
+                                                                        marginTop: 30,
+                                                                        // borderColor: 'white',
+                                                                        // borderWidth: 2,
+                                                                        flexShrink: 1,
+                                                                        fontSize: 13,
+                                                                        height: 35
+                                                                        // paddingTop:10
+                                                                    }}>
+                                                                        {this.state.subjects[item.subject]}
+                                                                    </Text>
+                                                                    <View  
+                                                                    style = {{
+                                                                        marginTop: -15, 
+                                                                        // flex: 1, 
+                                                                        flexDirection: 'row', 
+                                                                        justifyContent: 'space-between',
+                                                                        // borderWidth: 1, 
+                                                                        // borderColor: "white"
+                                                                    }}>
+                                                                    <Text style = {{
+                                                                        color: 'gray',
+                                                                        fontFamily: 'Poppins-SemiBold',
+                                                                        paddingLeft: 12,
+                                                                        paddingRight: 12,
+                                                                        maxWidth: 110,
+                                                                        // borderColor: 'white',
+                                                                        // borderWidth: 2,
+                                                                        flexShrink: 1,
+                                                                        fontSize: 10,
+                                                                        alignSelf: "center"
+                                                                        // marginTop: 10
+                                                                        // paddingTop: 29
+                                                                    }}>
+                                                                        {item.teacher_name}
+                                                                    </Text>
+                                                                    
+                                                                    <Text style = {{
+                                                                        color: 'gray',
+                                                                        fontFamily: 'Poppins-SemiBold',
+                                                                                // borderColor: 'white',
+                                                                                // borderWidth: 2,
+                                                                        width: 60,
+                                                                        flexShrink: 1,
+                                                                        fontSize: 10,
+                                                                        alignSelf: "center"
+                                                                        // marginTop: 10
+                                                                        // paddingTop: 29
+                                                                    }}>
+                                                                        {item.time} pm
+                                                                    </Text>
+                                                                    {
+                                                                        item.lock == false ? 
+                                                                        <TouchableOpacity 
+
+                                                                            onPress = {() => {
+                                                                                let time = item.time;
+                                                                                let url = item.demo_link;
+                                                                                this.onPressAttend(time, url, val);
+                                                                            }}
+                                                                            style = {{ 
+                                                                                // borderWidth: 1, 
+                                                                                // borderColor: 'white', 
+                                                                                width: 50, 
+                                                                                height: 25, 
+                                                                                marginRight: 15,
+                                                                                // marginTop: 5,
+                                                                                alignSelf: "center",
+                                                                                justifyContent: 'center', 
+                                                                                borderRadius: 5,
+                                                                                backgroundColor: '#4ACDF4'
+                                                                            }}
+                                                                        >
+                                                                            <Text style = {{
+                                                                                textAlign: 'center', 
+                                                                                alignItems: 'center',
+                                                                                alignSelf: 'center', 
+                                                                                fontSize: Platform.OS == "android" ? 10 : 11, 
+                                                                                fontFamily: 'Poppins-Bold', 
+                                                                                color: "white"
+                                                                            }}>Attend</Text>
+                                                                        </TouchableOpacity>
+                                                                        : 
+                                                                        <Image 
+                                                                            style = {{
+                                                                                width: 15, 
+                                                                                height: 15,
+                                                                                marginRight: 15,
+                                                                                // marginTop: 5,
+                                                                                alignSelf: "center",
+                                                                                justifyContent: 'center', 
+                                                                            }}
+                                                                            source = {require("../images/lock.png")} 
+                                                                        />
+                                                                    }
+                                                                </View>
                                                             </View>
                                                         </View>
-                                                    </View>
-                                                )
-                                                
-                                            } else if(item.length == 0) {
-                                                return (
-                                                    <View>
-                                                        <Text style = {{fontSize: 12, color: 'white', marginLeft: 16, marginBottom: 40, fontFamily: 'Poppins-SemiBold'}}>No Live Classes Found</Text>
-                                                    </View>
-                                                )
+                                                        </TouchableOpacity>
+                                                    )
+                                                    
+                                                } else if(item.length == 0) {
+                                                    return (
+                                                        <View>
+                                                            <Text style = {{fontSize: 12, color: 'white', marginLeft: 16, marginBottom: 40, fontFamily: 'Poppins-SemiBold'}}>No Live Classes Found</Text>
+                                                        </View>
+                                                    )
+                                                }
+                                            
                                             }
-                                        
-                                        }
-                                        }
+                                            }
 
-                                    /> 
-                                </View>
+                                        /> 
+                                    </View>
                             )
                         } else if(this.state.classes[val] !== undefined && this.state.classes[val].length === 0){
 
@@ -598,7 +605,7 @@ class DemoVideos extends Component {
                     })
                 }
                 </View>
-                <View style = {{height: Platform.OS == "android" ? 40: -0}}></View>
+                <View style = {{height: Platform.OS == "android" ? 20: -0}}></View>
                                
             </ScrollView>
         ) 

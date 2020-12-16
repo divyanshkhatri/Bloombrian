@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {StatusBar, View, Text, SafeAreaView, ScrollView, Dimensions, TouchableOpacity, Keyboard, TextInput, Image, StyleSheet,PermissionsAndroid, Platform, Animated, AsyncStorage, BackHandler,Alert} from 'react-native';
+import {StatusBar, View, Text, SafeAreaView, ScrollView, Dimensions, TouchableOpacity, Keyboard, TextInput, Image, StyleSheet,PermissionsAndroid, Platform, Animated, AsyncStorage, BackHandler,Alert, Linking} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { Actions } from 'react-native-router-flux';
 import Geolocation from '@react-native-community/geolocation';
@@ -27,6 +27,8 @@ class Register extends Component {
         confirmPass: true,
         mobile: true,
         place: true,
+        tcAccepted: false,
+        tc: true,
 
     }
 
@@ -100,36 +102,40 @@ class Register extends Component {
             this.setState({passSame: false})
         }
 
-        else if(this.state.fullName != ""&& this.state.email != "" && this.state.password != "" && this.state.confirmPassword != "" && this.state.mob != "" && this.state.password == this.state.confirmPassword){
-            let url = 'http://idirect.bloombraineducation.com/idirect/lms/register?username='+this.state.fullName+'&password='+this.state.password+'&email='+this.state.email+'&phone='+this.state.mob+'&location='+this.state.city
+        if(this.state.tcAccepted == false) {
+            this.setState({tc: false})
+        }
+
+        else if(this.state.fullName != ""&& this.state.email != "" && this.state.password != "" && this.state.confirmPassword != "" && this.state.mob != "" && this.state.password == this.state.confirmPassword && this.state.tcAccepted == true){
+            let url = 'http://idirect.bloombraineducation.com/idirect/lms/register?username='+this.state.fullName+'&password='+this.state.password+'&email='+this.state.email+'&phone='+this.state.mob+'&location='+this.state.city+'&tc='+this.state.tcAccepted
             console.log(url);
             fetch(url, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
-                })
-                .then((response) => {
-                    if(response.ok) {
-                        response.json().then((responseJson) => {
-                            console.log(responseJson);
-                            AsyncStorage.setItem('email', this.state.email);
-                            // console.log(responseJson.ID);
-                            AsyncStorage.setItem('id', JSON.stringify(responseJson.ID));
-                            Actions.Favourite();
-                        })
-                    } else {
-                        if(response.status == 500) {
-                            console.log("500");
-                        }
-                        if(response.status == 404) {
-                            console.log("404");
-                        }
+            })
+            .then((response) => {
+                if(response.ok) {
+                    response.json().then((responseJson) => {
+                        console.log(responseJson);
+                        AsyncStorage.setItem('email', this.state.email);
+                        // console.log(responseJson.ID);
+                        AsyncStorage.setItem('id', JSON.stringify(responseJson.ID));
+                        Actions.Favourite();
+                    })
+                } else {
+                    if(response.status == 500) {
+                        console.log("500");
                     }
-                })
-                .catch((error) => {
-                    this.setState({login: false})
-                    console.error(error);
+                    if(response.status == 404) {
+                        console.log("404");
+                    }
+                }
+            })
+            .catch((error) => {
+                this.setState({login: false})
+                console.error(error);
             });
        }
         
@@ -427,6 +433,78 @@ class Register extends Component {
                                     underlineColorAndroid = "transparent"    
                                 />
                             </View>
+                            <View
+                                style = {{
+                                    marginTop: 10,
+                                    marginLeft: 30,
+                                    color: '#4ACDF4',
+                                    fontFamily: 'Poppins-SemiBold',
+                                    fontSize: Platform.isPad ? 15 : 11,
+                                    flexDirection: "row",
+                                    alignItems: "center",
+                                    
+                                }}
+                            >
+                                <TouchableOpacity
+                                    onPress = {() => {this.setState({tcAccepted: !this.state.tcAccepted})}}
+                                >
+                                    <View style={{
+                                        height: 20,
+                                        width: 20,
+                                        borderRadius: 10,
+                                        borderWidth: 2,
+                                        borderColor: '#4ACDF4',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        marginRight: 10,
+                                    }}>
+                                        {
+                                        this.state.tcAccepted ?
+                                            <View style={{
+                                            height: 10,
+                                            width: 10,
+                                            borderRadius: 5,
+                                            backgroundColor: '#4ACDF4',
+                                            }}/>
+                                            : null
+                                        }
+                                    </View>
+                                </TouchableOpacity>
+                                <View
+                                    style = {{
+                                        flexDirection: "row"
+                                    }}
+                                >
+                                    <TouchableOpacity
+                                        onPress = {() => this.setState({tcAccepted: !this.state.tcAccepted})}
+                                    >
+                                    <Text
+                                        style = {{
+                                            fontFamily: "Poppins-SemiBold",
+                                            fontSize: Platform.OS == "android" ? 10 : 12,
+                                            color: "#4ACDF4",
+                                        }}
+                                    >
+                                        I accept the terms and conditions mentioned  </Text>
+                                    </TouchableOpacity>
+                                    <TouchableOpacity
+                                        onPress = {() => {
+                                            Linking.openURL("https://www.bloombraineducation.com/privacy-policy")
+                                        }}
+                                    >
+                                        <Text
+                                            style = {{
+                                                fontFamily: "Poppins-SemiBold",
+                                                fontSize: Platform.OS == "android" ? 10 : 12,
+                                                color: "#FF5252",
+                                                textDecorationLine: "underline"
+                                            }}
+                                        >here.
+                                        </Text>
+                                    </TouchableOpacity>
+                                </View>
+                            </View>
+                            {this.state.tc? false : <Text style = {{color: '#FF5252', marginLeft: 30, marginTop: 10, fontFamily: "Poppins-Medium", fontSize: 10}}>Please accept our terms and conditions!</Text>}
                         </Animated.View>
                     </View>
                     <View

@@ -199,13 +199,13 @@ class RealSchedule extends Component {
 
                                 style = {{
                                     justifyContent: "center",
-                                    maxWidth: 140,
+                                    maxWidth: 100,
                                     overflow: "hidden"
                                 }}
                                 textStyle = {{
                                     color: 'white',
                                     fontFamily: 'Poppins-ExtraBold',
-                                    fontSize: 14
+                                    fontSize: 14,
                                 }}
                                 defaultValue = {this.state.course}
                                 showsVerticalScrollIndicator
@@ -215,7 +215,7 @@ class RealSchedule extends Component {
                                     backgroundColor: "#1A1A1A",
                                     borderWidth: 0,
                                     borderRadius: 10,
-                                    marginLeft: - Dimensions.get("screen").width + 302,
+                                    marginLeft: Platform.OS == "android" ? -Dimensions.get("screen").width/5 : -Dimensions.get("screen").width/5.5,
                                     opacity: 1,
                                     overflow: "hidden"
                                 }}
@@ -439,7 +439,7 @@ class RealSchedule extends Component {
                                         <View style = {{
                                             position: 'absolute',
                                             zIndex: 10,
-                                            left: Dimensions.get("screen").width - 165,
+                                            left: Platform.OS == "android" ? Dimensions.get("screen").width/1.9 : Dimensions.get("screen").width/1.8,
                                             flexDirection: 'row',
                                             alignItems: "center",
                                             alignContent: "center",

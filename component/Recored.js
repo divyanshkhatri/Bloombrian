@@ -619,7 +619,7 @@ class Recorded extends Component {
                 </View> 
                 <View
                     style = {{
-                        height: 30,
+                        height: Platform.OS == "android" ? 10 : 30,
                     }}
                 >
 

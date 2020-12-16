@@ -5,6 +5,8 @@ import Modal from 'react-native-modal';
 import moment from 'moment';
 import Modal404 from './Modal404';
 import Modal500 from './Modal500';
+import {Actions} from 'react-native-router-flux';
+
 moment().format();
 
 class DemoVideos1 extends Component {
@@ -405,6 +407,10 @@ class DemoVideos1 extends Component {
                                             if(item.length != 0) {
                                                 let base64Icon = `data:image/png;base64,${item.thumbnail_url}`;
                                                 return (
+                                                    <TouchableOpacity
+                                                        disabled = {this.state.plan == false ? true : false}
+                                                        onPress= {() => Actions.Payment()}
+                                                    >
                                                     <View style = {{
                                                         flexDirection: 'row', 
                                                         // borderWidth: 2, 
@@ -569,6 +575,7 @@ class DemoVideos1 extends Component {
                                                             </View>
                                                         </View>
                                                     </View>
+                                                    </TouchableOpacity>
                                                 )
                                                 
                                             } else if(item.length == 0) {

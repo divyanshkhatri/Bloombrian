@@ -27,7 +27,7 @@
 		8A5D22E8A9024B6F826FB9CC /* Poppins-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 87ABC1DC601E413CA809E559 /* Poppins-LightItalic.ttf */; };
 		9E1FA5612565277F00CBC91E /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E1FA5602565277F00CBC91E /* NotificationService.swift */; };
 		9E1FA5652565277F00CBC91E /* OneSignalNotificationServiceExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 9E1FA55E2565277F00CBC91E /* OneSignalNotificationServiceExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		9E67687A2562F9A0001BB69D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9E6768792562F9A0001BB69D /* GoogleService-Info.plist */; };
+		9E8A3CF42588D31400D3CFBB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9E8A3CF32588D31400D3CFBB /* GoogleService-Info.plist */; };
 		AD3CBCC225EC0275D12CFAFD /* libPods-AwesomeProject-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D9AB97103C08D4B4530570E /* libPods-AwesomeProject-tvOS.a */; };
 		D3DFEC666F590AEE16BD44D9 /* libPods-AwesomeProject-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 564D8431F8C0A20380D99364 /* libPods-AwesomeProject-tvOSTests.a */; };
 		EB1D0166EA0C497C96227910 /* Poppins-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 63E7A62DFBC64E3DA85D9EFF /* Poppins-Black.ttf */; };
@@ -124,7 +124,7 @@
 		9E1FA55E2565277F00CBC91E /* OneSignalNotificationServiceExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = OneSignalNotificationServiceExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		9E1FA5602565277F00CBC91E /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
 		9E1FA5622565277F00CBC91E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		9E6768792562F9A0001BB69D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		9E8A3CF32588D31400D3CFBB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		9EAC2BF12562E1E200562C9F /* AwesomeProject.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = AwesomeProject.entitlements; path = AwesomeProject/AwesomeProject.entitlements; sourceTree = "<group>"; };
 		A4B9D57DB1076A7D4461C0CA /* Pods-AwesomeProject-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AwesomeProject-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-AwesomeProject-tvOSTests/Pods-AwesomeProject-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		AA53C791949172DB753017C6 /* Pods-AwesomeProject-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AwesomeProject-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-AwesomeProject-tvOS/Pods-AwesomeProject-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
@@ -211,9 +211,9 @@
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
+				9E8A3CF32588D31400D3CFBB /* GoogleService-Info.plist */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
-				9E6768792562F9A0001BB69D /* GoogleService-Info.plist */,
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB71A68108700A75B9A /* main.m */,
 			);
@@ -529,13 +529,13 @@
 				EB1D0166EA0C497C96227910 /* Poppins-Black.ttf in Resources */,
 				561E3E89841346E29061F34C /* Poppins-Bold.ttf in Resources */,
 				2103734F17E2469E87572EB3 /* Poppins-ExtraBold.ttf in Resources */,
+				9E8A3CF42588D31400D3CFBB /* GoogleService-Info.plist in Resources */,
 				8A5D22E8A9024B6F826FB9CC /* Poppins-LightItalic.ttf in Resources */,
 				3873B82C779B4CB5BA7B4940 /* Poppins-Medium.ttf in Resources */,
 				FBDA82715FDD414EA1B12B1F /* Poppins-MediumItalic.ttf in Resources */,
 				7B46EEA457AC4BE29D9464C9 /* Poppins-Regular.ttf in Resources */,
 				4FE52DAB6D114F419C667DF9 /* Poppins-SemiBold.ttf in Resources */,
 				534BA048D670469090BBE3F2 /* Poppins-SemiBoldItalic.ttf in Resources */,
-				9E67687A2562F9A0001BB69D /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1003,13 +1003,13 @@
 				CODE_SIGN_ENTITLEMENTS = AwesomeProject/AwesomeProject.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_TEAM = 345WT4VQMV;
 				ENABLE_BITCODE = NO;
 				GCC_NO_COMMON_BLOCKS = NO;
 				INFOPLIST_FILE = AwesomeProject/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.0.3;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -1035,12 +1035,12 @@
 				CODE_SIGN_ENTITLEMENTS = AwesomeProject/AwesomeProject.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_TEAM = 345WT4VQMV;
 				GCC_NO_COMMON_BLOCKS = NO;
 				INFOPLIST_FILE = AwesomeProject/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.0.3;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -1296,14 +1296,14 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 6;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = 345WT4VQMV;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = OneSignalNotificationServiceExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.0.3;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ios.bloombrain.iosv1.OneSignalNotificationServiceExtension;
@@ -1331,14 +1331,14 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 6;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 345WT4VQMV;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = OneSignalNotificationServiceExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.0.3;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ios.bloombrain.iosv1.OneSignalNotificationServiceExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
